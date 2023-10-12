@@ -10,7 +10,7 @@ export default function AdminRoutes() {
         <Link to="/admin">Main</Link>
         <Link to="/admin/manage-product">Manage Product</Link>
       </div>
-      <div className="border-2 w-full justify-center flex items-center">
+      <div className="border-2 w-full justify-center">
         <Routes>
           <Route path="/" index element={<Main />} />
           <Route path="/manage-product" element={<ManageProduct />} />
