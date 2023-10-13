@@ -20,18 +20,20 @@ export default function Main() {
   }, []);
 
   return (
-    <div>
+    <>
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/login"
-          element={<Login setIsLoggedIn={setIsLoggedIn} />}
-        />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/shop/bastaID" element={<View />} />
-        <Route path="/admin/*" element={<AdminRoutes />} />
-      </Routes>
-    </div>
+      <div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/login"
+            element={<Login setIsLoggedIn={setIsLoggedIn} />}
+          />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/shop/:id" element={<View />} />
+          <Route path="/admin/*" element={<AdminRoutes />} />
+        </Routes>
+      </div>
+    </>
   );
 }

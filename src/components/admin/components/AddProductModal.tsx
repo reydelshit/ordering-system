@@ -5,8 +5,12 @@ import axios from 'axios';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 // import { URL } from 'url';
 
+type ChangeEvent =
+  | React.ChangeEvent<HTMLInputElement>
+  | React.ChangeEvent<HTMLTextAreaElement>;
 export default function AddProductModal({
   setShowAddProduct,
 }: {
@@ -18,30 +22,13 @@ export default function AddProductModal({
   const [height, setHeight] = useState('');
 
   const [image, setImage] = useState<string | null>(null);
+  const [images, setImages] = useState<string[]>([]);
 
   const { id } = useParams();
 
-  // const fetchUser = async () => {
-  //   axios
-  //     .get(`http://localhost/hd-monitoring/register.php/${id}`)
-  //     .then((res) => {
-  //       console.log(res.data, 'reyudel');
-  //       setUser(res.data);
-  //       setName(res.data.name);
-  //       setEmail(res.data.email);
-  //       setHeight(res.data.height);
-
-  //       setImage(res.data.image);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   fetchUser();
-  // }, []);
-
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent) => {
     const value = e.target.value;
     const name = e.target.name;
     setUser((values) => ({ ...values, [name]: value }));
@@ -59,6 +46,7 @@ export default function AddProductModal({
         },
         ...user,
         product_image: image,
+        images_data: images,
       })
       .then((res) => {
         console.log(res.data);
@@ -84,6 +72,57 @@ export default function AddProductModal({
     };
   };
 
+  // const handleMultipleImages = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const files = e.target.files;
+  //   const imageArray = [] as string[];
+
+  //   for (let i = 0; i < files!.length; i++) {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(files![i]);
+
+  //     reader.onload = () => {
+  //       imageArray.push(reader.result as string);
+  //       if (imageArray.length === files!.length) {
+  //         setImages(imageArray);
+
+  //         console.log(imageArray);
+  //       }
+  //     };
+  //   }
+  // };
+
+  const handleMultipleImages = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    const newImages = [...images];
+
+    const promises = [];
+    for (let i = 0; i < files!.length; i++) {
+      const reader = new FileReader();
+      reader.readAsDataURL(files![i]);
+
+      promises.push(
+        new Promise((resolve, reject) => {
+          reader.onload = () => {
+            resolve(reader.result as string);
+          };
+
+          reader.onerror = (error) => {
+            reject(error);
+          };
+        }),
+      );
+    }
+
+    Promise.all(promises)
+      .then((results) => {
+        newImages.push(...(results as string[]));
+        setImages(newImages);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <div className="w-full h-fit flex justify-center items-center flex-col text-center">
       <div className="w-[40%]">
@@ -93,6 +132,7 @@ export default function AddProductModal({
             className="w-[15rem] h-[15rem] object-cover rounded-full mb-4"
             src={image! ? image! : defaultProfile}
           />
+          <Label className="mb-2 text-start">Primary image</Label>
 
           <Input
             type="file"
@@ -118,6 +158,12 @@ export default function AddProductModal({
             onChange={handleChange}
             // defaultValue={name}
           />
+          <Textarea
+            onChange={handleChange}
+            name="product_description"
+            placeholder="description"
+            className="mb-2"
+          ></Textarea>
           <Input
             type="number"
             placeholder="quantity"
@@ -126,6 +172,28 @@ export default function AddProductModal({
             onChange={handleChange}
             // defaultValue={name}
           />
+
+          <div className="mb-2 w-full flex flex-col justify-center items-center">
+            <Label className="mb-2 text-start">Upload multiple images</Label>
+
+            <div className="border-2 w-full flex mb-2 p-2 gap-2">
+              {images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Image ${index}`}
+                  className="w-[5rem] h-[5rem] object-cover rounded-full mb-4"
+                />
+              ))}
+            </div>
+            <Input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleMultipleImages}
+              className="cursor-pointer"
+            />
+          </div>
 
           <Button className="w-[80%] self-center" type="submit">
             Save and Update

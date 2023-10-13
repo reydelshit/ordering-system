@@ -2,31 +2,68 @@ import Cake from '@/assets/cake.png';
 import Cake2 from '@/assets/cake2.png';
 
 import { Button } from './ui/button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
+// type Image = {
+//   images_data: string;
+// }[];
+
+type Product = {
+  product_id: number;
+  product_image: string;
+  product_name: string;
+  product_price: number;
+  quantity: number;
+};
 
 type Image = {
-  img: string;
-}[];
+  images_data: string;
+};
 
 export default function View() {
   const [quantity, setQuantity] = useState(1);
   const [showImage, setShowImage] = useState(false);
   const [trackIndex, setTrackIndex] = useState(0);
+  const [product, setProduct] = useState<Product[]>([]);
+  const [images, setImages] = useState<Image[]>([]);
 
-  const images: Image = [
-    {
-      img: Cake,
-    },
-    {
-      img: Cake2,
-    },
-    {
-      img: Cake,
-    },
-    {
-      img: Cake2,
-    },
-  ];
+  const id = useParams();
+
+  const fetchProduct = () => {
+    console.log(id);
+    axios
+      .get('http://localhost/ordering/product.php', {
+        params: {
+          product_id: id.id,
+        },
+      })
+      .then((res) => {
+        // console.log(res.data, 'view product');
+
+        setProduct(res.data);
+      });
+  };
+
+  const fetchProductImages = () => {
+    console.log(id);
+    axios
+      .get('http://localhost/ordering/product-images.php', {
+        params: {
+          product_id: id.id,
+        },
+      })
+      .then((res) => {
+        console.log(res.data, 'view product images');
+        setImages(res.data);
+      });
+  };
+
+  useEffect(() => {
+    fetchProduct();
+    fetchProductImages();
+  }, []);
 
   const handleShowPicture = (index: number) => {
     setShowImage(true);
@@ -46,10 +83,10 @@ export default function View() {
         >
           Close
         </Button>
-        <div className="w-[50%] h-[50%] flex justify-center items-center ">
+        <div className="w-[50%] h-[50%] flex justify-center items-center object-contain">
           <img
-            className="object-contain"
-            src={images[trackIndex].img!}
+            className="object-contain h-full"
+            src={images[trackIndex].images_data!}
             alt="cake"
           />
           B
@@ -58,59 +95,70 @@ export default function View() {
     );
   };
   return (
-    <div className="w-full h-[70vh] flex p-2 justify-between gap-[4rem] px-[4rem]">
-      <div className="w-[100%] flex flex-col justify-center items-center">
-        <img className="w-[90%]" src={Cake} alt="cake" />
-        <div className="flex w-full justify-center h-[6rem] gap-4">
-          {images.map((image, index) => (
+    <>
+      {product.map((prod, index) => (
+        <div
+          className="w-full h-[70vh] flex p-2 justify-between gap-[4rem] px-[4rem]"
+          key={index}
+        >
+          <div className="w-[100%] flex flex-col justify-center items-center">
             <img
-              key={index}
-              className="w-[8rem] h-[6.5rem] cursor-pointer"
-              src={image.img!}
+              className="w-[90%] h-[30rem] object-cover rounded-lg bg-[#3d633c]"
+              src={prod.product_image}
               alt="cake"
-              onClick={() => handleShowPicture(index)}
             />
-          ))}
-        </div>
-      </div>
-      {showImage && <ModalPicture />}
-      <div className="text-start flex flex-col item-start justify-center w-[100%] p-2">
-        <span>CAKE NI BAI</span>
-        <h1 className="font-bold text-4xl mb-4">Cake Cake</h1>
-        <p className="mb-4 break-words">
-          Life is too short to sweat the small stuff and pass up on the simple
-          joys. So, why not savor the sweet moments? Delight in a delectable
-          piece of cake, where every bite is a celebration of life's little
-          pleasures.
-        </p>
-        <span className="flex items-center gap-5 mb-4">
-          <h1 className="font-bold text-3xl">$125.00</h1>
-          <p className="p-1 rounded-sm bg-[#3b0d0a] text-white">50%</p>
-        </span>
-        <div className="flex h-[2.8rem] gap-8">
-          <div
-            className="w-[50%] f-full rounded-md font-bold bg-gray-100
-           flex justify-between items-center px-4"
-          >
-            <span
-              onClick={() => setQuantity(quantity - 1)}
-              className="font-bold text-2xl cursor-pointer"
-            >
-              -
-            </span>
-            <span>{quantity < 0 ? 0 : quantity}</span>
-            <span
-              onClick={() => setQuantity(quantity + 1)}
-              className="font-bold text-2xl cursor-pointer"
-            >
-              +
-            </span>
+            <div className="flex w-full justify-center h-[7rem] gap-4 p-4 mt-5 object-cover">
+              {images.map((image, index) => (
+                <img
+                  key={index}
+                  className="w-[9rem] h-[8rem] cursor-pointer object-cover border-2"
+                  src={image.images_data!}
+                  alt="cake"
+                  onClick={() => handleShowPicture(index)}
+                />
+              ))}
+            </div>
           </div>
-          <Button className="w-[50%] h-full bg-[#3b0d0a]">
-            Add to Order cart
-          </Button>
+          {showImage && <ModalPicture />}
+          <div className="text-start flex flex-col item-start justify-center w-[100%] p-2">
+            <span>CAKE NI BAI</span>
+            <h1 className="font-bold text-4xl mb-4">{prod.product_name}</h1>
+            <p className="mb-4 break-words">
+              Life is too short to sweat the small stuff and pass up on the
+              simple joys. So, why not savor the sweet moments? Delight in a
+              delectable piece of cake, where every bite is a celebration of
+              life's little pleasures.
+            </p>
+            <span className="flex items-center gap-5 mb-4">
+              <h1 className="font-bold text-3xl">${prod.product_price}</h1>
+              <p className="p-1 rounded-sm bg-[#3d633c] text-white">50%</p>
+            </span>
+            <div className="flex h-[2.8rem] gap-8">
+              <div
+                className="w-[50%] f-full rounded-md font-bold bg-gray-100
+           flex justify-between items-center px-4"
+              >
+                <span
+                  onClick={() => setQuantity(quantity - 1)}
+                  className="font-bold text-2xl cursor-pointer"
+                >
+                  -
+                </span>
+                <span>{quantity < 0 ? 0 : quantity}</span>
+                <span
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="font-bold text-2xl cursor-pointer"
+                >
+                  +
+                </span>
+              </div>
+              <Button className="w-[50%] h-full bg-[#3d633c]">
+                Add to Order cart
+              </Button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      ))}
+    </>
   );
 }

@@ -2,7 +2,7 @@ import Logo from '@/assets/cake.png';
 import { Button } from './ui/button';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 type Product = {
   product_id: number;
   product_name: string;
@@ -39,9 +39,30 @@ export default function Shop() {
       product_id: id,
       qty: quantity,
     };
-    axios.post('http://localhost/ordering/cart.php', data).then((res) => {
-      console.log(res.data);
-    });
+
+    axios
+      .get('http://localhost/ordering/cart.php', {
+        params: {
+          product_id: id,
+        },
+      })
+      .then((res) => {
+        console.log(res.data, 'res');
+        if (res.data.length > 0) {
+          axios
+            .put('http://localhost/ordering/cart.php', {
+              cart_id: res.data[0].cart_id,
+              qty: res.data[0].qty + quantity,
+            })
+            .then((res) => {
+              console.log(res);
+            });
+        } else {
+          axios.post('http://localhost/ordering/cart.php', data).then((res) => {
+            console.log(res.data);
+          });
+        }
+      });
   };
 
   return (
@@ -49,7 +70,7 @@ export default function Shop() {
       {product.map((product) => (
         <div
           key={product.product_id}
-          className="border-2 w-[18rem] h-[27rem] rounded-xl overflow-hidden bg-[#3b0d0ace] text-white"
+          className="border-2 w-[18rem] h-[27rem] rounded-xl overflow-hidden bg-[#3d633c] text-white"
         >
           <img
             className="w-full h-[14rem] object-cover"
@@ -58,9 +79,13 @@ export default function Shop() {
           />
           <div className="p-4">
             <div>
-              <h1 className="font-bold text-2xl cursor-pointer text-white">
-                {product.product_name.slice(0, 10)}
-              </h1>
+              <Link to={`/shop/${product.product_id}`}>
+                {' '}
+                <h1 className="font-bold text-2xl cursor-pointer text-white">
+                  {product.product_name.slice(0, 10)}
+                </h1>
+              </Link>
+
               <p className="text-white">${product.product_price}</p>
             </div>
 
@@ -85,7 +110,7 @@ export default function Shop() {
             <Button
               onClick={() => handleAddToCart(product.product_id)}
               variant="outline"
-              className="w-[9rem] h-[2.8rem] mt-5 bg-[#3B0D0A] text-white"
+              className="w-[9rem] h-[2.8rem] mt-5 bg-[#3d633c] text-white"
             >
               Add order{' '}
             </Button>

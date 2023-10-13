@@ -9,8 +9,10 @@ import {
 } from '@/components/ui/popover';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { Button } from './ui/button';
 
 type Cart = {
+  cart_id: number;
   product_name: string;
   product_price: number;
   qty: number;
@@ -37,7 +39,7 @@ export default function Header() {
       .get('http://localhost/ordering/cart.php', { params: { user_id: token } })
       .then((res) => {
         setCart(res.data);
-        console.log(res.data);
+        console.log(res.data, 'cart');
       });
   };
 
@@ -45,43 +47,83 @@ export default function Header() {
   //   handleFetchCart();
   // }, []);
 
+  const handleDeleteCartProduct = (cart_id: number) => {
+    console.log(cart_id);
+    axios
+      .delete(`http://localhost/ordering/cart.php/${cart_id}`)
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
   return (
     <header className="flex h-[5rem] justify-between items-center border-b-2">
       <div className="flex gap-8 items-center">
         <Link to="/">
-          <h1 className="font-bold text-4xl">Cake</h1>
+          <h1 className="font-bold text-4xl">DRIP</h1>
         </Link>
 
         <div className="flex gap-10">
-          <Link to="/shop">Shop 🍰</Link>
-          <Link to="/about">About 🍰</Link>
-          <Link to="/contact">Contact 🍰</Link>
+          <Link to="/shop">Shop 🔥</Link>
+          <Link to="/about">About</Link>
+          <Link to="/contact">Contact</Link>
         </div>
       </div>
 
-      <div className="flex items-center">
+      <div className="flex items-center z-40">
         <Popover>
           <PopoverTrigger onClick={handleFetchCart}>
             <AiOutlineShoppingCart className="w-8 h-[1.5rem] mr-2" />
           </PopoverTrigger>
-          <PopoverContent className="w-[15rem] mr-[15rem] p-1 self-end flex flex-col justify-center items-center">
+          <PopoverContent className="w-[20rem] min-h-[20rem] mt-[1.5rem] mr-[15rem] p-4 self-end flex flex-col justify-center items-center">
             {cart.map((cart, index) => (
               <div
-                className="flex h-[4rem] items-center justify-between w-full"
+                className="flex h-[6rem] items-center justify-between w-full border-b-2 p-2 mb-2"
                 key={index}
               >
-                <img
-                  className="w-[4rem] h-[4rem] rounded-md object-cover"
-                  src={cart.product_image}
-                  alt={cart.product_name}
-                />
-                <div>
-                  <h1>{cart.product_name}</h1>
-                  <p>{cart.qty}</p>
+                <div className="flex gap-2">
+                  <img
+                    className="w-[4rem] h-[4rem] rounded-md object-cover bg-gray-100"
+                    src={cart.product_image}
+                    alt={cart.product_name}
+                  />
+                  <div>
+                    <h1 className="font-bold">{cart.product_name}</h1>
+                    <p>Qty: {cart.qty}</p>
+                  </div>
                 </div>
-                <span>${cart.product_price * cart.qty}</span>
+
+                <div className="flex flex-col justify-between h-full items-center">
+                  <span
+                    onClick={() => handleDeleteCartProduct(cart.cart_id)}
+                    className="cursor-pointer"
+                  >
+                    delete
+                  </span>
+                  <span className="block font-bold">
+                    ${cart.product_price * cart.qty}
+                  </span>
+                </div>
               </div>
             ))}
+            <div className="w-full flex justify-between p-4 font-bold">
+              <h1>Total</h1>
+              <span>
+                $
+                {cart.reduce(
+                  (total, prod) => total + prod.product_price * prod.qty,
+                  0,
+                )}
+              </span>
+            </div>
+
+            <div>
+              <Link to="/checkout">
+                <Button className="w-full h-[3rem] bg-[#3d633c] text-white font-bold">
+                  Checkout
+                </Button>
+              </Link>
+            </div>
           </PopoverContent>
         </Popover>
         {session ? (
