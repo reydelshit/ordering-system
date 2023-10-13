@@ -16,6 +16,7 @@ type Product = {
   product_name: string;
   product_price: number;
   quantity: number;
+  product_description: string;
 };
 
 type Image = {
@@ -83,9 +84,9 @@ export default function View() {
         >
           Close
         </Button>
-        <div className="w-[50%] h-[50%] flex justify-center items-center object-contain">
+        <div className="w-[50%] h-[50%] flex justify-center items-center object-contain overflow-hidden rounded-md">
           <img
-            className="object-contain h-full"
+            className="object-contain h-full rounded-lg"
             src={images[trackIndex].images_data!}
             alt="cake"
           />
@@ -98,12 +99,12 @@ export default function View() {
     <>
       {product.map((prod, index) => (
         <div
-          className="w-full h-[70vh] flex p-2 justify-between gap-[4rem] px-[4rem]"
+          className="w-full h-[70vh] flex p-2 justify-between gap-[2rem] container"
           key={index}
         >
-          <div className="w-[100%] flex flex-col justify-center items-center">
+          <div className="w-[40em] flex flex-col justify-center items-center">
             <img
-              className="w-[90%] h-[30rem] object-cover rounded-lg bg-[#3d633c]"
+              className="w-[] h-[30rem] object-cover rounded-lg bg-[#3d633c]"
               src={prod.product_image}
               alt="cake"
             />
@@ -111,7 +112,7 @@ export default function View() {
               {images.map((image, index) => (
                 <img
                   key={index}
-                  className="w-[9rem] h-[8rem] cursor-pointer object-cover border-2"
+                  className="w-[9rem] h-[8rem] cursor-pointer object-cover rounded-md"
                   src={image.images_data!}
                   alt="cake"
                   onClick={() => handleShowPicture(index)}
@@ -120,14 +121,11 @@ export default function View() {
             </div>
           </div>
           {showImage && <ModalPicture />}
-          <div className="text-start flex flex-col item-start justify-center w-[100%] p-2">
-            <span>CAKE NI BAI</span>
+          <div className="text-start flex flex-col item-start justify-center w-[38rem] p-2 container">
+            <span>#tshirt</span>
             <h1 className="font-bold text-4xl mb-4">{prod.product_name}</h1>
-            <p className="mb-4 break-words">
-              Life is too short to sweat the small stuff and pass up on the
-              simple joys. So, why not savor the sweet moments? Delight in a
-              delectable piece of cake, where every bite is a celebration of
-              life's little pleasures.
+            <p className="mb-4 break-words w-full block">
+              {prod.product_description}
             </p>
             <span className="flex items-center gap-5 mb-4">
               <h1 className="font-bold text-3xl">${prod.product_price}</h1>
