@@ -1,8 +1,6 @@
-import Logo from '@/assets/cake.png';
-import { Button } from './ui/button';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Button } from '../ui/button';
+import { Link } from 'react-router-dom';
+
 type Product = {
   product_id: number;
   product_name: string;
@@ -10,65 +8,20 @@ type Product = {
   product_qty: number;
   product_image: string;
 };
-export default function Shop() {
-  const [quantity, setQuantity] = useState(1);
-  const [product, setProduct] = useState<Product[]>([]);
 
-  const getProduct = () => {
-    axios.get('http://localhost/ordering/product.php/').then((res) => {
-      console.log(res.data);
-      setProduct(res.data);
-    });
-  };
-
-  useEffect(() => {
-    getProduct();
-  }, []);
-
-  const navigate = useNavigate();
-
-  const handleAddToCart = (id: number) => {
-    const token = localStorage.getItem('ordering-token');
-
-    if (token === null) {
-      navigate('/login');
-    }
-    const data = {
-      user_id: token,
-      product_id: id,
-      qty: quantity,
-    };
-
-    console.log(id);
-
-    axios
-      .get('http://localhost/ordering/cart.php', {
-        params: {
-          product_id: id,
-          user_id: token,
-        },
-      })
-      .then((res) => {
-        console.log(res.data, 'res');
-        if (res.data.length > 0) {
-          axios
-            .put('http://localhost/ordering/cart.php', {
-              cart_id: res.data[0].cart_id,
-              qty: res.data[0].qty + quantity,
-            })
-            .then((res) => {
-              console.log(res);
-            });
-        } else {
-          axios.post('http://localhost/ordering/cart.php', data).then((res) => {
-            console.log(res.data);
-          });
-        }
-      });
-  };
-
+export default function ProductList({
+  product,
+  setQuantity,
+  quantity,
+  handleAddToCart,
+}: {
+  product: Product[];
+  setQuantity: (quantity: number) => void;
+  quantity: number;
+  handleAddToCart: (id: number) => void;
+}) {
   return (
-    <div className="w-full h-screen p-4 grid grid-cols-4 gap-4">
+    <>
       {product.map((product) => (
         <div
           key={product.product_id}
@@ -123,6 +76,6 @@ export default function Shop() {
           </div>
         </div>
       ))}
-    </div>
+    </>
   );
 }

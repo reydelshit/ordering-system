@@ -7,41 +7,12 @@ import axios from 'axios';
 import Logo from '@/assets/logo.png';
 
 export default function Login({
-  setIsLoggedIn,
+  handleLogin,
+  handleChange,
 }: {
-  setIsLoggedIn: (value: boolean) => void;
+  handleLogin: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
-  const navigation = useNavigate();
-  const [loginDetails, setLoginDetails] = useState([]);
-  const [email, setEmail] = useState('');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const name = e.target.name;
-
-    setLoginDetails((values) => ({ ...values, [name]: value }));
-  };
-
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    axios
-      .get('http://localhost/ordering/login.php', {
-        params: loginDetails,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          console.log('success');
-          console.log(res.data);
-          localStorage.setItem('ordering-token', res.data[0].user_id);
-          //   setEmail(res.data[0].email);
-          setIsLoggedIn(true);
-
-          navigation('/shop');
-        }
-      });
-  };
-
   return (
     <div className="w-full h-screen flex justify-center items-center flex-col text-center">
       <div>

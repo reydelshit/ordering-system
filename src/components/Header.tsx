@@ -25,6 +25,7 @@ export default function Header() {
 
   const handleLogout = () => {
     localStorage.removeItem('ordering-token');
+    localStorage.removeItem('type');
     window.location.reload();
   };
 
@@ -88,8 +89,13 @@ export default function Header() {
               />
             </PopoverTrigger>
             <PopoverContent className="w-[6rem] border-2 self-end flex flex-col justify-center items-center">
-              <span className="cursor-pointer">Profile</span>
-              <span className="cursor-pointer">Orders</span>
+              <Link className="cursor-pointer" to="/profile">
+                Profile
+              </Link>
+              <Link className="cursor-pointer" to="/orders">
+                Orders
+              </Link>
+
               <span onClick={handleLogout} className="cursor-pointer">
                 Logout
               </span>
