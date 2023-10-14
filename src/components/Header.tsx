@@ -21,6 +21,7 @@ type Cart = {
 };
 export default function Header() {
   const session = localStorage.getItem('ordering-token');
+  const type = localStorage.getItem('type');
 
   const handleLogout = () => {
     localStorage.removeItem('ordering-token');
@@ -61,6 +62,8 @@ export default function Header() {
       </div>
 
       <div className="flex items-center z-40">
+        {type === 'admin' && <Link to="/admin">Admin</Link>}
+
         <Popover>
           <PopoverTrigger onClick={handleFetchCart}>
             <AiOutlineShoppingCart className="w-8 h-[1.5rem] mr-2" />

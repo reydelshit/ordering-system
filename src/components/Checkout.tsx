@@ -60,8 +60,8 @@ export default function Checkout() {
     // console.log(selectedValue);
   };
   return (
-    <div className="w-full border-2 flex justify-between">
-      <div className="w-[50%] flex-col p-4">
+    <div className="w-full border-2 flex justify-around">
+      <div className="w-[40%] p-4 flex flex-col justify-center items-center">
         <div className="flex gap-4 justify-center mt-[4rem] items-center">
           <div className="w-[15rem]">
             <Select onValueChange={handlePaymentType}>
@@ -98,13 +98,40 @@ export default function Checkout() {
             </Link>
           </div>
         ) : (
-          <div className="mt-[5rem] border-2 w-full">
-            <h1>card</h1>
+          <div className="mt-[5rem] border-2 w-full p-4 rounded-lg">
+            <h1 className="mb-2 font-bold text-2xl">CARD PAYMENT</h1>
+
+            <div className="p-4">
+              <Label className="text-start block mb-2">Name</Label>
+              <Input className="mb-2"></Input>
+
+              <Label className="text-start block mb-2">Address</Label>
+              <Input className="mb-2"></Input>
+
+              <Label className="text-start block mb-2">Card number</Label>
+              <Input className="mb-2"></Input>
+
+              <div>
+                <Label className="text-start block mb-2">Expiration</Label>
+                <div className="flex gap-2 mb-2">
+                  <Input className="mb-2" placeholder="MM"></Input>
+                  <Input className="mb-2" placeholder="YY"></Input>
+                </div>
+
+                <Label className="text-start block mb-2">CVC</Label>
+                <Input className="mb-2"></Input>
+              </div>
+
+              <Link to="/shop/checkout/order-confirmation">
+                <Button>Pay $3214123</Button>
+              </Link>
+            </div>
           </div>
         )}
       </div>
 
-      <div className="w-[30rem]">
+      <div className="w-[30rem] p-4">
+        <h1>ORDERS</h1>
         {cart.map((cart, index) => (
           <div
             className="flex h-[6rem] items-center justify-between w-full border-b-2 p-2 mb-2"
