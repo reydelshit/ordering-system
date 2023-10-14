@@ -2,6 +2,15 @@ import axios from 'axios';
 import DefaultProfile from '@/assets/default.jpg';
 import { Separator } from '@/components/ui/separator';
 import { Label } from '@/components/ui/label';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
@@ -25,12 +34,14 @@ type Cart = {
   product_name: string;
   product_price: number;
   qty: number;
+  quantity: number;
   product_image: string;
 };
 export default function Profile() {
   const [user, setUser] = useState<User[]>([]);
+  const [paidOrders, setPaidOrders] = useState<Cart[]>([]);
 
-  const getAllUser = () => {
+  const getUserData = () => {
     axios
       .get('http://localhost/ordering/user.php', {
         params: { user_id: localStorage.getItem('ordering-token') },
@@ -38,6 +49,17 @@ export default function Profile() {
       .then((res) => {
         console.log(res.data);
         setUser(res.data);
+      });
+  };
+
+  const getPaidOrders = () => {
+    axios
+      .get('http://localhost/ordering/orders.php', {
+        params: { user_id: localStorage.getItem('ordering-token') },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setPaidOrders(res.data);
       });
   };
 
@@ -50,7 +72,6 @@ export default function Profile() {
     if (token === null) {
       return;
     }
-
     axios
       .get('http://localhost/ordering/cart.php', { params: { user_id: token } })
       .then((res) => {
@@ -60,20 +81,21 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    getAllUser();
+    getUserData();
     handleFetchCart();
+    getPaidOrders();
   }, []);
 
   return (
-    <div className="w-full border-2 p-4">
+    <div className="w-full p-4">
       {user.map((user, index) => (
         <div className="flex w-full gap-4" key={index}>
           <img
-            className="border-2 w-[20rem] rounded-lg"
+            className="w-[20rem] rounded-lg"
             src={user.profile_picture ? user.profile_picture : DefaultProfile}
             alt={user.name}
           />
-          <div className="w-[80%] border-2 flex flex-col justify-between items-start relative">
+          <div className="w-[80%] border-2 flex flex-col justify-between items-start relative rounded-lg">
             <div className="text-start p-4">
               <div className="absolute right-2 top-2">
                 <Link to={`/profile/edit/${user.user_id}`}>
@@ -101,7 +123,7 @@ export default function Profile() {
               </div>
             </div>
 
-            <div className="border-2 w-full flex h-[8rem] justify-around items-center">
+            <div className="w-full flex h-[8rem] justify-around items-center">
               <div>
                 <h1 className="font-bold">Total orders</h1>
                 <span className="font-bold text-3xl">99</span>
@@ -119,12 +141,44 @@ export default function Profile() {
         </div>
       ))}
 
-      <div className="flex mt-[4rem]">
+      <div className="flex mt-[4rem] gap-4">
         <div className="border-2 w-[25rem] rounded-lg p-2">
           <h1 className="text-start font-bold text-2xl">Cart</h1>
           <Cart cart={cart} />
         </div>
-        <div className="w-[75rem]">orders</div>
+        <div className="w-[75rem]">
+          <Table className="w-full">
+            <TableCaption>A list of your orders.</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead></TableHead>
+                <TableHead className="text-center">Product</TableHead>
+                <TableHead className="text-center">Price</TableHead>
+                <TableHead className="text-center">Quantity</TableHead>
+                <TableHead className="text-center">Total</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {paidOrders.map((paidOrders, index) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    <img
+                      className="w-[4rem] h-[4rem] rounded-md object-cover bg-gray-100"
+                      src={paidOrders.product_image}
+                      alt={paidOrders.product_name}
+                    />
+                  </TableCell>
+                  <TableCell>{paidOrders.product_name}</TableCell>
+                  <TableCell>${paidOrders.product_price}</TableCell>
+                  <TableCell>{paidOrders.quantity}</TableCell>
+                  <TableCell>
+                    ${paidOrders.product_price * paidOrders.quantity}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </div>
   );

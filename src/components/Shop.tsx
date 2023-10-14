@@ -51,8 +51,8 @@ export default function Shop() {
         },
       })
       .then((res) => {
-        console.log(res.data, 'res');
-        if (res.data.length > 0) {
+        console.log(res.data, 'cart');
+        if (res.data.length > 1) {
           axios
             .put('http://localhost/ordering/cart.php', {
               cart_id: res.data[0].cart_id,

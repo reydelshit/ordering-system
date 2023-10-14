@@ -5,6 +5,7 @@ import { Button } from './ui/button';
 
 type Cart = {
   cart_id: number;
+  product_id: number;
   product_name: string;
   product_price: number;
   qty: number;
@@ -18,6 +19,7 @@ export default function OrderConfirmation() {
   const email = searchParams.get('email');
   const phone = searchParams.get('phone');
   const address = searchParams.get('address');
+  const paymentType = searchParams.get('payment_type');
 
   const [cart, setCart] = useState<Cart[]>([]);
 
@@ -33,6 +35,7 @@ export default function OrderConfirmation() {
       .get('http://localhost/ordering/cart.php', { params: { user_id: token } })
       .then((res) => {
         setCart(res.data);
+
         console.log(res.data, 'cart');
       });
   };
@@ -41,27 +44,92 @@ export default function OrderConfirmation() {
     handleFetchCart();
   }, []);
 
+  const handleConfirmPayment = () => {
+    const token = localStorage.getItem('ordering-token');
+
+    if (token === null) {
+      return;
+    }
+
+    axios
+      .post('http://localhost/ordering/orders.php', {
+        user_id: token,
+        payment_type: paymentType,
+        total_amount: cart.reduce(
+          (total, prod) => total + prod.product_price * prod.qty,
+          0,
+        ),
+        products: cart,
+      })
+      .then((res) => {
+        console.log(res.data);
+
+        window.location.href = '/profile';
+      });
+  };
+
   return (
     <div>
-      <div>
-        <h1>Order Confirmation</h1>
-        <p>Name: {name}</p>
-        <p>Email: {email}</p>
-        {phone && <p>Phone: {phone}</p>}
-        <p>Address: {address}</p>
-        total Pay $
-        {cart.map((prod) => (
+      <div className=" mt-[2rem] flex justify-between items-center">
+        <h1 className="font-bold text-3xl text-start">ORDER CONFIRMATION</h1>
+        <span className="block font-bold text-2xl">
+          ORDER TOTAL:{' '}
+          {cart.reduce(
+            (total, prod) => total + prod.product_price * prod.qty,
+            0,
+          )}
+        </span>
+      </div>
+      <div className="flex justify-between items-start text-start mt-[5rem] gap-5">
+        <div className="w-[50%] border-2 h-[15rem] flex flex-col items-start p-4">
+          <h1 className="font-bold mb-2">Your Information</h1>
+
           <div>
-            <img className="w-[5rem]" src={prod.product_image} alt="" />
-            {prod.product_name}
-            {prod.product_price}
-            <h1 className="font-bold"> {prod.qty}</h1>
+            <p>{name}</p>
+            <p>{email}</p>
+            {phone && <p>{phone}</p>}
           </div>
-        ))}
-        {cart.reduce((total, prod) => total + prod.product_price * prod.qty, 0)}
+        </div>
+
+        <div className="w-[50%] border-2 h-[15rem] flex flex-col items-start justify-center p-4">
+          <h1 className="font-bold mb-2">Payment Type</h1>
+          <p className="mb-[3rem]">
+            {paymentType === 'cod' ? 'CASH ON DELIVERY (COD)' : 'CARD'}
+          </p>
+          <h1 className="font-bold mb-2">Shipping Address</h1>
+          <p>{address}</p>
+        </div>
       </div>
 
-      <Button>Confirm</Button>
+      <div className="mt-[4rem]">
+        <h1 className="text-start font-bold">YOUR ORDERS</h1>
+        {cart.map((cart, index) => (
+          <div
+            className="flex h-[6rem] items-center justify-between w-full border-b-2 p-2 mb-2"
+            key={index}
+          >
+            <div className="flex gap-2">
+              <img
+                className="w-[4rem] h-[4rem] rounded-md object-cover bg-gray-100"
+                src={cart.product_image}
+                alt={cart.product_name}
+              />
+              <div>
+                <h1 className="font-bold">{cart.product_name}</h1>
+                <p>Qty: {cart.qty}</p>
+              </div>
+            </div>
+
+            <div className="flex flex-col justify-between h-full items-center">
+              <span className="block font-bold">
+                ${cart.product_price * cart.qty}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <Button onClick={handleConfirmPayment}>Confirm Payment</Button>
     </div>
   );
 }

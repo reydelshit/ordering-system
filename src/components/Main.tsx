@@ -15,6 +15,7 @@ import Profile from './Profile';
 import Register from './Register';
 import Checkout from './Checkout';
 import OrderConfirmation from './Confirmation';
+import EditProfile from './EditProfile';
 
 export default function Main() {
   const navigation = useNavigate();
@@ -71,6 +72,7 @@ export default function Main() {
           <Route path="/register" element={<Register />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/edit/:id" element={<EditProfile />} />
 
           <Route path="/shop/checkout" element={<Checkout />} />
           <Route

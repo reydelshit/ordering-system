@@ -11,6 +11,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import Cart from './components/Cart';
+import { set } from 'date-fns';
 
 type Cart = {
   cart_id: number;
@@ -20,6 +21,9 @@ type Cart = {
   product_image: string;
 };
 export default function Header() {
+  const [cart, setCart] = useState<Cart[]>([]);
+
+  const [image, setImage] = useState<string | null>(null);
   const session = localStorage.getItem('ordering-token');
   const type = localStorage.getItem('type');
 
@@ -28,8 +32,6 @@ export default function Header() {
     localStorage.removeItem('type');
     window.location.reload();
   };
-
-  const [cart, setCart] = useState<Cart[]>([]);
 
   const handleFetchCart = () => {
     const token = localStorage.getItem('ordering-token');
@@ -46,6 +48,20 @@ export default function Header() {
         console.log(res.data, 'cart');
       });
   };
+
+  const getProfilePicture = () => {
+    axios
+      .get('http://localhost/ordering/user.php', {
+        params: { user_id: localStorage.getItem('ordering-token') },
+      })
+      .then((res) => {
+        setImage(res.data[0].profile_picture);
+      });
+  };
+
+  useEffect(() => {
+    getProfilePicture();
+  }, []);
 
   return (
     <header className="flex h-[5rem] justify-between items-center border-b-2">
@@ -77,8 +93,8 @@ export default function Header() {
             <PopoverTrigger>
               {' '}
               <img
-                className="w-[3rem] h-[3rem] rounded-full cursor-pointer"
-                src={DefaultProfile}
+                className="w-[3rem] h-[3rem] rounded-full cursor-pointer object-cover"
+                src={image ? image : DefaultProfile}
                 alt="default profile"
               />
             </PopoverTrigger>

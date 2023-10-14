@@ -137,7 +137,7 @@ export default function Checkout() {
               ></Input>
             </div>
             <Link
-              to={`/shop/checkout/order-confirmation?name=${name}&email=${email}&phone=${phone}&address=${address}`}
+              to={`/shop/checkout/order-confirmation?name=${name}&email=${email}&phone=${phone}&address=${address}&payment_type=${selectedPaymentType}`}
             >
               <Button>
                 Pay $
