@@ -22,7 +22,7 @@ export default function Register() {
       console.log(res.data);
 
       if (res.data.status === 'success') {
-        navigate('/');
+        navigate('/login');
       }
     });
   };
@@ -42,6 +42,14 @@ export default function Register() {
             className="mb-2"
             onChange={handleChange}
           />
+
+          <Input
+            placeholder="Address"
+            name="address"
+            className="mb-2"
+            onChange={handleChange}
+          />
+
           <Input
             placeholder="Email"
             name="email"

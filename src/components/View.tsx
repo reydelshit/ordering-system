@@ -4,7 +4,7 @@ import Cake2 from '@/assets/cake2.png';
 import { Button } from './ui/button';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // type Image = {
 //   images_data: string;
@@ -17,6 +17,7 @@ type Product = {
   product_price: number;
   quantity: number;
   product_description: string;
+  tags: string;
 };
 
 type Image = {
@@ -31,6 +32,7 @@ export default function View() {
   const [images, setImages] = useState<Image[]>([]);
 
   const id = useParams();
+  const navigate = useNavigate();
 
   const fetchProduct = () => {
     console.log(id);
@@ -70,6 +72,46 @@ export default function View() {
     setShowImage(true);
     setTrackIndex(index);
     console.log(index);
+  };
+
+  const handleAddToCart = (id: number) => {
+    const token = localStorage.getItem('ordering-token');
+
+    if (token === null) {
+      navigate('/login');
+    }
+    const data = {
+      user_id: token,
+      product_id: id,
+      qty: quantity,
+    };
+
+    console.log(id);
+
+    axios
+      .get('http://localhost/ordering/cart.php', {
+        params: {
+          product_id: id,
+          user_id: token,
+        },
+      })
+      .then((res) => {
+        console.log(res.data, 'res');
+        if (res.data.length > 0) {
+          axios
+            .put('http://localhost/ordering/cart.php', {
+              cart_id: res.data[0].cart_id,
+              qty: res.data[0].qty + quantity,
+            })
+            .then((res) => {
+              console.log(res);
+            });
+        } else {
+          axios.post('http://localhost/ordering/cart.php', data).then((res) => {
+            console.log(res.data);
+          });
+        }
+      });
   };
 
   const ModalPicture = () => {
@@ -122,7 +164,7 @@ export default function View() {
           </div>
           {showImage && <ModalPicture />}
           <div className="text-start flex flex-col item-start justify-center w-[38rem] p-2 container">
-            <span>#tshirt</span>
+            <span>{prod.tags}</span>
             <h1 className="font-bold text-4xl mb-4">{prod.product_name}</h1>
             <p className="mb-4 break-words w-full block">
               {prod.product_description}
@@ -150,7 +192,10 @@ export default function View() {
                   +
                 </span>
               </div>
-              <Button className="w-[50%] h-full bg-[#3d633c]">
+              <Button
+                onClick={() => handleAddToCart(prod.product_id)}
+                className="w-[50%] h-full bg-[#3d633c]"
+              >
                 Add to Order cart
               </Button>
             </div>

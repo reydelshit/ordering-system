@@ -12,6 +12,7 @@ import axios from 'axios';
 import { is } from 'date-fns/locale';
 import Profile from './Profile';
 import Orders from './Orders';
+import Register from './Register';
 
 export default function Main() {
   const navigation = useNavigate();
@@ -64,6 +65,8 @@ export default function Main() {
               <Login handleChange={handleChange} handleLogin={handleLogin} />
             }
           />
+
+          <Route path="/register" element={<Register />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/profile" element={<Profile />} />
 

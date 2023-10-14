@@ -11,8 +11,10 @@ type Product = {
   product_image: string;
 };
 export default function Shop() {
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState<number>(1);
   const [product, setProduct] = useState<Product[]>([]);
+  const [selectedProductIndex, setSelectedProductIndex] = useState<number>(0);
+  const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
 
   const getProduct = () => {
     axios.get('http://localhost/ordering/product.php/').then((res) => {
@@ -67,11 +69,25 @@ export default function Shop() {
       });
   };
 
+  const handleIncreaseQuantity = (index: number) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [index]: (prevQuantities[index] || 0) + 1,
+    }));
+  };
+
+  const handleDecreaseQuantity = (index: number) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [index]: (prevQuantities[index] || 0) - 1,
+    }));
+  };
+
   return (
     <div className="w-full h-screen p-4 grid grid-cols-4 gap-4">
-      {product.map((product) => (
+      {product.map((product, index) => (
         <div
-          key={product.product_id}
+          key={index}
           className="border-2 w-[18rem] max-h-[25rem] rounded-xl overflow-hidden text-white text-start p-4 flex flex-col items-center"
         >
           <img
@@ -97,14 +113,15 @@ export default function Shop() {
     flex justify-between items-center px-4"
                 >
                   <span
-                    onClick={() => setQuantity(quantity - 1)}
+                    onClick={() => handleDecreaseQuantity(index)}
                     className="font-bold text-2xl cursor-pointer"
                   >
                     -
                   </span>
-                  <span>{quantity < 0 ? 0 : quantity}</span>
+                  {/* <span>{selectedProductIndex === index ? quantity : 1}</span> */}
+                  <span>{quantities[index] || 1}</span>
                   <span
-                    onClick={() => setQuantity(quantity + 1)}
+                    onClick={() => handleIncreaseQuantity(index)}
                     className="font-bold text-2xl cursor-pointer"
                   >
                     +

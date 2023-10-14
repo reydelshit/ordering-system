@@ -1,6 +1,6 @@
 import { AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import DefaultProfile from '@/assets/cake.png';
+import DefaultProfile from '@/assets/default.jpg';
 
 import {
   Popover,
@@ -21,13 +21,14 @@ type Cart = {
 };
 export default function Header() {
   const session = localStorage.getItem('ordering-token');
-  const [cart, setCart] = useState<Cart[]>([]);
 
   const handleLogout = () => {
     localStorage.removeItem('ordering-token');
     localStorage.removeItem('type');
     window.location.reload();
   };
+
+  const [cart, setCart] = useState<Cart[]>([]);
 
   const handleFetchCart = () => {
     const token = localStorage.getItem('ordering-token');
@@ -42,19 +43,6 @@ export default function Header() {
       .then((res) => {
         setCart(res.data);
         console.log(res.data, 'cart');
-      });
-  };
-
-  // useEffect(() => {
-  //   handleFetchCart();
-  // }, []);
-
-  const handleDeleteCartProduct = (cart_id: number) => {
-    console.log(cart_id);
-    axios
-      .delete(`http://localhost/ordering/cart.php/${cart_id}`)
-      .then((res) => {
-        console.log(res);
       });
   };
 
@@ -73,11 +61,14 @@ export default function Header() {
       </div>
 
       <div className="flex items-center z-40">
-        <Cart
-          cart={cart}
-          handleFetchCart={handleFetchCart}
-          handleDeleteCartProduct={handleDeleteCartProduct}
-        />
+        <Popover>
+          <PopoverTrigger onClick={handleFetchCart}>
+            <AiOutlineShoppingCart className="w-8 h-[1.5rem] mr-2" />
+          </PopoverTrigger>
+          <PopoverContent className="w-[20rem] min-h-[20rem] mt-[1.5rem] mr-[15rem] p-4 self-end flex flex-col justify-center items-center">
+            <Cart cart={cart} />
+          </PopoverContent>
+        </Popover>
         {session ? (
           <Popover>
             <PopoverTrigger>

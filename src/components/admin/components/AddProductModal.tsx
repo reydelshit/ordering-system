@@ -72,25 +72,6 @@ export default function AddProductModal({
     };
   };
 
-  // const handleMultipleImages = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const files = e.target.files;
-  //   const imageArray = [] as string[];
-
-  //   for (let i = 0; i < files!.length; i++) {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(files![i]);
-
-  //     reader.onload = () => {
-  //       imageArray.push(reader.result as string);
-  //       if (imageArray.length === files!.length) {
-  //         setImages(imageArray);
-
-  //         console.log(imageArray);
-  //       }
-  //     };
-  //   }
-  // };
-
   const handleMultipleImages = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     const newImages = [...images];
@@ -168,6 +149,15 @@ export default function AddProductModal({
             type="number"
             placeholder="quantity"
             name="quantity"
+            className="mb-2"
+            onChange={handleChange}
+            // defaultValue={name}
+          />
+
+          <Input
+            type="text"
+            placeholder="tags (seperated by spaces)"
+            name="tags"
             className="mb-2"
             onChange={handleChange}
             // defaultValue={name}
