@@ -11,8 +11,10 @@ import ProtectedRoute from './Protected';
 import axios from 'axios';
 import { is } from 'date-fns/locale';
 import Profile from './Profile';
-import Orders from './Orders';
+
 import Register from './Register';
+import Checkout from './Checkout';
+import OrderConfirmation from './Confirmation';
 
 export default function Main() {
   const navigation = useNavigate();
@@ -70,7 +72,11 @@ export default function Main() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/profile" element={<Profile />} />
 
-          <Route path="/orders" element={<Orders />} />
+          <Route path="/shop/checkout" element={<Checkout />} />
+          <Route
+            path="/shop/checkout/order-confirmation"
+            element={<OrderConfirmation />}
+          />
 
           <Route path="/shop/:id" element={<View />} />
           <Route

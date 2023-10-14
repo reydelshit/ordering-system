@@ -74,7 +74,7 @@ export default function Cart({ cart }: { cart: Cart[] }) {
       </div>
 
       <div>
-        <Link to="/checkout">
+        <Link to="/shop/checkout">
           <Button className="w-full h-[3rem] bg-[#3d633c] text-white font-bold">
             Checkout
           </Button>
