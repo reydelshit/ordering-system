@@ -24,6 +24,12 @@ type Cart = {
 export default function Checkout() {
   const [cart, setCart] = useState<Cart[]>([]);
   const [selectedPaymentType, setSelectedPaymentType] = useState('' as string);
+  const [user, setUser] = useState([]);
+
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
 
   const handleFetchCart = () => {
     const token = localStorage.getItem('ordering-token');
@@ -41,8 +47,28 @@ export default function Checkout() {
       });
   };
 
+  const fetchUser = () => {
+    const token = localStorage.getItem('ordering-token');
+
+    if (token === null) {
+      return;
+    }
+
+    axios
+      .get('http://localhost/ordering/user.php', { params: { user_id: token } })
+      .then((res) => {
+        console.log(res.data);
+        setName(res.data[0].name);
+        setAddress(res.data[0].address);
+        setEmail(res.data[0].email);
+
+        setUser(res.data);
+      });
+  };
+
   useEffect(() => {
     handleFetchCart();
+    fetchUser();
   }, []);
 
   const handleDeleteCartProduct = (cart_id: number) => {
@@ -82,19 +108,44 @@ export default function Checkout() {
               <Label className="text-start block mb-2">
                 Contact Information
               </Label>
-              <Input className="mb-2" placeholder="Name"></Input>
-
-              <Input className="mb-2" placeholder="Email"></Input>
-
-              <Input className="mb-2" placeholder="Phone number"></Input>
+              <Input
+                defaultValue={name}
+                onChange={(e) => setName(e.target.value)}
+                className="mb-2"
+                placeholder="Name"
+              ></Input>
+              <Input
+                defaultValue={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="mb-2"
+                placeholder="Email"
+              ></Input>
+              <Input
+                onChange={(e) => setPhone(e.target.value)}
+                className="mb-2"
+                placeholder="Phone number"
+              ></Input>
             </div>
 
             <div className="p-4 mt-[2rem]">
               <Label className="text-start block mb-2">Delivery Address</Label>
-              <Input className="mb-2" placeholder="Address"></Input>
+              <Input
+                defaultValue={address}
+                onChange={(e) => setAddress(e.target.value)}
+                className="mb-2"
+                placeholder="Address"
+              ></Input>
             </div>
-            <Link to="/shop/checkout/order-confirmation">
-              <Button>Pay $3214123</Button>
+            <Link
+              to={`/shop/checkout/order-confirmation?name=${name}&email=${email}&phone=${phone}&address=${address}`}
+            >
+              <Button>
+                Pay $
+                {cart.reduce(
+                  (total, prod) => total + prod.product_price * prod.qty,
+                  0,
+                )}
+              </Button>
             </Link>
           </div>
         ) : (
@@ -103,10 +154,18 @@ export default function Checkout() {
 
             <div className="p-4">
               <Label className="text-start block mb-2">Name</Label>
-              <Input className="mb-2"></Input>
+              <Input
+                defaultValue={name}
+                onChange={(e) => setName(e.target.value)}
+                className="mb-2"
+              ></Input>
 
               <Label className="text-start block mb-2">Address</Label>
-              <Input className="mb-2"></Input>
+              <Input
+                defaultValue={address}
+                onChange={(e) => setAddress(e.target.value)}
+                className="mb-2"
+              ></Input>
 
               <Label className="text-start block mb-2">Card number</Label>
               <Input className="mb-2"></Input>
@@ -123,7 +182,13 @@ export default function Checkout() {
               </div>
 
               <Link to="/shop/checkout/order-confirmation">
-                <Button>Pay $3214123</Button>
+                <Button>
+                  Pay $
+                  {cart.reduce(
+                    (total, prod) => total + prod.product_price * prod.qty,
+                    0,
+                  )}
+                </Button>
               </Link>
             </div>
           </div>

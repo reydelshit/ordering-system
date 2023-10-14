@@ -32,6 +32,7 @@ export default function View() {
   const [images, setImages] = useState<Image[]>([]);
 
   const id = useParams();
+
   const navigate = useNavigate();
 
   const fetchProduct = () => {
