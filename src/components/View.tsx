@@ -140,7 +140,7 @@ export default function View() {
     );
   };
   return (
-    <div>
+    <div className="relative">
       {product.map((prod, index) => (
         <div
           className="w-full h-[70vh] flex p-2 justify-between gap-[2rem] container"
