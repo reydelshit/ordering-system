@@ -29,6 +29,8 @@ export default function Feedbacks() {
   const [disabledButton, setDisabledButton] = useState(false);
   const [feedBackDescription, setFeedBackDescription] = useState('');
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
+  const [selectedRating, setSelectedRating] = useState<number | null>(null);
+  const [rating, setRating] = useState(0);
 
   const checkIfOrderIdExistToUserId = () => {
     if (user_id === null) {
@@ -69,9 +71,6 @@ export default function Feedbacks() {
     checkIfOrderIdExistToUserId();
     fetchFeedbacks();
   }, []);
-
-  const [selectedRating, setSelectedRating] = useState<number | null>(null);
-  const [rating, setRating] = useState(0);
 
   const handleFeedbackSubmition = () => {
     axios
@@ -179,27 +178,49 @@ export default function Feedbacks() {
                     </svg>
                   </span>
 
-                  <div className="w-full h-4 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+                  <div className="w-full h-3.5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
                     <div
-                      style={{ backgroundClip: 'content-box' }}
+                      style={{
+                        backgroundClip: 'content-box',
+                        width: `${
+                          (feedbacks.filter(
+                            (feedb) => feedb.feedback_rating === number,
+                          ).length /
+                            feedbacks.length) *
+                          100
+                        }%`,
+                      }}
                       className={`h-full rounded ${
                         feedbacks.filter(
                           (feedb) => feedb.feedback_rating === number,
                         ).length === 0
-                          ? 'w-0 bg-transparent'
-                          : 'bg-yellow-300'
+                          ? 'bg-gray-200'
+                          : 'bg-green-700'
                       }`}
                     ></div>
                   </div>
-                  <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    {Math.ceil(
-                      (feedbacks.filter(
-                        (feedb) => feedb.feedback_rating === number,
-                      ).length /
-                        feedbacks.length) *
-                        100,
-                    )}
+                  <span className="text-sm font-medium text-gray-500 dark:text-gray-400 w-[5rem]">
+                    {feedbacks.filter(
+                      (feedb) => feedb.feedback_rating === number,
+                    ).length === 0
+                      ? 0
+                      : Math.ceil(
+                          (feedbacks.filter(
+                            (feedb) => feedb.feedback_rating === number,
+                          ).length /
+                            feedbacks.length) *
+                            100,
+                        )}
                     %
+                    <span className="ml-2 text-green-700">
+                      (
+                      {
+                        feedbacks.filter(
+                          (feedb) => feedb.feedback_rating === number,
+                        ).length
+                      }
+                      )
+                    </span>
                   </span>
                 </div>
               );
@@ -282,7 +303,7 @@ export default function Feedbacks() {
                           : 'bg-white text-green-700'
                       } ' mr-2 my-2 hover:bg-green-700 hover:text-white`}
                     >
-                      {number + 1}
+                      {number + 1} ⭐
                     </Button>
                   );
                 })}

@@ -6,6 +6,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
 // import { URL } from 'url';
 
 type ChangeEvent =
@@ -17,6 +25,7 @@ export default function AddProductModal({
   setShowAddProduct: (value: boolean) => void;
 }) {
   const [user, setUser] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('' as string);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [height, setHeight] = useState('');
@@ -47,6 +56,7 @@ export default function AddProductModal({
         ...user,
         product_image: image,
         images_data: images,
+        product_category: selectedCategory,
       })
       .then((res) => {
         console.log(res.data);
@@ -104,6 +114,12 @@ export default function AddProductModal({
       });
   };
 
+  const handlePaymentType = (event: string) => {
+    const selectedValue = event;
+    setSelectedCategory(selectedValue);
+    // console.log(selectedValue);
+  };
+
   return (
     <div className="w-full h-fit flex justify-center items-center flex-col text-center">
       <div className="w-[40%]">
@@ -139,12 +155,14 @@ export default function AddProductModal({
             onChange={handleChange}
             // defaultValue={name}
           />
+
           <Textarea
             onChange={handleChange}
             name="product_description"
             placeholder="description"
             className="mb-2"
           ></Textarea>
+
           <Input
             type="number"
             placeholder="quantity"
@@ -163,7 +181,18 @@ export default function AddProductModal({
             // defaultValue={name}
           />
 
-          <div className="mb-2 w-full flex flex-col justify-center items-center">
+          <Select onValueChange={handlePaymentType}>
+            <SelectTrigger>
+              <SelectValue placeholder="Categories" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="tshirt">T-shirt</SelectItem>
+              <SelectItem value="pants">Pants</SelectItem>
+              <SelectItem value="hoodie">Hoodie</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <div className="my-5 w-full flex flex-col justify-center items-center">
             <Label className="mb-2 text-start">Upload multiple images</Label>
 
             <div className="border-2 w-full flex mb-2 p-2 gap-2">

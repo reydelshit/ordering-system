@@ -61,7 +61,7 @@ export default function ManageProduct() {
                   Product Name
                 </TableHead>
                 <TableHead className="font-bold text-black">Price</TableHead>
-                <TableHead className="font-bold text-black">QTY</TableHead>
+                <TableHead className="font-bold text-black">Stocks</TableHead>
                 <TableHead className="font-bold text-black">Amount</TableHead>
                 <TableHead className="font-bold text-black">Actions</TableHead>
               </TableRow>
