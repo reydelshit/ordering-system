@@ -117,7 +117,6 @@ export default function Feedbacks() {
                   .reduce((a, b) => a + b, 0) / feedbacks.length,
               );
 
-              console.log(untilWhatNumber, 'until what number');
               return (
                 <svg
                   key={number}

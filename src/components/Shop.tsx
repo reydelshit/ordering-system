@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/popover';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
+import Star from './Star';
 
 type Product = {
   product_id: number;
@@ -33,7 +34,6 @@ type Feedback = {
 };
 
 export default function Shop() {
-  const [quantity, setQuantity] = useState<number>(1);
   const [product, setProduct] = useState<Product[]>([]);
   const [selectedProductIndex, setSelectedProductIndex] = useState<number>(0);
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
@@ -54,17 +54,39 @@ export default function Shop() {
     });
   };
 
-  // const fetchFeedbacks = () => {
+  // const FetchFeedbacks = (product_id: number) => {
   //   axios
   //     .get('http://localhost/ordering/feedback.php', {
   //       params: {
-  //         product_id: product_id.id,
+  //         product_id: product_id,
   //       },
   //     })
   //     .then((res) => {
-  //       console.log(res.data, 'feedbacks');
+  //       // console.log(res.data, 'feedbacks');
   //       setFeedbacks(res.data);
   //     });
+
+  //   return (
+  //     <div className="flex items-center">
+  //       {Array.from({ length: 5 }, (_, i) => i).map((number) => {
+  //         // const untilWhatNumber = prod.feedback_rating;
+  //         const untilWhatNumber = 5;
+
+  //         return (
+  //           <svg
+  //             key={number}
+  //             className="w-4 h-4 text-yellow-300 mr-1"
+  //             aria-hidden="true"
+  //             xmlns="http://www.w3.org/2000/svg"
+  //             fill={number == untilWhatNumber ? 'gray' : 'currentColor'}
+  //             viewBox="0 0 22 20"
+  //           >
+  //             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+  //           </svg>
+  //         );
+  //       })}
+  //     </div>
+  //   );
   // };
 
   useEffect(() => {
@@ -83,7 +105,7 @@ export default function Shop() {
     const data = {
       user_id: token,
       product_id: id,
-      qty: quantity,
+      qty: quantities[0],
     };
 
     console.log(id);
@@ -97,11 +119,11 @@ export default function Shop() {
       })
       .then((res) => {
         console.log(res.data, 'cart');
-        if (res.data.length > 1) {
+        if (res.data.length > 0) {
           axios
             .put('http://localhost/ordering/cart.php', {
               cart_id: res.data[0].cart_id,
-              qty: res.data[0].qty + quantity,
+              qty: res.data[0].qty + quantities[0],
             })
             .then((res) => {
               console.log(res);
@@ -119,6 +141,8 @@ export default function Shop() {
       ...prevQuantities,
       [index]: (prevQuantities[index] || 0) + 1,
     }));
+
+    // console.log(quantities[0], 'quantities');
   };
 
   const handleDecreaseQuantity = (index: number) => {
@@ -260,27 +284,7 @@ export default function Shop() {
                         {prod.product_name.slice(0, 10)}
                       </h1>
                     </Link>
-                    <div className="flex items-center">
-                      {Array.from({ length: 5 }, (_, i) => i).map((number) => {
-                        const untilWhatNumber = prod.feedback_rating;
-                        return (
-                          <svg
-                            key={number}
-                            className="w-4 h-4 text-yellow-300 mr-1"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill={
-                              number == untilWhatNumber
-                                ? 'gray'
-                                : 'currentColor'
-                            }
-                            viewBox="0 0 22 20"
-                          >
-                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                          </svg>
-                        );
-                      })}
-                    </div>
+                    <Star product_id={prod.product_id} index={index} />
                   </div>
 
                   <div className="flex items-center gap-4 justify-center w-full">
