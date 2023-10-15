@@ -54,41 +54,6 @@ export default function Shop() {
     });
   };
 
-  // const FetchFeedbacks = (product_id: number) => {
-  //   axios
-  //     .get('http://localhost/ordering/feedback.php', {
-  //       params: {
-  //         product_id: product_id,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       // console.log(res.data, 'feedbacks');
-  //       setFeedbacks(res.data);
-  //     });
-
-  //   return (
-  //     <div className="flex items-center">
-  //       {Array.from({ length: 5 }, (_, i) => i).map((number) => {
-  //         // const untilWhatNumber = prod.feedback_rating;
-  //         const untilWhatNumber = 5;
-
-  //         return (
-  //           <svg
-  //             key={number}
-  //             className="w-4 h-4 text-yellow-300 mr-1"
-  //             aria-hidden="true"
-  //             xmlns="http://www.w3.org/2000/svg"
-  //             fill={number == untilWhatNumber ? 'gray' : 'currentColor'}
-  //             viewBox="0 0 22 20"
-  //           >
-  //             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-  //           </svg>
-  //         );
-  //       })}
-  //     </div>
-  //   );
-  // };
-
   useEffect(() => {
     getProduct();
     // fetchFeedbacks()
@@ -168,11 +133,13 @@ export default function Shop() {
   };
 
   return (
-    <div className="border-2  p-4">
-      <div className="border-2 h-[4rem] rounded-lg mb-2 flex justify-between w-full items-center px-2">
+    <div className="p-4">
+      <div className="h-[4rem] rounded-lg mb-2 flex justify-between w-full items-center px-2">
         <Popover>
-          <PopoverTrigger>Filter</PopoverTrigger>
-          <PopoverContent className="h-fit w-fit">
+          <PopoverTrigger>
+            <Button className="bg-green-700">Filter</Button>
+          </PopoverTrigger>
+          <PopoverContent className="h-fit w-[20rem]">
             <div className="border-2 p-2 rounded-md mb-2">
               <h1 className="font-bold mb-2">Category</h1>
               <div className="flex items-center">
@@ -222,7 +189,7 @@ export default function Shop() {
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:bg-green-700 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5  [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full"
               />
             </div>
-            <div className="border-2 p-2 rounded-md py-[1rem]">
+            {/* <div className="border-2 p-2 rounded-md py-[1rem]">
               <h1 className="font-bold mb-2">Filter by Star</h1>
 
               <div className="flex mt-[1rem] w-full justify-center">
@@ -243,7 +210,7 @@ export default function Shop() {
                   );
                 })}
               </div>
-            </div>
+            </div> */}
           </PopoverContent>
         </Popover>
 
@@ -256,7 +223,7 @@ export default function Shop() {
           />
         </div>
       </div>
-      <div className="w-full h-screen grid grid-cols-4 gap-4">
+      <div className="w-full h-fit grid grid-cols-4 gap-4">
         {product
           .filter((prod) => {
             return (

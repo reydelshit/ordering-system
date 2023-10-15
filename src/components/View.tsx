@@ -128,11 +128,11 @@ export default function View() {
         >
           Close
         </Button>
-        <div className="w-[50%] h-[50%] flex justify-center items-center object-contain overflow-hidden rounded-md">
+        <div className="w-[50%] h-[80%] flex justify-center items-center object-contain overflow-hidden rounded-2xl">
           <img
-            className="object-contain h-full rounded-lg"
+            className="h-fit rounded-lg w-full object-cover"
             src={images[trackIndex].images_data!}
-            alt="cake"
+            alt="picture"
           />
           B
         </div>
@@ -148,7 +148,7 @@ export default function View() {
         >
           <div className="w-[40em] flex flex-col justify-center items-center">
             <img
-              className="w-[] h-[30rem] object-cover rounded-lg bg-[#3d633c]"
+              className="object-cover !h-[30rem] rounded-lg bg-[#3d633c]"
               src={prod.product_image}
               alt="cake"
             />
