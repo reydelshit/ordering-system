@@ -19,6 +19,7 @@ type Product = {
   product_qty: number;
   product_image: string;
   feedback_rating: number;
+  product_category: string;
 };
 
 type Feedback = {
@@ -38,6 +39,7 @@ export default function Shop() {
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
   // const [priceFilter, setPriceFilter] = useState<number[]>([0, 1000]);
   const [rangeValue, setRangeValue] = useState(5000);
+  const [selectedCategory, setSelectedCategory] = useState('' as string);
 
   const [search, setSearch] = useState('');
 
@@ -137,6 +139,10 @@ export default function Shop() {
     setSelectedRating(number);
   };
 
+  const handleChangeCategory = (event: React.FormEvent<HTMLInputElement>) => {
+    setSelectedCategory(event.currentTarget.value);
+  };
+
   return (
     <div className="border-2  p-4">
       <div className="border-2 h-[4rem] rounded-lg mb-2 flex justify-between w-full items-center px-2">
@@ -145,22 +151,36 @@ export default function Shop() {
           <PopoverContent className="h-fit w-fit">
             <div className="border-2 p-2 rounded-md mb-2">
               <h1 className="font-bold mb-2">Category</h1>
-              <span className="block mb-2">
-                <Checkbox className="mr-2" />
-                Tshirt
-              </span>
-              <span className="block mb-2">
-                <Checkbox className="mr-2" />
-                Pants
-              </span>
-              <span className="block mb-2">
-                <Checkbox className="mr-2" />
-                Hoodie
-              </span>
-              <span className="block mb-2">
-                <Checkbox className="mr-2" />
-                All
-              </span>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  value="tshirt"
+                  name="category"
+                  onChange={handleChangeCategory}
+                  className="w-4 h-4 cursor-pointer rounded-lg"
+                />
+                <span className="ml-2">Tshirt</span>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  value="pants"
+                  name="category"
+                  onChange={handleChangeCategory}
+                  className="w-4 h-4 cursor-pointer rounded-lg"
+                />
+                <span className="ml-2">Pants</span>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  value=""
+                  name="category"
+                  onChange={handleChangeCategory}
+                  className="w-4 h-4 cursor-pointer rounded-lg"
+                />
+                <span className="ml-2">All</span>
+              </div>
             </div>
 
             <div className="border-2 p-2 rounded-md py-[1rem mb-2">
@@ -217,7 +237,8 @@ export default function Shop() {
           .filter((prod) => {
             return (
               prod.product_price <= rangeValue &&
-              prod.product_name.includes(search)
+              prod.product_name.includes(search) &&
+              prod.product_category.includes(selectedCategory)
             );
           })
           .map((prod, index) => (
