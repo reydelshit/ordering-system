@@ -77,7 +77,7 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="flex items-center z-40">
+      <div className="flex items-center z-40 gap-[2rem]">
         {type === 'admin' && <Link to="/admin">Admin</Link>}
 
         <Popover>
@@ -86,6 +86,12 @@ export default function Header() {
           </PopoverTrigger>
           <PopoverContent className="w-[20rem] min-h-[20rem] mt-[1.5rem] mr-[15rem] p-4 self-end flex flex-col justify-center items-center">
             <Cart cart={cart} />
+          </PopoverContent>
+        </Popover>
+        <Popover>
+          <PopoverTrigger>Notification</PopoverTrigger>
+          <PopoverContent className="w-[20rem] min-h-[20rem] mt-[1.5rem] mr-[15rem] p-4 self-end flex flex-col justify-center items-center">
+            Notification
           </PopoverContent>
         </Popover>
         {session ? (

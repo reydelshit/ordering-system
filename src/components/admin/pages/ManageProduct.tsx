@@ -16,7 +16,7 @@ type Product = {
   product_id: number;
   product_name: string;
   product_price: number;
-  product_qty: number;
+  quantity: number;
   product_image: string;
 };
 export default function ManageProduct() {
@@ -82,7 +82,7 @@ export default function ManageProduct() {
                     </TableCell>
                     <TableCell>{prod.product_name}</TableCell>
                     <TableCell>{prod.product_price}</TableCell>
-                    <TableCell>{prod.product_qty}</TableCell>
+                    <TableCell>{prod.quantity}</TableCell>
                     <TableCell>${prod.product_price}</TableCell>
                     <TableCell>
                       <span>

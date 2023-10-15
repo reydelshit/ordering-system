@@ -47,8 +47,10 @@ export default function Main() {
 
           if (isAdmin) {
             navigation('/admin');
+            window.location.reload();
           } else {
             navigation('/shop');
+            window.location.reload();
           }
 
           console.log(localStorage.getItem('type'), 'type');
@@ -80,7 +82,8 @@ export default function Main() {
             element={<OrderConfirmation />}
           />
 
-          <Route path="/shop/:id" element={<View />} />
+          <Route path={'/shop/:id' && '/shop/:id/*'} element={<View />} />
+          {/* <Route path="/shop/:id/*" element={<View />} /> */}
           <Route
             path="/admin/*"
             element={

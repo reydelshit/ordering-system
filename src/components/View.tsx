@@ -4,7 +4,8 @@ import Cake2 from '@/assets/cake2.png';
 import { Button } from './ui/button';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import Feedbacks from './Feedbacks';
 
 // type Image = {
 //   images_data: string;
@@ -139,7 +140,7 @@ export default function View() {
     );
   };
   return (
-    <>
+    <div>
       {product.map((prod, index) => (
         <div
           className="w-full h-[70vh] flex p-2 justify-between gap-[2rem] container"
@@ -203,6 +204,8 @@ export default function View() {
           </div>
         </div>
       ))}
-    </>
+
+      <Feedbacks />
+    </div>
   );
 }

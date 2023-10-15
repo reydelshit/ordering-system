@@ -36,6 +36,9 @@ type Cart = {
   qty: number;
   quantity: number;
   product_image: string;
+  status: string;
+  product_id: number;
+  order_id: number;
 };
 export default function Profile() {
   const [user, setUser] = useState<User[]>([]);
@@ -58,7 +61,7 @@ export default function Profile() {
         params: { user_id: localStorage.getItem('ordering-token') },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data, 'paid');
         setPaidOrders(res.data);
       });
   };
@@ -91,7 +94,7 @@ export default function Profile() {
       {user.map((user, index) => (
         <div className="flex w-full gap-4" key={index}>
           <img
-            className="w-[20rem] rounded-lg"
+            className="w-[20rem] rounded-lg h-[20rem] object-cover"
             src={user.profile_picture ? user.profile_picture : DefaultProfile}
             alt={user.name}
           />
@@ -156,6 +159,8 @@ export default function Profile() {
                 <TableHead className="text-center">Price</TableHead>
                 <TableHead className="text-center">Quantity</TableHead>
                 <TableHead className="text-center">Total</TableHead>
+                <TableHead className="text-center">Status</TableHead>
+                <TableHead className="text-center w-[5rem]"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -173,6 +178,23 @@ export default function Profile() {
                   <TableCell>{paidOrders.quantity}</TableCell>
                   <TableCell>
                     ${paidOrders.product_price * paidOrders.quantity}
+                  </TableCell>
+
+                  <TableCell>{paidOrders.status}</TableCell>
+                  <TableCell>
+                    <Link
+                      to={`/shop/${paidOrders.product_id}?orderid=${paidOrders.order_id}`}
+                    >
+                      {' '}
+                      <Button
+                        disabled={
+                          paidOrders.status == 'Delivered' ? false : true
+                        }
+                        className="bg-green-700 cursor-pointer text-xs"
+                      >
+                        Send feedback
+                      </Button>
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))}
