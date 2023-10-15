@@ -49,7 +49,7 @@ export default function Shop() {
 
   const getProduct = () => {
     axios.get('http://localhost/ordering/product.php/').then((res) => {
-      console.log(res.data);
+      console.log(res.data, 'product');
       setProduct(res.data);
     });
   };
@@ -297,7 +297,7 @@ export default function Shop() {
                       >
                         -
                       </span>
-                      {/* <span>{selectedProductIndex === index ? quantity : 1}</span> */}
+
                       <span>{quantities[index] || 1}</span>
                       <span
                         onClick={() => handleIncreaseQuantity(index)}
