@@ -28,6 +28,7 @@ type User = {
   type: string;
   profile_picture: string;
   created_at: string;
+  profile_description: string;
 };
 
 type Cart = {
@@ -84,12 +85,9 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    getPaidOrders();
-  }, []);
-
-  useEffect(() => {
     getUserData();
     handleFetchCart();
+    getPaidOrders();
   }, []);
 
   return (
@@ -120,8 +118,10 @@ export default function Profile() {
                 {user.gender.slice(0, 1).toLocaleUpperCase() +
                   user.gender.slice(1)}
               </p>
-
-              <p className="my-4 font-bold">{user.email}</p>
+              <Label className="mt-[1rem] block">Email</Label>
+              <p className="font-bold">{user.email}</p>
+              <Label className="mt-[1rem] block">Bio</Label>
+              <p>{user.profile_description}</p>
 
               <div className="mt-4">
                 <Label>Address</Label>

@@ -3,6 +3,7 @@ import { Routes, Route, Link, BrowserRouter } from 'react-router-dom';
 import ManageProduct from './pages/ManageProduct';
 import Main from './pages/Main';
 import Orders from './pages/Orders';
+import ViewOrders from './pages/ViewOrders';
 
 export default function AdminRoutes() {
   return (
@@ -17,6 +18,7 @@ export default function AdminRoutes() {
           <Route path="/" index element={<Main />} />
           <Route path="/manage-product" element={<ManageProduct />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/orders/:ordersid" element={<ViewOrders />} />
         </Routes>
       </div>
     </div>

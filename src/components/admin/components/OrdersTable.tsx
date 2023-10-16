@@ -1,0 +1,131 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
+type Product = {
+  cart_id: number;
+  product_names: string;
+  product_price: number;
+  total_quantity: number;
+  payment_type: string;
+  product_image: string;
+  status: string;
+  product_id: number;
+  order_id: number;
+  total_amount: number;
+  user_id: number;
+  status_id: number;
+};
+
+export default function OrdersTable() {
+  // const orderGroups: { [orderId: string]: Product[] } = {} as {
+  //   [orderId: string]: Product[];
+  // };
+  // paidOrders.forEach((order) => {
+  //   const orderId = order.order_id;
+  //   if (!orderGroups[orderId]) {
+  //     orderGroups[orderId] = [];
+  //   }
+  //   orderGroups[orderId].push(order);
+  // });
+
+  const [paidOrders, setPaidOrders] = useState<Product[]>([]);
+
+  const getPaidOrders = () => {
+    axios.get('http://localhost/ordering/orders-admin.php').then((res) => {
+      console.log(res.data, 'paid');
+      setPaidOrders(res.data);
+    });
+  };
+
+  useEffect(() => {
+    getPaidOrders();
+  }, []);
+
+  const handleStatus = (event: string, status_id: number) => {
+    const selectedValue = event;
+
+    console.log(selectedValue);
+    console.log(status_id);
+
+    axios
+      .put('http://localhost/ordering/status.php', {
+        status: selectedValue,
+        status_id: status_id,
+      })
+      .then((res) => {
+        console.log(res.data, 'status');
+        getPaidOrders();
+      });
+  };
+
+  return (
+    <Table className="w-full">
+      <TableCaption>A list of your orders.</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="text-center">Order ID</TableHead>
+          <TableHead className="text-center">User ID</TableHead>
+          <TableHead className="text-center">Ordered Products</TableHead>
+          <TableHead className="text-center">Payment Type</TableHead>
+          <TableHead className="text-center">Total Amount</TableHead>
+          <TableHead className="text-center">Status</TableHead>
+          <TableHead></TableHead>
+        </TableRow>
+      </TableHeader>
+
+      <TableBody>
+        {paidOrders.map((prod, index) => {
+          return (
+            <TableRow key={index}>
+              <TableCell>{prod.order_id}</TableCell>
+              <TableCell>{prod.user_id}</TableCell>
+              <TableCell className="font-bold cursor-pointer">
+                <Link to={`/admin/orders/${prod.order_id}`}>
+                  {' '}
+                  {prod.product_names}
+                </Link>
+              </TableCell>
+              <TableCell>{prod.payment_type}</TableCell>
+              <TableCell>{prod.total_amount}</TableCell>
+              <TableCell>{prod.status}</TableCell>
+
+              <TableCell>
+                <Select onValueChange={(e) => handleStatus(e, prod.status_id)}>
+                  <SelectTrigger className="w-[120px]">
+                    <SelectValue placeholder="Set status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Pending">Pending</SelectItem>
+                    <SelectItem value="Shipped">Shipped</SelectItem>
+                    <SelectItem value="Cancelled">Cancelled</SelectItem>
+                    <SelectItem value="Delivered">Delivered</SelectItem>
+                  </SelectContent>
+                </Select>
+              </TableCell>
+
+              {/* <TableCell>{totalPrice}</TableCell> */}
+            </TableRow>
+          );
+        })}
+      </TableBody>
+    </Table>
+  );
+}
