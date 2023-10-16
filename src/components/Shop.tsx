@@ -1,4 +1,3 @@
-import Logo from '@/assets/cake.png';
 import { Button } from './ui/button';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -9,8 +8,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Slider } from '@/components/ui/slider';
 import Star from './Star';
 
 type Product = {
@@ -35,8 +32,9 @@ type Feedback = {
 
 export default function Shop() {
   const [product, setProduct] = useState<Product[]>([]);
-  const [selectedProductIndex, setSelectedProductIndex] = useState<number>(0);
-  const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
+  const [quantities, setQuantities] = useState<{ [key: number]: number }>({
+    0: 1,
+  });
   // const [priceFilter, setPriceFilter] = useState<number[]>([0, 1000]);
   const [rangeValue, setRangeValue] = useState(5000);
   const [selectedCategory, setSelectedCategory] = useState('' as string);
@@ -136,8 +134,8 @@ export default function Shop() {
     <div className="p-4">
       <div className="h-[4rem] rounded-lg mb-2 flex justify-between w-full items-center px-2">
         <Popover>
-          <PopoverTrigger>
-            <Button className="bg-green-700">Filter</Button>
+          <PopoverTrigger className="bg-green-700 p-2 rounded-md text-white">
+            Filter
           </PopoverTrigger>
           <PopoverContent className="h-fit w-[20rem]">
             <div className="border-2 p-2 rounded-md mb-2">

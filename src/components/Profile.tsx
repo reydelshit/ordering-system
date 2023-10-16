@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import Cart from './components/Cart';
+import ProfileOrdersTable from './components/ProfileOrderTable';
 
 type User = {
   user_id: number;
@@ -42,6 +43,7 @@ type Cart = {
 };
 export default function Profile() {
   const [user, setUser] = useState<User[]>([]);
+  const [cart, setCart] = useState<Cart[]>([]);
   const [paidOrders, setPaidOrders] = useState<Cart[]>([]);
 
   const getUserData = () => {
@@ -54,19 +56,6 @@ export default function Profile() {
         setUser(res.data);
       });
   };
-
-  const getPaidOrders = () => {
-    axios
-      .get('http://localhost/ordering/orders.php', {
-        params: { user_id: localStorage.getItem('ordering-token') },
-      })
-      .then((res) => {
-        console.log(res.data, 'paid');
-        setPaidOrders(res.data);
-      });
-  };
-
-  const [cart, setCart] = useState<Cart[]>([]);
 
   const handleFetchCart = () => {
     const token = localStorage.getItem('ordering-token');
@@ -83,10 +72,24 @@ export default function Profile() {
       });
   };
 
+  const getPaidOrders = () => {
+    axios
+      .get('http://localhost/ordering/orders.php', {
+        params: { user_id: localStorage.getItem('ordering-token') },
+      })
+      .then((res) => {
+        console.log(res.data, 'paid');
+        setPaidOrders(res.data);
+      });
+  };
+
+  useEffect(() => {
+    getPaidOrders();
+  }, []);
+
   useEffect(() => {
     getUserData();
     handleFetchCart();
-    getPaidOrders();
   }, []);
 
   return (
@@ -129,11 +132,15 @@ export default function Profile() {
             <div className="w-full flex h-[8rem] justify-around items-center">
               <div>
                 <h1 className="font-bold">Total orders</h1>
-                <span className="font-bold text-3xl">99</span>
+                <span className="font-bold text-3xl">{paidOrders.length}</span>
               </div>
               <div>
                 <h1 className="font-bold">Total Spends</h1>
-                <span className="font-bold text-3xl">99</span>
+                <span className="font-bold text-3xl">
+                  {paidOrders.reduce((acc, product) => {
+                    return acc + product.product_price * product.quantity;
+                  }, 0)}
+                </span>
               </div>
               <div>
                 <h1 className="font-bold">Feedback Submission</h1>
@@ -150,56 +157,7 @@ export default function Profile() {
           <Cart cart={cart} />
         </div>
         <div className="w-[75rem]">
-          <Table className="w-full">
-            <TableCaption>A list of your orders.</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead></TableHead>
-                <TableHead className="text-center">Product</TableHead>
-                <TableHead className="text-center">Price</TableHead>
-                <TableHead className="text-center">Quantity</TableHead>
-                <TableHead className="text-center">Total</TableHead>
-                <TableHead className="text-center">Status</TableHead>
-                <TableHead className="text-center w-[5rem]"></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {paidOrders.map((paidOrders, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    <img
-                      className="w-[4rem] h-[4rem] rounded-md object-cover bg-gray-100"
-                      src={paidOrders.product_image}
-                      alt={paidOrders.product_name}
-                    />
-                  </TableCell>
-                  <TableCell>{paidOrders.product_name}</TableCell>
-                  <TableCell>${paidOrders.product_price}</TableCell>
-                  <TableCell>{paidOrders.quantity}</TableCell>
-                  <TableCell>
-                    ${paidOrders.product_price * paidOrders.quantity}
-                  </TableCell>
-
-                  <TableCell>{paidOrders.status}</TableCell>
-                  <TableCell>
-                    <Link
-                      to={`/shop/${paidOrders.product_id}?orderid=${paidOrders.order_id}`}
-                    >
-                      {' '}
-                      <Button
-                        disabled={
-                          paidOrders.status == 'Delivered' ? false : true
-                        }
-                        className="bg-green-700 cursor-pointer text-xs"
-                      >
-                        Send feedback
-                      </Button>
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <ProfileOrdersTable paidOrders={paidOrders} />
         </div>
       </div>
     </div>
