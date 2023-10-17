@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button } from './ui/button';
 
 type Cart = {
@@ -20,6 +20,7 @@ export default function OrderConfirmation() {
   const phone = searchParams.get('phone');
   const address = searchParams.get('address');
   const paymentType = searchParams.get('payment_type');
+  const navigate = useNavigate();
 
   const [cart, setCart] = useState<Cart[]>([]);
 
@@ -60,12 +61,18 @@ export default function OrderConfirmation() {
           0,
         ),
         products: cart,
+        delivery_address: address,
+        name: name,
+        email: email,
+        phone: phone,
       })
       .then((res) => {
         console.log(res.data);
 
-        window.location.href = '/profile';
+        // window.location.href = '/profile';
       });
+
+    axios.post('');
   };
 
   return (
@@ -128,7 +135,9 @@ export default function OrderConfirmation() {
           </div>
         ))}
       </div>
-
+      <Button className="self-start mr-2" onClick={() => navigate(-1)}>
+        Cancel, Go Back
+      </Button>
       <Button onClick={handleConfirmPayment}>Confirm Payment</Button>
     </div>
   );

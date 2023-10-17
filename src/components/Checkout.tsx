@@ -23,7 +23,9 @@ type Cart = {
 
 export default function Checkout() {
   const [cart, setCart] = useState<Cart[]>([]);
-  const [selectedPaymentType, setSelectedPaymentType] = useState('' as string);
+  const [selectedPaymentType, setSelectedPaymentType] = useState(
+    'cod' as string,
+  );
   const [user, setUser] = useState([]);
 
   const [name, setName] = useState('');
@@ -85,6 +87,7 @@ export default function Checkout() {
     setSelectedPaymentType(selectedValue);
     // console.log(selectedValue);
   };
+
   return (
     <div className="w-full border-2 flex justify-around">
       <div className="w-[40%] p-4 flex flex-col justify-center items-center">
@@ -96,103 +99,114 @@ export default function Checkout() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="cod">Cash On Delivery (COD)</SelectItem>
-                <SelectItem value="card">Card</SelectItem>
+                {/* <SelectItem value="card">Card</SelectItem> */}
               </SelectContent>
             </Select>
           </div>
         </div>
-        {selectedPaymentType === 'cod' ? (
+        {
           <div className="mt-[5rem] border-2 w-full p-4 rounded-lg">
-            <h1 className="mb-2 font-bold text-2xl">CASH ON DELIVERY</h1>
-            <div className="p-4">
-              <Label className="text-start block mb-2">
-                Contact Information
-              </Label>
-              <Input
-                defaultValue={name}
-                onChange={(e) => setName(e.target.value)}
-                className="mb-2"
-                placeholder="Name"
-              ></Input>
-              <Input
-                defaultValue={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="mb-2"
-                placeholder="Email"
-              ></Input>
-              <Input
-                onChange={(e) => setPhone(e.target.value)}
-                className="mb-2"
-                placeholder="Phone number"
-              ></Input>
-            </div>
-
-            <div className="p-4 mt-[2rem]">
-              <Label className="text-start block mb-2">Delivery Address</Label>
-              <Input
-                defaultValue={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className="mb-2"
-                placeholder="Address"
-              ></Input>
-            </div>
-            <Link
-              to={`/shop/checkout/order-confirmation?name=${name}&email=${email}&phone=${phone}&address=${address}&payment_type=${selectedPaymentType}`}
-            >
-              <Button>
-                Pay $
-                {cart.reduce(
-                  (total, prod) => total + prod.product_price * prod.qty,
-                  0,
-                )}
-              </Button>
-            </Link>
-          </div>
-        ) : (
-          <div className="mt-[5rem] border-2 w-full p-4 rounded-lg">
-            <h1 className="mb-2 font-bold text-2xl">CARD PAYMENT</h1>
-
-            <div className="p-4">
-              <Label className="text-start block mb-2">Name</Label>
-              <Input
-                defaultValue={name}
-                onChange={(e) => setName(e.target.value)}
-                className="mb-2"
-              ></Input>
-
-              <Label className="text-start block mb-2">Address</Label>
-              <Input
-                defaultValue={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className="mb-2"
-              ></Input>
-
-              <Label className="text-start block mb-2">Card number</Label>
-              <Input className="mb-2"></Input>
-
-              <div>
-                <Label className="text-start block mb-2">Expiration</Label>
-                <div className="flex gap-2 mb-2">
-                  <Input className="mb-2" placeholder="MM"></Input>
-                  <Input className="mb-2" placeholder="YY"></Input>
-                </div>
-
-                <Label className="text-start block mb-2">CVC</Label>
-                <Input className="mb-2"></Input>
+            <form>
+              <h1 className="mb-2 font-bold text-2xl">CASH ON DELIVERY</h1>
+              <div className="p-4">
+                <Label className="text-start block mb-2">
+                  Contact Information
+                </Label>
+                <Input
+                  defaultValue={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="mb-2"
+                  placeholder="Name"
+                  required
+                ></Input>
+                <Input
+                  defaultValue={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mb-2"
+                  placeholder="Email"
+                ></Input>
+                <Input
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="mb-2"
+                  placeholder="Phone number"
+                  required
+                ></Input>
               </div>
 
-              <Link to="/shop/checkout/order-confirmation">
-                <Button>
+              <div className="p-4 mt-[2rem]">
+                <Label className="text-start block mb-2">
+                  Delivery Address
+                </Label>
+                <Input
+                  defaultValue={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  className="mb-2"
+                  placeholder="Address"
+                  required
+                ></Input>
+              </div>
+
+              <Button
+                type="submit"
+                disabled={!name || !email || !phone || !address}
+              >
+                <Link
+                  to={`/shop/checkout/order-confirmation?name=${name}&email=${email}&phone=${phone}&address=${address}&payment_type=${selectedPaymentType}`}
+                >
                   Pay $
                   {cart.reduce(
                     (total, prod) => total + prod.product_price * prod.qty,
                     0,
                   )}
-                </Button>
-              </Link>
-            </div>
+                </Link>
+              </Button>
+            </form>
           </div>
-        )}
+
+          // <div className="mt-[5rem] border-2 w-full p-4 rounded-lg">
+          //   <h1 className="mb-2 font-bold text-2xl">CARD PAYMENT</h1>
+
+          //   <div className="p-4">
+          //     <Label className="text-start block mb-2">Name</Label>
+          //     <Input
+          //       defaultValue={name}
+          //       onChange={(e) => setName(e.target.value)}
+          //       className="mb-2"
+          //     ></Input>
+
+          //     <Label className="text-start block mb-2">Address</Label>
+          //     <Input
+          //       defaultValue={address}
+          //       onChange={(e) => setAddress(e.target.value)}
+          //       className="mb-2"
+          //     ></Input>
+
+          //     <Label className="text-start block mb-2">Card number</Label>
+          //     <Input className="mb-2"></Input>
+
+          //     <div>
+          //       <Label className="text-start block mb-2">Expiration</Label>
+          //       <div className="flex gap-2 mb-2">
+          //         <Input className="mb-2" placeholder="MM"></Input>
+          //         <Input className="mb-2" placeholder="YY"></Input>
+          //       </div>
+
+          //       <Label className="text-start block mb-2">CVC</Label>
+          //       <Input className="mb-2"></Input>
+          //     </div>
+
+          //     <Link to="/shop/checkout/order-confirmation">
+          //       <Button>
+          //         Pay $
+          //         {cart.reduce(
+          //           (total, prod) => total + prod.product_price * prod.qty,
+          //           0,
+          //         )}
+          //       </Button>
+          //     </Link>
+          //   </div>
+          // </div>
+        }
       </div>
 
       <div className="w-[30rem] p-4">
