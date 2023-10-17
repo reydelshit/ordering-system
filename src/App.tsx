@@ -19,19 +19,6 @@ function App() {
 
   return (
     <>
-      {/* {isLogged ? (
-        <Main />
-      ) : (
-        <div> */}
-      {/* <Header /> */}
-
-      {/* <Routes> */}
-      {/* <Route index element={<Home />} /> */}
-      {/* <Route index element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
-        </div>
-      )} */}
       <Main />
     </>
   );

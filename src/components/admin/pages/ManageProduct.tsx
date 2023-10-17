@@ -42,12 +42,17 @@ export default function ManageProduct() {
 
   return (
     <div className="flex flex-col p-4 justify-center items-center">
-      <Button
-        onClick={() => setShowAddProduct(!showAddProduct)}
-        className="self-end"
-      >
-        {showAddProduct ? 'Close' : 'Add Product'}
-      </Button>
+      <div className="flex justify-between w-full">
+        <Button
+          onClick={() => setShowAddProduct(!showAddProduct)}
+          className="self-end"
+        >
+          {showAddProduct ? 'Close' : 'Add Product'}
+        </Button>
+
+        <h1 className="font-bold text-2xl">Manage Product</h1>
+      </div>
+
       {showAddProduct ? (
         <AddProductModal setShowAddProduct={setShowAddProduct} />
       ) : (

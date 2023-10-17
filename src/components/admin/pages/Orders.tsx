@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import OrdersTable from '../components/OrdersTable';
+import { Button } from '@/components/ui/button';
 
 type Order = {
   cart_id: number;
@@ -19,8 +20,11 @@ type Order = {
 
 export default function Orders() {
   return (
-    <div className="mt-[5rem] p-4">
-      <h1>Orders</h1>
+    <div className=" p-4">
+      <div className="flex justify-between w-full mb-[4rem]">
+        <Button>Orders</Button>
+        <h1 className="font-bold text-2xl self-end">Manage Product</h1>
+      </div>
       <OrdersTable />
     </div>
   );

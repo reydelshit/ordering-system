@@ -88,7 +88,7 @@ export default function OrderConfirmation() {
         </span>
       </div>
       <div className="flex justify-between items-start text-start mt-[5rem] gap-5">
-        <div className="w-[50%] border-2 h-[15rem] flex flex-col items-start p-4">
+        <div className="w-[50%] border-2 h-[15rem] flex flex-col items-start p-4 rounded-md">
           <h1 className="font-bold mb-2">Your Information</h1>
 
           <div>
@@ -98,7 +98,7 @@ export default function OrderConfirmation() {
           </div>
         </div>
 
-        <div className="w-[50%] border-2 h-[15rem] flex flex-col items-start justify-center p-4">
+        <div className="w-[50%] border-2 h-[15rem] flex flex-col items-start justify-center p-4 rounded-md">
           <h1 className="font-bold mb-2">Payment Type</h1>
           <p className="mb-[3rem]">
             {paymentType === 'cod' ? 'CASH ON DELIVERY (COD)' : 'CARD'}
@@ -138,7 +138,9 @@ export default function OrderConfirmation() {
       <Button className="self-start mr-2" onClick={() => navigate(-1)}>
         Cancel, Go Back
       </Button>
-      <Button onClick={handleConfirmPayment}>Confirm Payment</Button>
+      <Button className="bg-green-700" onClick={handleConfirmPayment}>
+        Confirm Payment
+      </Button>
     </div>
   );
 }

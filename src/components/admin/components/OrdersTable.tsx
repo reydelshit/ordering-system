@@ -56,7 +56,7 @@ export default function OrdersTable() {
           <TableHead className="text-center">Order ID</TableHead>
           <TableHead className="text-center">User ID</TableHead>
           <TableHead className="text-center">Ordered Products</TableHead>
-          <TableHead className="text-center">Payment Type</TableHead>
+          {/* <TableHead className="text-center">Payment Type</TableHead> */}
           <TableHead className="text-center">Total Amount</TableHead>
           <TableHead className="text-center">Status</TableHead>
         </TableRow>
@@ -74,7 +74,7 @@ export default function OrdersTable() {
                   {prod.product_names}
                 </Link>
               </TableCell>
-              <TableCell>{prod.payment_type}</TableCell>
+              {/* <TableCell>{prod.payment_type}</TableCell> */}
               <TableCell>{prod.total_amount}</TableCell>
               <TableCell>{prod.status}</TableCell>
             </TableRow>

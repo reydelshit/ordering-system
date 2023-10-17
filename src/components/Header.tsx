@@ -13,6 +13,7 @@ import { Button } from './ui/button';
 import Cart from './components/Cart';
 import { set } from 'date-fns';
 import Notification from './Notification';
+import { IoMdNotificationsOutline } from 'react-icons/io';
 
 type Cart = {
   cart_id: number;
@@ -78,8 +79,12 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="flex items-center z-40 gap-[2rem]">
-        {type === 'admin' && <Link to="/admin">Admin</Link>}
+      <div className="flex items-center z-40 gap-1">
+        {type === 'admin' && (
+          <Link to="/admin">
+            <Button className="bg-green-700">Admin</Button>
+          </Link>
+        )}
 
         <Popover>
           <PopoverTrigger onClick={handleFetchCart}>
@@ -90,9 +95,12 @@ export default function Header() {
           </PopoverContent>
         </Popover>
         <Popover>
-          <PopoverTrigger>Notification</PopoverTrigger>
+          <PopoverTrigger className="relative">
+            <div className="absolute bottom-auto left-auto right-2 top-1.5 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-red-600 p-1 text-xs"></div>
+            <IoMdNotificationsOutline className="w-8 h-[1.5rem]" />
+          </PopoverTrigger>
           <PopoverContent className="w-[20rem] min-h-[20rem] mt-[1.5rem] mr-[15rem] p-4 self-end flex flex-col scroll-m-1">
-            <Notification id={Number(session)} />
+            <Notification />
           </PopoverContent>
         </Popover>
         {session ? (

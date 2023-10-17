@@ -7,17 +7,27 @@ type Notification = {
   receiver_id: number;
   sender_id: number;
 };
-export default function Notification(id: { id: number }) {
+export default function Notification() {
   const [notification, setNotification] = useState<Notification[]>([]);
-  const getNotification = () => {
-    axios
-      .get('http://localhost/ordering/message.php', {
-        params: { receiver_id: id },
-      })
-      .then((res) => {
-        console.log(res.data, 'notif');
-        setNotification([res.data]);
-      });
+  const getNotification = async () => {
+    try {
+      const response = await axios.get(
+        'http://localhost/ordering/notification.php',
+        {
+          params: { receiver_id: localStorage.getItem('ordering-token') },
+        },
+      );
+      console.log(response.data, 'notif');
+
+      if (Array.isArray(response.data) && response.data.length > 0) {
+        setNotification(response.data);
+      } else {
+        setNotification([]); // Ensure notification is an array even if there are no notifications.
+      }
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+      //   setDataFetched(false);
+    }
   };
 
   useEffect(() => {
@@ -27,13 +37,20 @@ export default function Notification(id: { id: number }) {
   return (
     <div>
       <h1>You have {notification.length} notifications</h1>
-      {notification.map((noti, index) => {
-        return (
-          <div className="border-2 p-2 mt-[1rem] rounded-sm" key={index}>
-            <p>{noti.message}</p>
-          </div>
-        );
-      })}
+      {notification.length > 0 ? (
+        notification.map((noti, index) => {
+          return (
+            <div
+              className="border-2 p-2 mt-[1rem] rounded-sm bg-gray-200"
+              key={index}
+            >
+              <p>{noti.message}</p>
+            </div>
+          );
+        })
+      ) : (
+        <p>No notifications</p>
+      )}
     </div>
   );
 }
