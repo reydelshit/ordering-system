@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import Cart from './components/Cart';
 import { set } from 'date-fns';
+import Notification from './Notification';
 
 type Cart = {
   cart_id: number;
@@ -90,8 +91,8 @@ export default function Header() {
         </Popover>
         <Popover>
           <PopoverTrigger>Notification</PopoverTrigger>
-          <PopoverContent className="w-[20rem] min-h-[20rem] mt-[1.5rem] mr-[15rem] p-4 self-end flex flex-col justify-center items-center">
-            Notification
+          <PopoverContent className="w-[20rem] min-h-[20rem] mt-[1.5rem] mr-[15rem] p-4 self-end flex flex-col scroll-m-1">
+            <Notification id={Number(session)} />
           </PopoverContent>
         </Popover>
         {session ? (

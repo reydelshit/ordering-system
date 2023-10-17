@@ -69,7 +69,7 @@ export default function OrderConfirmation() {
       .then((res) => {
         console.log(res.data);
 
-        // window.location.href = '/profile';
+        window.location.href = '/profile';
       });
 
     axios.post('');

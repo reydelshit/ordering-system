@@ -57,6 +57,13 @@ type OrderDetails = {
   payment_type: string;
 };
 
+type Notification = {
+  created_at: string;
+  message: string;
+  receiver_id: number;
+  sender_id: number;
+};
+
 export default function ViewOrders() {
   const [paidOrders, setPaidOrders] = useState<Product[]>([]);
   const [userDetails, setUserDetails] = useState<User[]>([]);
@@ -66,6 +73,8 @@ export default function ViewOrders() {
   const [status, setStatus] = useState<string>('');
   const order_id = useParams();
   const navigate = useNavigate();
+  const [message, setMessage] = useState<string>('');
+  const [notification, setNotification] = useState<Notification[]>([]);
 
   const getOrders = async () => {
     await axios
@@ -101,13 +110,21 @@ export default function ViewOrders() {
         params: { order_id: order_id },
       })
       .then((res) => {
-        console.log(res.data);
-        setOrderDetails(res.data);
+        console.log(res.data, 'order details');
+        setOrderDetails([res.data[0]]);
       });
+  };
+
+  const getNotification = () => {
+    axios.get('http://localhost/ordering/message.php').then((res) => {
+      console.log(res.data, 'notif');
+      setNotification(res.data);
+    });
   };
 
   useEffect(() => {
     getOrders();
+    getNotification();
   }, []);
 
   const handleStatus = (event: string, status_id: number) => {
@@ -127,6 +144,22 @@ export default function ViewOrders() {
       });
   };
 
+  const handleExport = () => {
+    window.print();
+  };
+
+  const handleSendMessageNotification = () => {
+    axios
+      .post('http://localhost/ordering/message.php', {
+        sender_id: localStorage.getItem('ordering-token'),
+        receiver_id: userDetails[0].user_id,
+        message: message,
+      })
+      .then(() => {
+        getNotification();
+      });
+  };
+
   return (
     <div className="flex flex-col p-4 justify-center ">
       <div className="flex justify-between">
@@ -137,7 +170,7 @@ export default function ViewOrders() {
         <h1 className="font-bold text-2xl">Order Details</h1>
       </div>
 
-      <div className="h-[5rem] border-2 mt-[2rem] rounded-md flex justify-between items-center">
+      <div className="h-[5rem] border-2 mt-[2rem] rounded-md flex justify-between items-center p-2">
         <div>
           <h1>Time Ordered</h1>
           <p> Order ID: {orderID}</p>
@@ -156,6 +189,8 @@ export default function ViewOrders() {
               <SelectItem value="Delivered">Delivered</SelectItem>
             </SelectContent>
           </Select>
+
+          <Button onClick={handleExport}>Export</Button>
         </div>
       </div>
 
@@ -224,15 +259,41 @@ export default function ViewOrders() {
           })}
         </div>
 
-        <div className="mt-[2rem] flex flex-col">
-          <Textarea className="h-[8rem]" placeholder="Notes:"></Textarea>
-          <Button className="mt-[1rem] self-end bg-green-700">Save</Button>
+        <div className="w-[100%] flex gap-2 justify-between mt-[2rem]">
+          <div className="flex flex-col w-[50%]">
+            <Textarea className="h-full " placeholder="Notes:"></Textarea>
+            <Button className="mt-[1rem] self-end bg-green-700">Save</Button>
+          </div>
+          <div className="border-2 w-[50%] rounded-md h-[20rem] relative p-2">
+            <div className="h-[15rem] overflow-auto">
+              {' '}
+              {notification.map((noti, index) => {
+                return (
+                  <div
+                    className="border-2 p-2 mt-[1rem] rounded-sm"
+                    key={index}
+                  >
+                    <p>{noti.message}</p>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="flex absolute bottom-2 justify-between items-center gap-4">
+              <Textarea
+                onChange={(e) => setMessage(e.target.value)}
+                className="h-[4rem] w-[25rem]"
+                placeholder="Send notification / message"
+              ></Textarea>
+              <Button onClick={handleSendMessageNotification}>Send</Button>
+            </div>
+          </div>
         </div>
       </div>
 
       <Table className="w-full mt-[5rem]">
         <TableHeader>
-          <TableRow className="border-b-2 border-black">
+          <TableRow>
             <TableHead></TableHead>
 
             <TableHead className="text-center">Price</TableHead>
@@ -241,7 +302,7 @@ export default function ViewOrders() {
           </TableRow>
         </TableHeader>
 
-        <TableBody className="border-y-2 border-black">
+        <TableBody>
           {paidOrders.map((prod, index) => {
             return (
               <TableRow key={index}>
@@ -263,7 +324,7 @@ export default function ViewOrders() {
         </TableBody>
       </Table>
 
-      <div className="self-end mr-[2rem] mt-[2rem] flex gap-2">
+      <div className="self-end mr-[5rem] mt-[2rem] flex gap-2">
         <h1>Total: </h1>
         <p className="font-bold">
           {paidOrders.reduce(

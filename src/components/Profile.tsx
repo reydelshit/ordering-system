@@ -17,6 +17,7 @@ import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import Cart from './components/Cart';
 import ProfileOrdersTable from './components/ProfileOrderTable';
+import Messages from './Messages';
 
 type User = {
   user_id: number;
@@ -155,6 +156,7 @@ export default function Profile() {
         <div className="border-2 w-[25rem] rounded-lg p-2">
           <h1 className="text-start font-bold text-2xl">Cart</h1>
           <Cart cart={cart} />
+          {/* <Messages /> */}
         </div>
         <div className="w-[75rem]">
           <ProfileOrdersTable paidOrders={paidOrders} />

@@ -44,7 +44,7 @@ export default function ProfileOrdersTable({
     <Table className="w-full">
       <TableCaption>A list of your orders.</TableCaption>
       <TableHeader>
-        <TableRow className="border-b-2 border-black">
+        <TableRow>
           <TableHead></TableHead>
           <TableHead className="text-center">Product</TableHead>
           <TableHead className="text-center">Price</TableHead>
@@ -58,7 +58,7 @@ export default function ProfileOrdersTable({
       </TableHeader>
 
       {Object.keys(orderGroups).map((orderId, index) => (
-        <TableBody key={index} className="border-y-2 border-black">
+        <TableBody key={index}>
           {orderGroups[orderId].map((prod, index) => {
             return (
               <TableRow key={index}>
@@ -91,8 +91,6 @@ export default function ProfileOrdersTable({
                     </Button>
                   </Link>
                 </TableCell>
-
-                {/* <TableCell>{totalPrice}</TableCell> */}
               </TableRow>
             );
           })}
