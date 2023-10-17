@@ -35,17 +35,6 @@ type Product = {
 };
 
 export default function OrdersTable() {
-  // const orderGroups: { [orderId: string]: Product[] } = {} as {
-  //   [orderId: string]: Product[];
-  // };
-  // paidOrders.forEach((order) => {
-  //   const orderId = order.order_id;
-  //   if (!orderGroups[orderId]) {
-  //     orderGroups[orderId] = [];
-  //   }
-  //   orderGroups[orderId].push(order);
-  // });
-
   const [paidOrders, setPaidOrders] = useState<Product[]>([]);
 
   const getPaidOrders = () => {
@@ -59,23 +48,6 @@ export default function OrdersTable() {
     getPaidOrders();
   }, []);
 
-  const handleStatus = (event: string, status_id: number) => {
-    const selectedValue = event;
-
-    console.log(selectedValue);
-    console.log(status_id);
-
-    axios
-      .put('http://localhost/ordering/status.php', {
-        status: selectedValue,
-        status_id: status_id,
-      })
-      .then((res) => {
-        console.log(res.data, 'status');
-        getPaidOrders();
-      });
-  };
-
   return (
     <Table className="w-full">
       <TableCaption>A list of your orders.</TableCaption>
@@ -87,7 +59,6 @@ export default function OrdersTable() {
           <TableHead className="text-center">Payment Type</TableHead>
           <TableHead className="text-center">Total Amount</TableHead>
           <TableHead className="text-center">Status</TableHead>
-          <TableHead></TableHead>
         </TableRow>
       </TableHeader>
 
@@ -106,22 +77,6 @@ export default function OrdersTable() {
               <TableCell>{prod.payment_type}</TableCell>
               <TableCell>{prod.total_amount}</TableCell>
               <TableCell>{prod.status}</TableCell>
-
-              <TableCell>
-                <Select onValueChange={(e) => handleStatus(e, prod.status_id)}>
-                  <SelectTrigger className="w-[120px]">
-                    <SelectValue placeholder="Set status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Pending">Pending</SelectItem>
-                    <SelectItem value="Shipped">Shipped</SelectItem>
-                    <SelectItem value="Cancelled">Cancelled</SelectItem>
-                    <SelectItem value="Delivered">Delivered</SelectItem>
-                  </SelectContent>
-                </Select>
-              </TableCell>
-
-              {/* <TableCell>{totalPrice}</TableCell> */}
             </TableRow>
           );
         })}
