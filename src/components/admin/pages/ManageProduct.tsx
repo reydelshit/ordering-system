@@ -11,6 +11,7 @@ import {
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import AddProductModal from '../components/AddProductModal';
+import { Link } from 'react-router-dom';
 
 type Product = {
   product_id: number;
@@ -68,7 +69,9 @@ export default function ManageProduct() {
                 <TableHead className="font-bold text-black">Price</TableHead>
                 <TableHead className="font-bold text-black">Stocks</TableHead>
                 <TableHead className="font-bold text-black">Amount</TableHead>
-                <TableHead className="font-bold text-black">Actions</TableHead>
+                <TableHead className="font-bold text-black text-center">
+                  Actions
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -90,14 +93,21 @@ export default function ManageProduct() {
                     <TableCell>{prod.quantity}</TableCell>
                     <TableCell>${prod.product_price}</TableCell>
                     <TableCell>
-                      <span>
+                      <span className="flex gap-2">
                         <p
                           className="cursor-pointer"
                           onClick={() => handleDelete(prod.product_id)}
                         >
                           delete
                         </p>
-                        <p>update</p>
+                        <Link
+                          to={`/admin/manage-product/update/${prod.product_id}`}
+                        >
+                          {' '}
+                          <p>update</p>
+                        </Link>
+
+                        <p>view</p>
                       </span>
                     </TableCell>
                   </TableRow>

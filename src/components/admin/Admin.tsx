@@ -5,6 +5,7 @@ import Main from './pages/Main';
 import Orders from './pages/Orders';
 import ViewOrders from './pages/ViewOrders';
 import Feedback from './pages/Feedbacks';
+import UpdateProducts from './pages/UpdateProducts';
 
 export default function AdminRoutes() {
   return (
@@ -19,6 +20,11 @@ export default function AdminRoutes() {
         <Routes>
           <Route path="/" index element={<Main />} />
           <Route path="/manage-product" element={<ManageProduct />} />
+          <Route
+            path="/manage-product/update/:id"
+            element={<UpdateProducts />}
+          />
+
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/:ordersid" element={<ViewOrders />} />
           <Route path="/feedbacks" element={<Feedback />} />

@@ -52,6 +52,7 @@ export default function Feedback() {
   const [replyComment, setReplyComment] = useState<string>('');
   const [storeReplies, setStoreReplies] = useState<Replies[]>([]);
   const [inputIndex, setInputIndex] = useState<number>(0);
+  const [showReplies, setShowReplies] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const getFeedback = async () => {
@@ -151,93 +152,98 @@ export default function Feedback() {
           </Table>
         </div>
 
-        <div className="w-[100%] border-2 p-4">
+        <div className="w-[100%] border-2 p-4 rounded-md">
           {feedbackResponses.length > 0 ? (
             feedbackResponses.map((feedback, index) => {
               return (
-                <div className="mb-[1rem] w-full border-2 p-2" key={index}>
+                <div
+                  className="mb-[1rem] w-full border-2 p-2 rounded-md"
+                  key={index}
+                >
                   {feedback.feedback_rating == null ? (
                     <div className="flex justify-center items-center h-[20rem]">
                       <h1 className="text-2xl">No feedback yet</h1>
                     </div>
                   ) : (
                     <>
-                      <div className="flex items-center gap-4">
-                        <img
-                          className="w-[5rem] h-[5rem] rounded-full object-cover bg-green-700"
-                          src={feedback.profile_picture}
-                          alt="profile"
-                        />
-                        <div className="flex flex-col">
-                          <h1>{feedback.name}</h1>
-                          <div className="flex items-center">
-                            {Array.from({ length: 5 }, (_, i) => i).map(
-                              (number) => {
-                                const untilWhatNumber =
-                                  feedback.feedback_rating;
-                                return (
-                                  <svg
-                                    key={number}
-                                    className="w-4 h-4 text-yellow-300 mr-1"
-                                    aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill={
-                                      number == untilWhatNumber
-                                        ? 'gray'
-                                        : 'currentColor'
-                                    }
-                                    viewBox="0 0 22 20"
-                                  >
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                  </svg>
-                                );
-                              },
-                            )}
+                      <div className="flex items-center gap-4 justify-between">
+                        <div className="flex items-center gap-4">
+                          <img
+                            className="w-[2rem] h-[2rem] rounded-full object-cover bg-green-700"
+                            src={feedback.profile_picture}
+                            alt="profile"
+                          />
+                          <div className="flex flex-col">
+                            <h1 className="text-sm">{feedback.name}</h1>
+                            <div className="flex items-center">
+                              {Array.from({ length: 5 }, (_, i) => i).map(
+                                (number) => {
+                                  const untilWhatNumber =
+                                    feedback.feedback_rating;
+                                  return (
+                                    <svg
+                                      key={number}
+                                      className="w-3 h-3 text-yellow-300 mr-1"
+                                      aria-hidden="true"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill={
+                                        number == untilWhatNumber
+                                          ? 'gray'
+                                          : 'currentColor'
+                                      }
+                                      viewBox="0 0 22 20"
+                                    >
+                                      <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                                    </svg>
+                                  );
+                                },
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <p className="text-start mt-2 border-2 p-2 rounded-md min-h-[5rem]">
-                        {feedback.feedback_description}
-                      </p>
-
-                      <div className="text-end mt-[1rem] w-full">
-                        {storeReplies.map(
-                          (reply, index) =>
-                            reply.feedback_id == feedback.feedback_id && (
-                              <div
-                                className={`ml-[2rem] text-start p-2 rounded-md min-h-[5rem]`}
-                                key={index}
-                              >
-                                <div className="flex items-center gap-4">
-                                  <img
-                                    className="w-[5rem] h-[5rem] rounded-full object-cover bg-green-700"
-                                    src={reply.profile_picture}
-                                    alt="profile"
-                                  />
-                                  <h1>
-                                    {reply.user_type === 'admin'
-                                      ? 'Admin'
-                                      : reply.name}
-                                  </h1>
-                                </div>
-
-                                <p className="text-start mt-2 border-2 p-2 rounded-md min-h-[5rem]">
-                                  {reply.content}
-                                </p>
-                              </div>
-                            ),
-                        )}
 
                         <Button
                           onClick={() => handleShowReplyInput(index, index)}
-                          className="bg-green-700"
+                          className="bg-green-700 self-end"
                         >
                           {showReplyInput && inputIndex === index
-                            ? 'Cancel'
-                            : 'Reply'}
+                            ? 'Close Reply'
+                            : 'Show Reply'}
                         </Button>
+                      </div>
+                      <p className="text-start mt-2 border-2 p-2 rounded-md min-h-[4rem] bg-gray-200 text-sm">
+                        {feedback.feedback_description}
+                      </p>
 
-                        {showReplyInput && inputIndex === index && (
+                      {showReplyInput && inputIndex === index && (
+                        <div className="text-end mt-[1rem] w-full">
+                          {storeReplies.map(
+                            (reply, index) =>
+                              reply.feedback_id == feedback.feedback_id && (
+                                <div
+                                  className={`ml-[2rem] text-start p-2 rounded-md min-h-[2rem]`}
+                                  key={index}
+                                >
+                                  <div className="flex items-center gap-4">
+                                    <img
+                                      className="w-[2rem] h-[2rem] rounded-full object-cover bg-green-700"
+                                      src={reply.profile_picture}
+                                      alt="profile"
+                                    />
+                                    <h1>
+                                      {reply.user_type === 'admin'
+                                        ? 'Admin'
+                                        : reply.name}
+                                    </h1>
+                                  </div>
+
+                                  <p className="text-start mt-2 border-2 p-2 rounded-md min-h-[2rem] text-sm bg-gray-200">
+                                    {reply.content}
+                                  </p>
+                                </div>
+                              ),
+                          )}
+
                           <div className="mt-[1rem] flex flex-col">
                             <Button
                               onClick={() =>
@@ -266,8 +272,8 @@ export default function Feedback() {
                               Send
                             </Button>
                           </div>
-                        )}
-                      </div>
+                        </div>
+                      )}
                     </>
                   )}
                 </div>
