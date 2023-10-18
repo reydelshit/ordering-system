@@ -73,7 +73,7 @@ export default function MessageNotification({
   }, []);
   return (
     <div className="flex flex-col bottom-2 justify-between items-center">
-      <div className="h-[13rem] overflow-auto w-full flex flex-col gap-1 p-4">
+      <div className="h-[18rem]  overflow-auto w-full flex flex-col gap-1 p-4">
         {notification.length > 0 ? (
           notification.map((noti, index) => (
             <div
@@ -88,11 +88,11 @@ export default function MessageNotification({
           <p>Loading...</p>
         )}
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 mt-2 absolute bottom-2">
         <Textarea
           defaultValue={templateMessage.length > 0 ? templateMessage : message}
           onChange={(e) => setMessage(e.target.value)}
-          className="h-[4rem] w-[18rem]"
+          className="h-[4rem] w-[20rem]"
           placeholder="Send notification message"
         ></Textarea>
         <Button

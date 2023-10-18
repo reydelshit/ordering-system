@@ -128,16 +128,16 @@ export default function ViewOrders() {
     getNotes();
   }, []);
 
-  const handleStatus = (event: string, status_id: number) => {
+  const handleStatus = (event: string) => {
     const selectedValue = event;
 
     console.log(selectedValue);
-    console.log(status_id);
+    console.log(order_id.ordersid, 'orderid');
 
     axios
       .put('http://localhost/ordering/status.php', {
         status: selectedValue,
-        status_id: status_id,
+        order_id: order_id.ordersid,
       })
       .then((res) => {
         console.log(res.data, 'status');
@@ -202,7 +202,7 @@ export default function ViewOrders() {
 
         <div className="flex gap-2 items-center">
           <h1>{status}</h1>
-          <Select onValueChange={(e) => handleStatus(e, orderStatusID)}>
+          <Select onValueChange={(e) => handleStatus(e)}>
             <SelectTrigger className="w-[120px]">
               <SelectValue placeholder="Set status" />
             </SelectTrigger>
@@ -303,7 +303,7 @@ export default function ViewOrders() {
       </div>
 
       <div className="flex mt-[2rem] gap-4">
-        <div className="w-[100%] mt-[2rem] flex flex-col bg-white p-2 rounded-md border-2">
+        <div className="w-[100%] flex flex-col bg-white p-2 rounded-md border-2">
           <Table>
             <TableHeader>
               <TableRow>
@@ -355,7 +355,7 @@ export default function ViewOrders() {
           </div>
         </div>
 
-        <div className="w-[70%] h-[22rem] relative p-2 border-2 rounded-md bg-white">
+        <div className="relative w-[70%] h-[28rem] p-2 border-2 rounded-md bg-white">
           <div className="flex flex-row items-center h-[4rem] w-full justify-between">
             <div className="flex h-full items-center gap-4">
               <img

@@ -4,6 +4,7 @@ import ManageProduct from './pages/ManageProduct';
 import Main from './pages/Main';
 import Orders from './pages/Orders';
 import ViewOrders from './pages/ViewOrders';
+import Feedback from './pages/Feedbacks';
 
 export default function AdminRoutes() {
   return (
@@ -12,6 +13,7 @@ export default function AdminRoutes() {
         <Link to="/admin">Main</Link>
         <Link to="/admin/manage-product">Manage Product</Link>
         <Link to="/admin/orders">Orders</Link>
+        <Link to="/admin/feedbacks">Feedbacks</Link>
       </div>
       <div className="w-full justify-center">
         <Routes>
@@ -19,6 +21,7 @@ export default function AdminRoutes() {
           <Route path="/manage-product" element={<ManageProduct />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/:ordersid" element={<ViewOrders />} />
+          <Route path="/feedbacks" element={<Feedback />} />
         </Routes>
       </div>
     </div>

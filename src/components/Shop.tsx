@@ -32,9 +32,10 @@ type Feedback = {
 
 export default function Shop() {
   const [product, setProduct] = useState<Product[]>([]);
-  const [quantities, setQuantities] = useState<{ [key: number]: number }>({
-    0: 1,
-  });
+  const productIndex = 0;
+  const [quantities, setQuantities] = useState<{
+    [productIndex: number]: number;
+  }>({});
   // const [priceFilter, setPriceFilter] = useState<number[]>([0, 1000]);
   const [rangeValue, setRangeValue] = useState(5000);
   const [selectedCategory, setSelectedCategory] = useState('' as string);
@@ -59,7 +60,7 @@ export default function Shop() {
 
   const navigate = useNavigate();
 
-  const handleAddToCart = (id: number) => {
+  const handleAddToCart = (id: number, index: number) => {
     const token = localStorage.getItem('ordering-token');
 
     if (token === null) {
@@ -68,7 +69,7 @@ export default function Shop() {
     const data = {
       user_id: token,
       product_id: id,
-      qty: quantities[0],
+      qty: quantities[index],
     };
 
     console.log(id);
@@ -86,7 +87,7 @@ export default function Shop() {
           axios
             .put('http://localhost/ordering/cart.php', {
               cart_id: res.data[0].cart_id,
-              qty: res.data[0].qty + quantities[0],
+              qty: res.data[0].qty + quantities[index],
             })
             .then((res) => {
               console.log(res);
@@ -105,7 +106,7 @@ export default function Shop() {
       [index]: (prevQuantities[index] || 0) + 1,
     }));
 
-    // console.log(quantities[0], 'quantities');
+    console.log(quantities);
   };
 
   const handleDecreaseQuantity = (index: number) => {
@@ -113,6 +114,8 @@ export default function Shop() {
       ...prevQuantities,
       [index]: (prevQuantities[index] || 0) - 1,
     }));
+
+    console.log(quantities);
   };
 
   const handlePriceFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -279,7 +282,7 @@ export default function Shop() {
                 </div>
 
                 <Button
-                  onClick={() => handleAddToCart(prod.product_id)}
+                  onClick={() => handleAddToCart(prod.product_id, index)}
                   variant="outline"
                   className="w-[9rem] h-[2.8rem] mt-4 bg-[#3d633c] text-white self-center"
                 >

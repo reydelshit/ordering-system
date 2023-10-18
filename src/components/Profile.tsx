@@ -2,22 +2,12 @@ import axios from 'axios';
 import DefaultProfile from '@/assets/default.jpg';
 import { Separator } from '@/components/ui/separator';
 import { Label } from '@/components/ui/label';
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 
 import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import Cart from './components/Cart';
 import ProfileOrdersTable from './components/ProfileOrderTable';
-import Messages from './Messages';
 
 type User = {
   user_id: number;
