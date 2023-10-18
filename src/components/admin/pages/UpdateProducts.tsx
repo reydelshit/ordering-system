@@ -38,6 +38,23 @@ export default function UpdateProducts({}: {}) {
     const name = e.target.name;
     setUser((values) => ({ ...values, [name]: value }));
   };
+
+  useEffect(() => {
+    getProductDetails();
+  }, []);
+
+  const getProductDetails = () => {
+    axios
+      .get('http://localhost/ordering/product-update.php', {
+        params: {
+          product_id: id,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
