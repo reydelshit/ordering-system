@@ -14,7 +14,20 @@ type Feedback = {
   name: string;
   profile_picture: string;
   feedback_date: string;
+  user_id: number;
 };
+
+type Replies = {
+  content: string;
+  created_at: string;
+  name: string;
+  profile_picture: string;
+  reply_to: number;
+  user_id: number;
+  feedback_id: number;
+  user_type: string;
+};
+
 export default function Feedbacks() {
   // console.log(order_id);
 
@@ -31,6 +44,11 @@ export default function Feedbacks() {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const [rating, setRating] = useState(0);
+
+  const [showReplyInput, setShowReplyInput] = useState<boolean>(false);
+  const [replyComment, setReplyComment] = useState<string>('');
+  const [storeReplies, setStoreReplies] = useState<Replies[]>([]);
+  const [inputIndex, setInputIndex] = useState<number>(0);
 
   const checkIfOrderIdExistToUserId = () => {
     if (user_id === null) {
@@ -70,6 +88,7 @@ export default function Feedbacks() {
   useEffect(() => {
     checkIfOrderIdExistToUserId();
     fetchFeedbacks();
+    getReplies();
   }, []);
 
   const handleFeedbackSubmition = () => {
@@ -102,6 +121,38 @@ export default function Feedbacks() {
 
     // Focus the textarea.
     textareaRef.current?.focus();
+  };
+
+  const getReplies = async () => {
+    await axios.get('http://localhost/ordering/reply.php').then((res) => {
+      console.log(res.data, 'replies');
+      setStoreReplies(res.data);
+    });
+  };
+
+  const handleReplyComment = (reply_to: number, feedback_id: number) => {
+    axios
+      .post('http://localhost/ordering/reply.php', {
+        content: replyComment,
+        reply_to: reply_to,
+        feedback_id: feedback_id,
+        user_id: user_id && user_id.length > 0 ? user_id : 0,
+      })
+      .then((res) => {
+        console.log(res.data);
+
+        getReplies();
+        setReplyComment('');
+      });
+  };
+
+  const handleShowReplyInput = (index: number, selectedIndex: number) => {
+    console.log(index, selectedIndex);
+
+    if (index == selectedIndex) {
+      setInputIndex(selectedIndex);
+      setShowReplyInput(!showReplyInput);
+    }
   };
 
   return (
@@ -257,6 +308,71 @@ export default function Feedbacks() {
               </div>
 
               <p className="text-start mt-2">{feedback.feedback_description}</p>
+
+              <div className="text-end mt-[1rem] w-full">
+                {storeReplies.map(
+                  (reply, index) =>
+                    reply.feedback_id == feedback.feedback_id && (
+                      <div
+                        className={`ml-[2rem] text-start p-2 rounded-md min-h-[5rem]`}
+                        key={index}
+                      >
+                        <div className="flex items-center gap-4">
+                          <img
+                            className="w-[5rem] h-[5rem] rounded-full object-cover bg-green-700"
+                            src={reply.profile_picture}
+                            alt="profile"
+                          />
+                          <h1>
+                            {reply.user_type === 'admin' ? 'Admin' : reply.name}
+                          </h1>
+                        </div>
+
+                        <p className="text-start mt-2 border-2 p-2 rounded-md min-h-[5rem]">
+                          {reply.content}
+                        </p>
+                      </div>
+                    ),
+                )}
+
+                <Button
+                  onClick={() => handleShowReplyInput(index, index)}
+                  className="bg-green-700"
+                >
+                  {showReplyInput && inputIndex === index ? 'Cancel' : 'Reply'}
+                </Button>
+
+                {showReplyInput && inputIndex === index && (
+                  <div className="mt-[1rem] flex flex-col">
+                    <Button
+                      onClick={() =>
+                        setReplyComment('Thanks for your feedback!')
+                      }
+                      className="self-start bg-green-700 mb-2"
+                    >
+                      Thanks template
+                    </Button>
+                    <Textarea
+                      value={replyComment}
+                      // defaultValue={replyComment}
+                      onChange={(e) => setReplyComment(e.target.value)}
+                      placeholder="reply here"
+                    ></Textarea>
+
+                    <Button
+                      onClick={() =>
+                        handleReplyComment(
+                          feedback.user_id,
+                          feedback.feedback_id,
+                        )
+                      }
+                      className="bg-green-700 mt-[1rem] w-[10rem] self-end"
+                    >
+                      Send
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
           );
         })}
