@@ -121,103 +121,136 @@ export default function AddProductModal({
   };
 
   return (
-    <div className="w-full h-fit flex justify-center items-center flex-col text-center">
-      <div className="w-[40%]">
-        <h1 className="text-2xl font-bold mb-2">Update Details</h1>
-        <div className="mb-2 w-full flex flex-col justify-center items-center">
-          <img
-            className="w-[15rem] h-[15rem] object-cover rounded-full mb-4"
-            src={image! ? image! : defaultProfile}
-          />
-          <Label className="mb-2 text-start">Primary image</Label>
+    <div className="w-full h-fit flex justify-center items-center flex-col text-center p-4">
+      <div className="w-full">
+        <div className="flex justify-between">
+          <Button className="self-start" onClick={() => navigate(-1)}>
+            Go Back
+          </Button>
 
-          <Input
-            type="file"
-            accept="image/*"
-            onChange={handleChangeImage}
-            className="cursor-pointer"
-          />
+          <h1 className="font-bold text-2xl">Update Details</h1>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col justify-center">
-          <Input
-            placeholder="name of the product (cake)"
-            name="product_name"
-            className="mb-2"
-            onChange={handleChange}
-            // defaultValue={name}
-          />
-          <Input
-            type="number"
-            placeholder="price"
-            name="product_price"
-            className="mb-2"
-            onChange={handleChange}
-            // defaultValue={name}
-          />
+        <div className="flex w-full justify-between gap-[4rem] mt-[5rem]">
+          <div className="mb-2 flex flex-col mt-[2rem]">
+            <img
+              className="w-[40rem]  h-[25rem] object-cover rounded-lg mb-4"
+              src={image! ? image! : defaultProfile}
+            />
+            <Label className="mb-2 text-start">Primary image</Label>
 
-          <Textarea
-            onChange={handleChange}
-            name="product_description"
-            placeholder="description"
-            className="mb-2"
-          ></Textarea>
-
-          <Input
-            type="number"
-            placeholder="quantity"
-            name="quantity"
-            className="mb-2"
-            onChange={handleChange}
-            // defaultValue={name}
-          />
-
-          <Input
-            type="text"
-            placeholder="tags (seperated by spaces)"
-            name="tags"
-            className="mb-2"
-            onChange={handleChange}
-            // defaultValue={name}
-          />
-
-          <Select onValueChange={handlePaymentType}>
-            <SelectTrigger>
-              <SelectValue placeholder="Categories" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="tshirt">T-shirt</SelectItem>
-              <SelectItem value="pants">Pants</SelectItem>
-              <SelectItem value="hoodie">Hoodie</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <div className="my-5 w-full flex flex-col justify-center items-center">
-            <Label className="mb-2 text-start">Upload multiple images</Label>
-
-            <div className="border-2 w-full flex mb-2 p-2 gap-2">
-              {images.map((image, index) => (
-                <img
-                  key={index}
-                  src={image}
-                  alt={`Image ${index}`}
-                  className="w-[5rem] h-[5rem] object-cover rounded-full mb-4"
-                />
-              ))}
-            </div>
             <Input
               type="file"
               accept="image/*"
-              multiple
-              onChange={handleMultipleImages}
+              onChange={handleChangeImage}
               className="cursor-pointer"
             />
           </div>
 
-          <Button className="w-[80%] self-center" type="submit">
-            Save and Update
-          </Button>
-        </form>
+          <form onSubmit={handleSubmit} className="flex flex-col w-full">
+            <div className="flex gap-2 w-full">
+              <div className="flex flex-col item-start p-4">
+                <Label className="mb-2 text-start">Product Name</Label>
+                <Input
+                  placeholder="name of the product (cake)"
+                  name="product_name"
+                  className="mb-2"
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="flex flex-col item-start p-4 ">
+                <Label className="mb-2 text-start">Quantity</Label>
+                <Input
+                  type="number"
+                  placeholder="price"
+                  name="product_price"
+                  className="mb-2"
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="p-4 text-start">
+              <Label className="mb-2">Description</Label>
+              <Textarea
+                onChange={handleChange}
+                name="product_description"
+                placeholder="description"
+                className="mb-2 min-h-[10rem] mt-2"
+              ></Textarea>
+            </div>
+            <div className="flex w-full p-4 gap-2 justify-between">
+              <div className="text-start">
+                <Label className="mb-2">Description</Label>
+
+                <Input
+                  type="number"
+                  placeholder="quantity"
+                  name="quantity"
+                  className="mb-2"
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="text-start">
+                <Label className="mb-2">Tags</Label>
+
+                <Input
+                  type="text"
+                  placeholder="tags (seperated by spaces)"
+                  name="tags"
+                  className="mb-2"
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="text-start w-[15rem]">
+                <Label className="mb-2">Category</Label>
+
+                <Select
+                  value={selectedCategory}
+                  onValueChange={handlePaymentType}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Categories" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="tshirt">T-shirt</SelectItem>
+                    <SelectItem value="pants">Pants</SelectItem>
+                    <SelectItem value="hoodie">Hoodie</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="my-5 w-full flex flex-col justify-center items-center">
+              <Label className="mb-2 text-start">Upload multiple images</Label>
+
+              <div className="border-2 w-full flex mb-2 p-2 gap-2">
+                {images.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt={`Image ${index}`}
+                    className="w-[20rem]  h-[15rem] object-cover rounded-lg mb-4"
+                  />
+                ))}
+              </div>
+              <Input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleMultipleImages}
+                className="cursor-pointer"
+              />
+            </div>
+
+            <Button className="w-[40%] self-center" type="submit">
+              Save and Update
+            </Button>
+          </form>
+        </div>
       </div>
     </div>
   );

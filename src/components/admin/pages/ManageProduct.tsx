@@ -78,7 +78,7 @@ export default function ManageProduct() {
 
             <Button
               onClick={() => setShowAddProduct(!showAddProduct)}
-              className="self-end bg-green-700"
+              className="self-end"
             >
               {showAddProduct ? 'Close' : 'Add Product'}
             </Button>
@@ -131,8 +131,8 @@ export default function ManageProduct() {
                                 </AlertDialogTitle>
                                 <AlertDialogDescription>
                                   This action cannot be undone. This will
-                                  permanently delete your the product and remove
-                                  the data from our the server.
+                                  permanently delete the product and remove the
+                                  data from the server.
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>

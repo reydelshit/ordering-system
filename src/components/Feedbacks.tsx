@@ -224,7 +224,7 @@ export default function Feedbacks() {
                           (feedb) => feedb.feedback_rating === number,
                         ).length === 0
                           ? 'bg-gray-200'
-                          : 'bg-green-700'
+                          : 'bg-violet-600'
                       }`}
                     ></div>
                   </div>
@@ -241,7 +241,7 @@ export default function Feedbacks() {
                             100,
                         )}
                     %
-                    <span className="ml-2 text-green-700">
+                    <span className="ml-2 text-violet-600">
                       (
                       {
                         feedbacks.filter(
@@ -265,7 +265,7 @@ export default function Feedbacks() {
 
           <Button
             onClick={() => setShowFeedbackForm(true)}
-            className="block mt-[2rem] mx-auto bg-green-700"
+            className="block mt-[2rem] mx-auto"
             disabled={disabledButton}
           >
             Write a review
@@ -279,7 +279,7 @@ export default function Feedbacks() {
             <div className="mb-[1rem]" key={index}>
               <div className="flex items-center gap-4">
                 <img
-                  className="w-[5rem] h-[5rem] rounded-full object-cover bg-green-700"
+                  className="w-[5rem] h-[5rem] rounded-full object-cover bg-violet-600"
                   src={feedback.profile_picture}
                   alt="profile"
                 />
@@ -319,7 +319,7 @@ export default function Feedbacks() {
                       >
                         <div className="flex items-center gap-4">
                           <img
-                            className="w-[5rem] h-[5rem] rounded-full object-cover bg-green-700"
+                            className="w-[5rem] h-[5rem] rounded-full object-cover "
                             src={reply.profile_picture}
                             alt="profile"
                           />
@@ -348,7 +348,7 @@ export default function Feedbacks() {
                       onClick={() =>
                         setReplyComment('Thanks for your feedback!')
                       }
-                      className="self-start bg-green-700 mb-2"
+                      className="self-start bg-violet-600-700 mb-2"
                     >
                       Thanks template
                     </Button>
@@ -366,7 +366,7 @@ export default function Feedbacks() {
                           feedback.feedback_id,
                         )
                       }
-                      className="bg-green-700 mt-[1rem] w-[10rem] self-end"
+                      className="mt-[1rem] w-[10rem] self-end"
                     >
                       Send
                     </Button>
@@ -392,10 +392,8 @@ export default function Feedbacks() {
                       onClick={() => handleClick(number)}
                       key={number}
                       className={`${
-                        isSelected
-                          ? 'bg-green-700 text-white'
-                          : 'bg-white text-green-700'
-                      } ' mr-2 my-2 hover:bg-green-700 hover:text-white`}
+                        isSelected ? ':bg-violet-600 ' : 'bg-white '
+                      } ' mr-2 my-2 hover:bg-violet-600 text-black hover:text-white`}
                     >
                       {number + 1} ⭐
                     </Button>
@@ -420,12 +418,7 @@ export default function Feedbacks() {
                 cancel
               </Button>
 
-              <Button
-                onClick={handleFeedbackSubmition}
-                className=" bg-green-700"
-              >
-                Submit
-              </Button>
+              <Button onClick={handleFeedbackSubmition}>Submit</Button>
             </div>
           </div>
         </div>

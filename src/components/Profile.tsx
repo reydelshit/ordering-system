@@ -86,7 +86,7 @@ export default function Profile() {
       {user.map((user, index) => (
         <div className="flex w-full gap-4" key={index}>
           <img
-            className="w-[20rem] rounded-lg h-[20rem] object-cover"
+            className="w-[25rem] rounded-lg h-[25rem] object-cover"
             src={user.profile_picture ? user.profile_picture : DefaultProfile}
             alt={user.name}
           />
@@ -148,7 +148,7 @@ export default function Profile() {
           <Cart cart={cart} />
           {/* <Messages /> */}
         </div>
-        <div className="w-[75rem]">
+        <div className="w-[75rem] border-2 rounded-md">
           <ProfileOrdersTable paidOrders={paidOrders} />
         </div>
       </div>

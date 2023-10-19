@@ -20,9 +20,7 @@ export default function NotificationViewOrders({
         <span className="font-bold text-1xl">{recepientName}</span>
       </div>
 
-      <Button onClick={handleSetTemplateMessage} className="bg-green-700">
-        Use message template
-      </Button>
+      <Button onClick={handleSetTemplateMessage}>Use message template</Button>
     </div>
   );
 }

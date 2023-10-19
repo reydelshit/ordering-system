@@ -77,7 +77,7 @@ export default function MessageNotification({
         {notification.length > 0 ? (
           notification.map((noti, index) => (
             <div
-              className="border-2 h-fit mt-[1rem] w-[100%] rounded-sm bg-gray-200 p-3 text-xs text-start !text-white"
+              className="border-2 h-fit mt-[1rem] w-[100%] rounded-sm bg-gray-500 p-3 text-xs text-start !text-white"
               key={index}
             >
               <p>{noti.message}</p>
@@ -95,12 +95,7 @@ export default function MessageNotification({
           className="h-[4rem] w-[20rem]"
           placeholder="Send notification message"
         ></Textarea>
-        <Button
-          className="bg-green-700"
-          onClick={handleSendMessageNotification}
-        >
-          Send
-        </Button>
+        <Button onClick={handleSendMessageNotification}>Send</Button>
       </div>
     </div>
   );

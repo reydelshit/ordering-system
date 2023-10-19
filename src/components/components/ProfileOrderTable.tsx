@@ -1,4 +1,13 @@
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+
+import {
   Table,
   TableBody,
   TableCaption,
@@ -39,7 +48,7 @@ export default function ProfileOrdersTable({
   });
 
   return (
-    <Table className="w-full">
+    <Table className="w-[80%] mx-auto">
       <TableCaption>A list of your orders.</TableCaption>
       <TableHeader>
         <TableRow>
@@ -77,17 +86,23 @@ export default function ProfileOrdersTable({
                   {prod.order_id === prod.order_id ? prod.order_id : 'ngek'}
                 </TableCell>
                 <TableCell>
-                  <Link
-                    to={`/shop/${prod.product_id}?orderid=${prod.order_id}`}
-                  >
-                    {' '}
-                    <Button
-                      disabled={prod.status == 'Delivered' ? false : true}
-                      className="bg-green-700 cursor-pointer text-xs"
-                    >
-                      Send feedback
-                    </Button>
-                  </Link>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="underline">
+                      Actions
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="cursor-pointer">
+                      <DropdownMenuItem>Cancel Order</DropdownMenuItem>
+                      <DropdownMenuItem
+                        disabled={prod.status == 'Delivered' ? false : true}
+                      >
+                        <Link
+                          to={`/shop/${prod.product_id}?orderid=${prod.order_id}`}
+                        >
+                          Rate now
+                        </Link>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </TableCell>
               </TableRow>
             );

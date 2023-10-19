@@ -79,8 +79,10 @@ export default function OrdersTable() {
               <TableCell>
                 <div
                   className={`p-2 ${
-                    prod.status === 'Delivered' ? 'bg-green-100' : 'bg-blue-100'
-                  } text-green-700 font-bold rounded-md`}
+                    prod.status === 'Delivered'
+                      ? 'bg-violet-100'
+                      : 'bg-blue-100'
+                  } text-violet-700 font-bold rounded-md`}
                 >
                   {prod.status}
                 </div>

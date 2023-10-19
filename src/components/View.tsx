@@ -173,7 +173,7 @@ export default function View() {
             </p>
             <span className="flex items-center gap-5 mb-4">
               <h1 className="font-bold text-3xl">${prod.product_price}</h1>
-              <p className="p-1 rounded-sm bg-[#3d633c] text-white">50%</p>
+              <p className="p-1 rounded-sm bg-violet-600 text-white">50%</p>
             </span>
             <div className="flex h-[2.8rem] gap-8">
               <div
@@ -196,7 +196,7 @@ export default function View() {
               </div>
               <Button
                 onClick={() => handleAddToCart(prod.product_id)}
-                className="w-[50%] h-full bg-[#3d633c]"
+                className="w-[50%] h-full "
               >
                 Add to Order cart
               </Button>

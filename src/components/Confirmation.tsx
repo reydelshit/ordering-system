@@ -2,6 +2,17 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button } from './ui/button';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 type Cart = {
   cart_id: number;
@@ -138,9 +149,29 @@ export default function OrderConfirmation() {
       <Button className="self-start mr-2" onClick={() => navigate(-1)}>
         Cancel, Go Back
       </Button>
-      <Button className="bg-green-700" onClick={handleConfirmPayment}>
-        Confirm Payment
-      </Button>
+
+      <AlertDialog>
+        <AlertDialogTrigger className="bg-green-700 text-white font-semibold p-1.5 rounded-md">
+          {' '}
+          Confirm Order
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Order Confirmation</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to proceed with the order? You will have the
+              option to cancel before finalizing. Please double-check the
+              details before confirming.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmPayment}>
+              Confirm
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

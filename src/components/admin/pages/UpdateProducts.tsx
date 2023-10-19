@@ -169,6 +169,10 @@ export default function UpdateProducts({}: {}) {
       .then((res) => {
         console.log(res);
         getProductDetails();
+        toast({
+          title: 'Image: Deleted Successfully',
+          description: moment().format('LLLL'),
+        });
       });
   };
 
@@ -319,7 +323,7 @@ export default function UpdateProducts({}: {}) {
               />
             </div>
 
-            <Button className="w-[40%] self-center bg-green-700" type="submit">
+            <Button className="w-[40%] self-center " type="submit">
               Save and Update
             </Button>
           </form>

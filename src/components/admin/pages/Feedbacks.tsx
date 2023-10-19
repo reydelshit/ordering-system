@@ -169,7 +169,7 @@ export default function Feedback() {
                       <div className="flex items-center gap-4 justify-between">
                         <div className="flex items-center gap-4">
                           <img
-                            className="w-[2rem] h-[2rem] rounded-full object-cover bg-green-700"
+                            className="w-[2rem] h-[2rem] rounded-full object-cover bg-violet-700"
                             src={feedback.profile_picture}
                             alt="profile"
                           />
@@ -204,7 +204,7 @@ export default function Feedback() {
 
                         <Button
                           onClick={() => handleShowReplyInput(index, index)}
-                          className="bg-green-700 self-end"
+                          className="self-end"
                         >
                           {showReplyInput && inputIndex === index
                             ? 'Close Reply'
@@ -226,7 +226,7 @@ export default function Feedback() {
                                 >
                                   <div className="flex items-center gap-4">
                                     <img
-                                      className="w-[2rem] h-[2rem] rounded-full object-cover bg-green-700"
+                                      className="w-[2rem] h-[2rem] rounded-full object-cover bg-violet-700"
                                       src={reply.profile_picture}
                                       alt="profile"
                                     />
@@ -249,7 +249,7 @@ export default function Feedback() {
                               onClick={() =>
                                 setReplyComment('Thanks for your feedback!')
                               }
-                              className="self-start bg-green-700 mb-2"
+                              className="self-start mb-2"
                             >
                               Thanks template
                             </Button>
@@ -267,7 +267,7 @@ export default function Feedback() {
                                   feedback.feedback_id,
                                 )
                               }
-                              className="bg-green-700 mt-[1rem] w-[10rem] self-end"
+                              className="mt-[1rem] w-[10rem] self-end"
                             >
                               Send
                             </Button>

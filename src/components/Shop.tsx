@@ -137,7 +137,7 @@ export default function Shop() {
     <div className="p-4">
       <div className="h-[4rem] rounded-lg mb-2 flex justify-between w-full items-center px-2">
         <Popover>
-          <PopoverTrigger className="bg-green-700 p-2 rounded-md text-white">
+          <PopoverTrigger className="bg-violet-600 p-2 rounded-md text-white">
             Filter
           </PopoverTrigger>
           <PopoverContent className="h-fit w-[20rem]">
@@ -236,14 +236,14 @@ export default function Shop() {
           .map((prod, index) => (
             <div
               key={index}
-              className="border-2 w-[18rem] max-h-[25rem] rounded-xl overflow-hidden text-white text-start p-4 flex flex-col items-center"
+              className="border-2 w-[18rem] max-h-[25rem] rounded-xl overflow-hidden text-start p-4 flex flex-col items-center"
             >
               <img
                 className="w-full h-[60%] object-cover rounded-lg"
                 src={prod.product_image}
                 alt="cake"
               />
-              <div className="p-2 w-full flex justify-center flex-col bg-white rounded-b-lg">
+              <div className="p-2 w-full flex justify-center flex-col rounded-b-lg">
                 <div>
                   <div className="flex justify-between mb-2">
                     <Link to={`/shop/${prod.product_id}`}>
@@ -260,7 +260,7 @@ export default function Shop() {
                       ${prod.product_price}
                     </p>
                     <div
-                      className="w-full h-[2.5rem] f-full rounded-md font-bold bg-gray-100 
+                      className="w-full h-[2.5rem] f-full rounded-md font-bold bg-gray-200
     flex justify-between items-center px-4"
                     >
                       <span
@@ -283,8 +283,7 @@ export default function Shop() {
 
                 <Button
                   onClick={() => handleAddToCart(prod.product_id, index)}
-                  variant="outline"
-                  className="w-[9rem] h-[2.8rem] mt-4 bg-[#3d633c] text-white self-center"
+                  className="w-[9rem] h-[2.8rem] mt-4 text-white self-center"
                 >
                   Add order{' '}
                 </Button>

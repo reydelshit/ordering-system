@@ -1,5 +1,6 @@
 import { AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+import Jordans from '@/assets/jordans.png';
 import DefaultProfile from '@/assets/default.jpg';
 
 import {
@@ -69,7 +70,7 @@ export default function Header() {
     <header className="flex h-[5rem] justify-between items-center border-b-2">
       <div className="flex gap-8 items-center">
         <Link to="/">
-          <h1 className="font-bold text-4xl">DRIP</h1>
+          <img className="w-[3rem]" src={Jordans} />
         </Link>
 
         <div className="flex gap-10">
@@ -82,7 +83,7 @@ export default function Header() {
       <div className="flex items-center z-40 gap-1">
         {type === 'admin' && (
           <Link to="/admin">
-            <Button className="bg-green-700">Admin</Button>
+            <Button>Admin</Button>
           </Link>
         )}
 

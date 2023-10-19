@@ -248,7 +248,7 @@ export default function ViewOrders() {
           <Button
             disabled={notes.length === 0 ? true : false}
             onClick={handleSetNotes}
-            className="mt-[1rem] self-end bg-green-700"
+            className="mt-[1rem] self-end"
           >
             Save
           </Button>
