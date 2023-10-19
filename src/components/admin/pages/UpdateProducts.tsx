@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/components/ui/use-toast';
 import {
   Select,
   SelectContent,
@@ -13,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import moment from 'moment';
 
 // import { URL } from 'url';
 
@@ -41,7 +43,7 @@ export default function UpdateProducts({}: {}) {
   const [storeProduct, setStoreProducts] = useState([]);
 
   const { id } = useParams();
-
+  const { toast } = useToast();
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent) => {
@@ -99,11 +101,13 @@ export default function UpdateProducts({}: {}) {
         product_category: selectedCategory,
       })
       .then((res) => {
-        console.log(res.data);
-        if (res.data.status === 'success') {
-          window.location.reload();
-
-          // navigate('/');
+        if (res.status === 200) {
+          // window.location.reload();
+          // navigate('/admin/manage-product');
+          toast({
+            title: 'Product: Updated Successfully',
+            description: moment().format('LLLL'),
+          });
         }
       });
   };
@@ -167,13 +171,20 @@ export default function UpdateProducts({}: {}) {
       .delete(`http://localhost/ordering/product-image.php/${image_id}`)
       .then((res) => {
         console.log(res);
+        getProductDetails();
       });
   };
 
   return (
     <div className="w-full h-fit flex justify-center items-center flex-col text-center">
       <div className="w-[40%]">
-        <h1 className="text-2xl font-bold mb-2">Update Details</h1>
+        <div className="flex justify-between">
+          <Button className="self-start" onClick={() => navigate(-1)}>
+            Go Back
+          </Button>
+
+          <h1 className="font-bold text-2xl">Update Details</h1>
+        </div>
         <div className="mb-2 w-full flex flex-col justify-center items-center">
           <img
             className="w-[15rem] h-[15rem] object-cover rounded-full mb-4"

@@ -6,6 +6,7 @@ import Orders from './pages/Orders';
 import ViewOrders from './pages/ViewOrders';
 import Feedback from './pages/Feedbacks';
 import UpdateProducts from './pages/UpdateProducts';
+import { Toaster } from '@/components/ui/toaster';
 
 export default function AdminRoutes() {
   return (

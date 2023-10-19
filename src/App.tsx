@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import Main from './components/Main';
-import { Route, Routes } from 'react-router-dom';
-import Register from './components/Register';
-import Home from './components/Home';
-import Header from './components/Header';
-import Login from './components/Login';
+
+import { Toaster } from '@/components/ui/toaster';
 
 function App() {
   const [isLogged, setIsLoggedIn] = useState(false);
@@ -20,6 +17,7 @@ function App() {
   return (
     <>
       <Main />
+      <Toaster />
     </>
   );
 }
