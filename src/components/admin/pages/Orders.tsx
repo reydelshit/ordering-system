@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import OrdersTable from '../components/OrdersTable';
+import OrdersTable from '../components/orders/OrdersTable';
 import { Button } from '@/components/ui/button';
 
 type Order = {

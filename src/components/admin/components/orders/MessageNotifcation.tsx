@@ -44,7 +44,7 @@ export default function MessageNotification({
           params: { receiver_id: userId },
         },
       );
-      console.log(response.data, 'notif');
+      // console.log(response.data, 'notif');
 
       if (response.data.length > 0) {
         setNotification(response.data);

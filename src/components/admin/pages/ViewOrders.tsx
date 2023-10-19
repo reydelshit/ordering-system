@@ -1,17 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+
 import { Button } from '@/components/ui/button';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -21,11 +12,15 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-import MessageNotification from '../components/MessageNotifcation';
-import { FaRegUserCircle } from 'react-icons/fa';
-import { CiLocationOn } from 'react-icons/ci';
+import MessageNotification from '../components/orders/MessageNotifcation';
+
 import moment from 'moment';
 import { AiOutlineCalendar } from 'react-icons/ai';
+import PaidOrdersTable from '../components/view-orders/PaidOrdersTable';
+import Cards from '../components/view-orders/Cards';
+import Notification from '@/components/Notification';
+import NotificationViewOrders from '../components/view-orders/NotificationViewOrders';
+
 type Product = {
   cart_id: number;
   product_name: string;
@@ -219,157 +214,18 @@ export default function ViewOrders() {
       </div>
 
       <div>
-        <div className="flex w-full justify-between mt-[2rem] items-start h-[8rem]">
-          {orderDetails.map((order, index) => {
-            return (
-              <div
-                className="flex flex-col items-start border-2 w-[20rem] h-full justify-center p-2 rounded-md bg-white"
-                key={index}
-              >
-                <div className="flex items-center">
-                  <FaRegUserCircle className="w-10 h-[2rem] mr-1.5" />
-                  <h1 className="font-bold">Customer</h1>
-                </div>
-
-                <div className="ml-[3rem] flex flex-col items-start">
-                  <p className="font-bold">
-                    Name:{' '}
-                    <span className="font-semibold text-gray-400">
-                      {order.name}
-                    </span>
-                  </p>
-                  <p className="font-bold">
-                    Email:{' '}
-                    <span className="font-semibold text-gray-400">
-                      {order.email}
-                    </span>
-                  </p>
-                  <p className="font-bold">
-                    Phone:{' '}
-                    <span className="font-semibold text-gray-400">
-                      {order.phone}
-                    </span>
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-          {orderDetails.map((order, index) => {
-            return (
-              <div
-                className="relative flex flex-col items-start border-2 w-[20rem] h-full justify-center p-2 rounded-md bg-white"
-                key={index}
-              >
-                <div className="absolute flex items-center top-2">
-                  <AiOutlineInfoCircle className="w-10 h-[2rem] mr-1.5" />
-                  <h1 className="font-bold">Order Info</h1>
-                </div>
-
-                <div className="ml-[3rem] flex flex-col items-start">
-                  <p className="font-bold">
-                    Order type:{' '}
-                    <span className="font-semibold text-gray-400">
-                      {order.payment_type}
-                    </span>
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-
-          {orderDetails.map((order, index) => {
-            return (
-              <div
-                className="relative flex flex-col items-start border-2 w-[20rem] h-full justify-center p-2 rounded-md bg-white"
-                key={index}
-              >
-                <div className="absolute flex items-center top-2">
-                  <CiLocationOn className="w-10 h-[2rem] mr-1.5" />
-                  <h1 className="font-bold">Deliver to</h1>
-                </div>
-
-                <div className="ml-[3rem] flex flex-col items-start">
-                  <p className="font-bold">
-                    Address:{' '}
-                    <span className="font-semibold text-gray-400">
-                      {order.delivery_address}
-                    </span>
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <Cards orderDetails={orderDetails} />
       </div>
 
       <div className="flex mt-[2rem] gap-4">
-        <div className="w-[100%] flex flex-col bg-white p-2 rounded-md border-2">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead></TableHead>
-
-                <TableHead className="text-center">Price</TableHead>
-                <TableHead className="text-center">Quantity</TableHead>
-                <TableHead className="text-center">Total</TableHead>
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              {paidOrders.map((prod, index) => {
-                return (
-                  <TableRow key={index}>
-                    <TableCell className="flex items-center gap-4">
-                      <img
-                        className="w-[4rem] h-[4rem] rounded-md object-cover bg-gray-100"
-                        src={prod.product_image}
-                        alt={prod.product_name}
-                      />
-                      {prod.product_name}
-                    </TableCell>
-
-                    <TableCell>${prod.product_price}</TableCell>
-                    <TableCell>{prod.quantity}</TableCell>
-                    <TableCell>${prod.product_price * prod.quantity}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-
-          <div className="self-end mt-[2rem] mr-[2rem] flex gap-2 flex-col items-start w-[10rem]">
-            <span className="flex gap-[2rem] text-center w-full justify-between items-center">
-              <h1>Total: </h1>
-              <p className="font-bold text-start text-2xl">
-                {paidOrders.reduce(
-                  (total, prod) => total + prod.product_price * prod.quantity,
-                  0,
-                )}
-              </p>
-            </span>
-
-            <div className="flex gap-[2rem] text-center w-full justify-between">
-              <h1>Status: </h1>
-              <p className="font-bold">{status}</p>
-            </div>
-          </div>
-        </div>
+        <PaidOrdersTable paidOrders={paidOrders} status={status} />
 
         <div className="relative w-[70%] h-[28rem] p-2 border-2 rounded-md bg-white">
-          <div className="flex flex-row items-center h-[4rem] w-full justify-between">
-            <div className="flex h-full items-center gap-4">
-              <img
-                className="w-[4rem] h-full cover rounded-full"
-                src={recepeintProfilePicture}
-                alt={recepientName}
-              />
-              <span className="font-bold text-1xl">{recepientName}</span>
-            </div>
-
-            <Button onClick={handleSetTemplateMessage} className="bg-green-700">
-              Use message template
-            </Button>
-          </div>
+          <NotificationViewOrders
+            recepientName={recepientName}
+            recepeintProfilePicture={recepeintProfilePicture}
+            handleSetTemplateMessage={handleSetTemplateMessage}
+          />
           {userId !== 0 && (
             <MessageNotification
               templateMessage={templateMessage}

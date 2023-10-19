@@ -16,8 +16,6 @@ import {
 } from '@/components/ui/select';
 import moment from 'moment';
 
-// import { URL } from 'url';
-
 type ChangeEvent =
   | React.ChangeEvent<HTMLInputElement>
   | React.ChangeEvent<HTMLTextAreaElement>;
@@ -29,7 +27,6 @@ type Images = {
 };
 
 export default function UpdateProducts({}: {}) {
-  const [user, setUser] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('' as string);
   const [productName, setProductName] = useState('');
   const [image, setImage] = useState<string | null>(null);
@@ -176,8 +173,8 @@ export default function UpdateProducts({}: {}) {
   };
 
   return (
-    <div className="w-full h-fit flex justify-center items-center flex-col text-center">
-      <div className="w-[40%]">
+    <div className="w-full h-fit flex justify-center items-center flex-col text-center p-4">
+      <div className="w-full">
         <div className="flex justify-between">
           <Button className="self-start" onClick={() => navigate(-1)}>
             Go Back
@@ -185,117 +182,148 @@ export default function UpdateProducts({}: {}) {
 
           <h1 className="font-bold text-2xl">Update Details</h1>
         </div>
-        <div className="mb-2 w-full flex flex-col justify-center items-center">
-          <img
-            className="w-[15rem] h-[15rem] object-cover rounded-full mb-4"
-            src={image! ? image! : defaultProfile}
-          />
-          <Label className="mb-2 text-start">Primary image</Label>
 
-          <Input
-            type="file"
-            accept="image/*"
-            onChange={handleChangeImage}
-            className="cursor-pointer"
-          />
-        </div>
+        <div className="flex w-full justify-between gap-[4rem] mt-[5rem]">
+          <div className="mb-2 flex flex-col mt-[2rem]">
+            <img
+              className="w-[40rem]  h-[25rem] object-cover rounded-lg mb-4"
+              src={image! ? image! : defaultProfile}
+            />
+            <Label className="mb-2 text-start">Primary image</Label>
 
-        <form onSubmit={handleSubmit} className="flex flex-col justify-center">
-          <Input
-            placeholder="name of the product (cake)"
-            name="product_name"
-            className="mb-2"
-            onChange={handleChange}
-            defaultValue={productName}
-          />
-          <Input
-            type="number"
-            placeholder="price"
-            name="product_price"
-            className="mb-2"
-            onChange={handleChange}
-            defaultValue={price}
-          />
-
-          <Textarea
-            onChange={handleChange}
-            name="product_description"
-            placeholder="description"
-            className="mb-2 min-h-[10rem]"
-            defaultValue={description}
-          ></Textarea>
-
-          <Input
-            type="number"
-            placeholder="quantity"
-            name="quantity"
-            className="mb-2"
-            onChange={handleChange}
-            defaultValue={quantity}
-          />
-
-          <Input
-            type="text"
-            placeholder="tags (seperated by spaces)"
-            name="tags"
-            className="mb-2"
-            onChange={handleChange}
-            defaultValue={tags}
-          />
-
-          <Select value={selectedCategory} onValueChange={handlePaymentType}>
-            <SelectTrigger>
-              <SelectValue placeholder="Categories" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="tshirt">T-shirt</SelectItem>
-              <SelectItem value="pants">Pants</SelectItem>
-              <SelectItem value="hoodie">Hoodie</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <div className="my-5 w-full flex flex-col justify-center items-center">
-            <Label className="mb-2 text-start">Upload multiple images</Label>
-
-            <div className="border-2 w-full flex mb-2 p-2 gap-2">
-              {images.map((image, index) => (
-                <span key={index}>
-                  <img
-                    src={image.images_data}
-                    alt={`Image ${index}`}
-                    className="w-[5rem] h-[5rem] object-cover rounded-full mb-4"
-                  />
-                  <span
-                    className="cursor-pointer"
-                    onClick={() => handleDeleteImage(image.image_id)}
-                  >
-                    Delete
-                  </span>
-                </span>
-              ))}
-
-              {newImages.map((image, index) => (
-                <img
-                  key={index}
-                  src={image}
-                  alt={`Image ${index}`}
-                  className="w-[5rem] h-[5rem] object-cover rounded-full mb-4"
-                />
-              ))}
-            </div>
             <Input
               type="file"
               accept="image/*"
-              multiple
-              onChange={handleMultipleImages}
+              onChange={handleChangeImage}
               className="cursor-pointer"
             />
           </div>
 
-          <Button className="w-[80%] self-center" type="submit">
-            Save and Update
-          </Button>
-        </form>
+          <form onSubmit={handleSubmit} className="flex flex-col w-full">
+            <div className="flex gap-2 w-full">
+              <div className="flex flex-col item-start p-4">
+                <Label className="mb-2 text-start">Product Name</Label>
+                <Input
+                  placeholder="name of the product (cake)"
+                  name="product_name"
+                  className="mb-2"
+                  onChange={handleChange}
+                  defaultValue={productName}
+                />
+              </div>
+
+              <div className="flex flex-col item-start p-4 ">
+                <Label className="mb-2 text-start">Quantity</Label>
+                <Input
+                  type="number"
+                  placeholder="price"
+                  name="product_price"
+                  className="mb-2"
+                  onChange={handleChange}
+                  defaultValue={price}
+                />
+              </div>
+            </div>
+
+            <div className="p-4 text-start">
+              <Label className="mb-2">Description</Label>
+              <Textarea
+                onChange={handleChange}
+                name="product_description"
+                placeholder="description"
+                className="mb-2 min-h-[10rem] mt-2"
+                defaultValue={description}
+              ></Textarea>
+            </div>
+            <div className="flex w-full p-4 gap-2 justify-between">
+              <div className="text-start">
+                <Label className="mb-2">Description</Label>
+
+                <Input
+                  type="number"
+                  placeholder="quantity"
+                  name="quantity"
+                  className="mb-2"
+                  onChange={handleChange}
+                  defaultValue={quantity}
+                />
+              </div>
+
+              <div className="text-start">
+                <Label className="mb-2">Tags</Label>
+
+                <Input
+                  type="text"
+                  placeholder="tags (seperated by spaces)"
+                  name="tags"
+                  className="mb-2"
+                  onChange={handleChange}
+                  defaultValue={tags}
+                />
+              </div>
+
+              <div className="text-start w-[15rem]">
+                <Label className="mb-2">Category</Label>
+
+                <Select
+                  value={selectedCategory}
+                  onValueChange={handlePaymentType}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Categories" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="tshirt">T-shirt</SelectItem>
+                    <SelectItem value="pants">Pants</SelectItem>
+                    <SelectItem value="hoodie">Hoodie</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="my-5 w-full flex flex-col text-start">
+              <Label className="mb-2 ">Upload multiple images</Label>
+
+              <div className="border-2 w-full flex mb-2 p-2 gap-2">
+                {images.map((image, index) => (
+                  <span key={index}>
+                    <img
+                      src={image.images_data}
+                      alt={`Image ${index}`}
+                      className="w-[20rem]  h-[15rem] object-cover rounded-lg mb-4"
+                    />
+                    <span
+                      className="cursor-pointer"
+                      onClick={() => handleDeleteImage(image.image_id)}
+                    >
+                      Delete
+                    </span>
+                  </span>
+                ))}
+
+                {newImages.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt={`Image ${index}`}
+                    className="w-[20rem]  h-[15rem] object-cover rounded-lg mb-4"
+                  />
+                ))}
+              </div>
+              <Input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleMultipleImages}
+                className="cursor-pointer"
+              />
+            </div>
+
+            <Button className="w-[40%] self-center bg-green-700" type="submit">
+              Save and Update
+            </Button>
+          </form>
+        </div>
       </div>
     </div>
   );
