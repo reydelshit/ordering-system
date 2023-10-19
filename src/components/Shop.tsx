@@ -137,7 +137,7 @@ export default function Shop() {
     <div className="p-4">
       <div className="h-[4rem] rounded-lg mb-2 flex justify-between w-full items-center px-2">
         <Popover>
-          <PopoverTrigger className="bg-violet-600 p-2 rounded-md text-white">
+          <PopoverTrigger className="bg-violet-600 p-2 rounded-md text-white w-[10rem]">
             Filter
           </PopoverTrigger>
           <PopoverContent className="h-fit w-[20rem]">
@@ -224,7 +224,7 @@ export default function Shop() {
           />
         </div>
       </div>
-      <div className="w-full h-fit grid grid-cols-4 gap-4">
+      <div className="w-full h-fit grid grid-cols-5 gap-4">
         {product
           .filter((prod) => {
             return (
@@ -239,7 +239,7 @@ export default function Shop() {
               className="border-2 w-[18rem] max-h-[25rem] rounded-xl overflow-hidden text-start p-4 flex flex-col items-center"
             >
               <img
-                className="w-full h-[60%] object-cover rounded-lg"
+                className="w-full h-[60%] object-cover rounded-lg bg-violet-600"
                 src={prod.product_image}
                 alt="cake"
               />
