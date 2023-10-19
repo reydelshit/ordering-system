@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useNavigate } from 'react-router-dom';
 
 type Order = {
   cart_id: number;
@@ -27,7 +28,7 @@ type Order = {
 
 export default function Orders() {
   const [status, setStatus] = useState('');
-
+  const navigate = useNavigate();
   const handleStatus = (event: string) => {
     const selectedValue = event;
 
@@ -49,7 +50,7 @@ export default function Orders() {
   return (
     <div className=" p-4">
       <div className="flex justify-between w-full mb-[4rem]">
-        <Button>Orders</Button>
+        <Button onClick={() => navigate(-1)}>Go Back</Button>
         <h1 className="font-bold text-2xl self-end">Manage Product</h1>
       </div>
       <Select onValueChange={(e) => handleStatus(e)}>
