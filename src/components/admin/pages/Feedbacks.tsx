@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 
 type FeedbackProduct = {
   product_id: number;
@@ -53,6 +54,7 @@ export default function Feedback() {
   const [storeReplies, setStoreReplies] = useState<Replies[]>([]);
   const [inputIndex, setInputIndex] = useState<number>(0);
   const [showReplies, setShowReplies] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>('');
 
   const navigate = useNavigate();
   const getFeedback = async () => {
@@ -128,6 +130,11 @@ export default function Feedback() {
       </div>
       <div className="flex w-full justify-between gap-4 mt-[5rem]">
         <div className="w-[25rem] grid place-content-start">
+          <Input
+            onChange={(e) => setSearch(e.target.value)}
+            className="mb-2"
+            placeholder="Search"
+          />
           <Table className="border-2 w-full">
             <TableHeader>
               <TableRow>
@@ -136,18 +143,20 @@ export default function Feedback() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {feedbackProduct.map((feedback, index) => {
-                return (
-                  <TableRow
-                    onClick={handleFetchFeedback(feedback.product_id)}
-                    className="cursor-pointer"
-                    key={index}
-                  >
-                    <TableCell>{feedback.product_name}</TableCell>
-                    <TableCell>{feedback.total_feedback}</TableCell>
-                  </TableRow>
-                );
-              })}
+              {feedbackProduct
+                .filter((feedback) => feedback.product_name.includes(search))
+                .map((feedback, index) => {
+                  return (
+                    <TableRow
+                      onClick={handleFetchFeedback(feedback.product_id)}
+                      className="cursor-pointer"
+                      key={index}
+                    >
+                      <TableCell>{feedback.product_name}</TableCell>
+                      <TableCell>{feedback.total_feedback}</TableCell>
+                    </TableRow>
+                  );
+                })}
             </TableBody>
           </Table>
         </div>

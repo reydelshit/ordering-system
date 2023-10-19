@@ -34,7 +34,7 @@ type Product = {
   status_id: number;
 };
 
-export default function OrdersTable() {
+export default function OrdersTable({ status }: { status: string }) {
   const [paidOrders, setPaidOrders] = useState<Product[]>([]);
 
   const getPaidOrders = () => {
@@ -63,33 +63,35 @@ export default function OrdersTable() {
       </TableHeader>
 
       <TableBody>
-        {paidOrders.map((prod, index) => {
-          return (
-            <TableRow key={index}>
-              <TableCell>{prod.order_id}</TableCell>
-              <TableCell>{prod.user_id}</TableCell>
-              <TableCell className="font-bold cursor-pointer">
-                <Link to={`/admin/orders/${prod.order_id}`}>
-                  {' '}
-                  {prod.product_names}
-                </Link>
-              </TableCell>
-              {/* <TableCell>{prod.payment_type}</TableCell> */}
-              <TableCell>{prod.total_amount}</TableCell>
-              <TableCell>
-                <div
-                  className={`p-2 ${
-                    prod.status === 'Delivered'
-                      ? 'bg-violet-100'
-                      : 'bg-blue-100'
-                  } text-violet-700 font-bold rounded-md`}
-                >
-                  {prod.status}
-                </div>
-              </TableCell>
-            </TableRow>
-          );
-        })}
+        {paidOrders
+          .filter((prod) => prod.status.includes(status) || status === 'All')
+          .map((prod, index) => {
+            return (
+              <TableRow key={index}>
+                <TableCell>{prod.order_id}</TableCell>
+                <TableCell>{prod.user_id}</TableCell>
+                <TableCell className="font-bold cursor-pointer">
+                  <Link to={`/admin/orders/${prod.order_id}`}>
+                    {' '}
+                    {prod.product_names}
+                  </Link>
+                </TableCell>
+                {/* <TableCell>{prod.payment_type}</TableCell> */}
+                <TableCell>{prod.total_amount}</TableCell>
+                <TableCell>
+                  <div
+                    className={`p-2 ${
+                      prod.status === 'Delivered'
+                        ? 'bg-violet-100'
+                        : 'bg-blue-100'
+                    } text-violet-700 font-bold rounded-md`}
+                  >
+                    {prod.status}
+                  </div>
+                </TableCell>
+              </TableRow>
+            );
+          })}
       </TableBody>
     </Table>
   );
