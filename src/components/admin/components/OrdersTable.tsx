@@ -76,7 +76,15 @@ export default function OrdersTable() {
               </TableCell>
               {/* <TableCell>{prod.payment_type}</TableCell> */}
               <TableCell>{prod.total_amount}</TableCell>
-              <TableCell>{prod.status}</TableCell>
+              <TableCell>
+                <div
+                  className={`p-2 ${
+                    prod.status === 'Delivered' ? 'bg-green-100' : 'bg-blue-100'
+                  } text-green-700 font-bold rounded-md`}
+                >
+                  {prod.status}
+                </div>
+              </TableCell>
             </TableRow>
           );
         })}

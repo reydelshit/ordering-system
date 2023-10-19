@@ -19,15 +19,26 @@ import {
 type ChangeEvent =
   | React.ChangeEvent<HTMLInputElement>
   | React.ChangeEvent<HTMLTextAreaElement>;
+
+type Images = {
+  product_id: number;
+  images_data: string;
+  image_id: number;
+};
+
 export default function UpdateProducts({}: {}) {
   const [user, setUser] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('' as string);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [height, setHeight] = useState('');
-
+  const [productName, setProductName] = useState('');
   const [image, setImage] = useState<string | null>(null);
-  const [images, setImages] = useState<string[]>([]);
+  const [price, setPrice] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [tags, setTags] = useState('');
+  const [description, setDescription] = useState('');
+
+  const [images, setImages] = useState<Images[]>([]);
+  const [newImages, setNewImages] = useState<string[]>([]);
+  const [storeProduct, setStoreProducts] = useState([]);
 
   const { id } = useParams();
 
@@ -36,39 +47,55 @@ export default function UpdateProducts({}: {}) {
   const handleChange = (e: ChangeEvent) => {
     const value = e.target.value;
     const name = e.target.name;
-    setUser((values) => ({ ...values, [name]: value }));
+    setStoreProducts((values) => ({ ...values, [name]: value }));
   };
 
   useEffect(() => {
     getProductDetails();
   }, []);
 
-  const getProductDetails = () => {
-    axios
-      .get('http://localhost/ordering/product-update.php', {
+  const getProductDetails = async () => {
+    const res = await axios.get(
+      'http://localhost/ordering/product-update.php',
+      {
         params: {
           product_id: id,
         },
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
+      },
+    );
+
+    console.log(res.data);
+    if (res.data.status === 'success') {
+      setProductName(res.data.data.product_name);
+      setPrice(res.data.data.product_price);
+      setQuantity(res.data.data.quantity);
+      setTags(res.data.data.tags);
+      setDescription(res.data.data.product_description);
+      setImage(res.data.data.product_image);
+      setSelectedCategory(res.data.data.product_category);
+      setImages(res.data.data.images_data);
+
+      setStoreProducts(res.data.data);
+      console.log(res.data.data.product_name);
+    }
+    // setStoreProducts(res.data);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(image);
+    // console.log(image);
     // console.log(user);
 
     axios
-      .post('http://localhost/ordering/product.php', {
+      .put('http://localhost/ordering/product.php', {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-        ...user,
+        ...storeProduct,
+        product_id: id,
         product_image: image,
-        images_data: images,
+        images_data: newImages,
         product_category: selectedCategory,
       })
       .then((res) => {
@@ -97,7 +124,7 @@ export default function UpdateProducts({}: {}) {
 
   const handleMultipleImages = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    const newImages = [...images];
+    const newnewImages = [...newImages];
 
     const promises = [];
     for (let i = 0; i < files!.length; i++) {
@@ -119,8 +146,10 @@ export default function UpdateProducts({}: {}) {
 
     Promise.all(promises)
       .then((results) => {
-        newImages.push(...(results as string[]));
-        setImages(newImages);
+        // console.log('Results:', results);
+        newnewImages.push(...(results as string[]));
+        // console.log('New Images:', newImages);
+        setNewImages(newnewImages);
       })
       .catch((error) => {
         console.error(error);
@@ -130,7 +159,15 @@ export default function UpdateProducts({}: {}) {
   const handlePaymentType = (event: string) => {
     const selectedValue = event;
     setSelectedCategory(selectedValue);
-    // console.log(selectedValue);
+  };
+
+  const handleDeleteImage = (image_id: number) => {
+    // console.log(image_id);
+    axios
+      .delete(`http://localhost/ordering/product-image.php/${image_id}`)
+      .then((res) => {
+        console.log(res);
+      });
   };
 
   return (
@@ -158,7 +195,7 @@ export default function UpdateProducts({}: {}) {
             name="product_name"
             className="mb-2"
             onChange={handleChange}
-            // defaultValue={name}
+            defaultValue={productName}
           />
           <Input
             type="number"
@@ -166,14 +203,15 @@ export default function UpdateProducts({}: {}) {
             name="product_price"
             className="mb-2"
             onChange={handleChange}
-            // defaultValue={name}
+            defaultValue={price}
           />
 
           <Textarea
             onChange={handleChange}
             name="product_description"
             placeholder="description"
-            className="mb-2"
+            className="mb-2 min-h-[10rem]"
+            defaultValue={description}
           ></Textarea>
 
           <Input
@@ -182,7 +220,7 @@ export default function UpdateProducts({}: {}) {
             name="quantity"
             className="mb-2"
             onChange={handleChange}
-            // defaultValue={name}
+            defaultValue={quantity}
           />
 
           <Input
@@ -191,10 +229,10 @@ export default function UpdateProducts({}: {}) {
             name="tags"
             className="mb-2"
             onChange={handleChange}
-            // defaultValue={name}
+            defaultValue={tags}
           />
 
-          <Select onValueChange={handlePaymentType}>
+          <Select value={selectedCategory} onValueChange={handlePaymentType}>
             <SelectTrigger>
               <SelectValue placeholder="Categories" />
             </SelectTrigger>
@@ -210,6 +248,22 @@ export default function UpdateProducts({}: {}) {
 
             <div className="border-2 w-full flex mb-2 p-2 gap-2">
               {images.map((image, index) => (
+                <span key={index}>
+                  <img
+                    src={image.images_data}
+                    alt={`Image ${index}`}
+                    className="w-[5rem] h-[5rem] object-cover rounded-full mb-4"
+                  />
+                  <span
+                    className="cursor-pointer"
+                    onClick={() => handleDeleteImage(image.image_id)}
+                  >
+                    Delete
+                  </span>
+                </span>
+              ))}
+
+              {newImages.map((image, index) => (
                 <img
                   key={index}
                   src={image}

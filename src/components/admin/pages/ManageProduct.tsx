@@ -12,6 +12,9 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import AddProductModal from '../components/AddProductModal';
 import { Link } from 'react-router-dom';
+import { RiDeleteBin5Line } from 'react-icons/ri';
+import { FiEdit3 } from 'react-icons/fi';
+import { AiOutlineEye } from 'react-icons/ai';
 
 type Product = {
   product_id: number;
@@ -69,9 +72,7 @@ export default function ManageProduct() {
                 <TableHead className="font-bold text-black">Price</TableHead>
                 <TableHead className="font-bold text-black">Stocks</TableHead>
                 <TableHead className="font-bold text-black">Amount</TableHead>
-                <TableHead className="font-bold text-black text-center">
-                  Actions
-                </TableHead>
+                <TableHead className="font-bold text-black ">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -98,16 +99,18 @@ export default function ManageProduct() {
                           className="cursor-pointer"
                           onClick={() => handleDelete(prod.product_id)}
                         >
-                          delete
+                          <RiDeleteBin5Line className="w-[2rem] h-[1.5rem]" />
                         </p>
                         <Link
                           to={`/admin/manage-product/update/${prod.product_id}`}
                         >
                           {' '}
-                          <p>update</p>
+                          <FiEdit3 className="w-[2rem] h-[1.5rem]" />
                         </Link>
-
-                        <p>view</p>
+                        <Link to={`/shop/${prod.product_id}`}>
+                          {' '}
+                          <AiOutlineEye className="w-[2rem] h-[1.5rem]" />
+                        </Link>
                       </span>
                     </TableCell>
                   </TableRow>
