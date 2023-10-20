@@ -71,6 +71,7 @@ export default function ViewOrders() {
 
   const [notes, setNotes] = useState<string>('');
   const [templateMessage, setTemplateMessage] = useState<string>('');
+  const [isTemplateMessage, setIsTemplateMessage] = useState<boolean>(true);
   const [orderDate, setOrderDate] = useState<string>('');
 
   const getOrders = async () => {
@@ -145,9 +146,10 @@ export default function ViewOrders() {
   };
 
   const handleSetTemplateMessage = () => {
-    setTemplateMessage(
-      `Hi ${recepientName}, your order with order id number ${order_id.ordersid} has been ${status}.`,
-    );
+    setIsTemplateMessage(!isTemplateMessage);
+    const newTemplateMessage = `Hi ${recepientName}, your order with order id number ${order_id.ordersid} has been ${status}.`;
+    console.log(newTemplateMessage); // Add this line
+    setTemplateMessage(newTemplateMessage);
   };
 
   const handleSetNotes = () => {
@@ -228,6 +230,8 @@ export default function ViewOrders() {
           />
           {userId !== 0 && (
             <MessageNotification
+              setIsTemplateMessage={setIsTemplateMessage}
+              isTemplateMessage={isTemplateMessage}
               templateMessage={templateMessage}
               userId={Number(userId)}
               userDetails={userDetails}

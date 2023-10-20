@@ -28,10 +28,14 @@ export default function MessageNotification({
   userId,
   userDetails,
   templateMessage,
+  isTemplateMessage,
+  setIsTemplateMessage,
 }: {
   userId: number;
   userDetails: User[];
   templateMessage: string;
+  isTemplateMessage: boolean;
+  setIsTemplateMessage: (e: boolean) => void;
 }) {
   const [notification, setNotification] = useState<Notification[]>([]);
   const [message, setMessage] = useState<string>('');
@@ -71,6 +75,7 @@ export default function MessageNotification({
   useEffect(() => {
     getNotification();
   }, []);
+
   return (
     <div className="flex flex-col bottom-2 justify-between items-center">
       <div className="h-[18rem]  overflow-auto w-full flex flex-col gap-1 p-4">
@@ -87,10 +92,11 @@ export default function MessageNotification({
         ) : (
           <p>Loading...</p>
         )}
+        B
       </div>
       <div className="flex items-center gap-4 mt-2 absolute bottom-2">
         <Textarea
-          defaultValue={templateMessage.length > 0 ? templateMessage : message}
+          defaultValue={isTemplateMessage ? message : templateMessage}
           onChange={(e) => setMessage(e.target.value)}
           className="h-[4rem] w-[20rem]"
           placeholder="Send notification message"

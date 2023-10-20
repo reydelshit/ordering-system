@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
+import CustomerReviews from '@/components/components/CustomerReviews';
 
 type FeedbackProduct = {
   product_id: number;
@@ -43,7 +44,18 @@ type Replies = {
   user_type: string;
 };
 
-export default function Feedback() {
+type Feedback = {
+  email: string;
+  feedback_description: string;
+  feedback_id: number;
+  feedback_rating: number;
+  name: string;
+  profile_picture: string;
+  feedback_date: string;
+  user_id: number;
+};
+
+export default function AdminFeedbacks() {
   const [feedbackProduct, setFeedbackProduct] = useState<FeedbackProduct[]>([]);
   const [feedbackResponses, setFeedbackResponses] = useState<
     FeedbackResponse[]
@@ -55,6 +67,7 @@ export default function Feedback() {
   const [inputIndex, setInputIndex] = useState<number>(0);
   const [showReplies, setShowReplies] = useState<boolean>(false);
   const [search, setSearch] = useState<string>('');
+  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
 
   const navigate = useNavigate();
   const getFeedback = async () => {
@@ -82,6 +95,7 @@ export default function Feedback() {
         // navigate(`/admin/feedback/${id}`, { state: res.data });
       });
 
+    fetchFeedbacks(id);
     getReplies();
   };
 
@@ -121,6 +135,19 @@ export default function Feedback() {
     }
   };
 
+  const fetchFeedbacks = (product_id: number) => {
+    axios
+      .get('http://localhost/ordering/feedback.php', {
+        params: {
+          product_id: product_id,
+        },
+      })
+      .then((res) => {
+        console.log(res.data, 'feedbacks');
+        setFeedbacks(res.data);
+      });
+  };
+
   return (
     <div className="flex justify-center items-center w-full flex-col p-4">
       <div className="flex justify-between w-full h-[5rem] items-center">
@@ -128,6 +155,7 @@ export default function Feedback() {
 
         <h1 className="font-bold text-2xl">Feedback</h1>
       </div>
+
       <div className="flex w-full justify-between gap-4 mt-[5rem]">
         <div className="w-[25rem] grid place-content-start">
           <Input
@@ -162,6 +190,11 @@ export default function Feedback() {
         </div>
 
         <div className="w-[100%] border-2 p-4 rounded-md">
+          <div className="flex">
+            <CustomerReviews feedbacks={feedbacks} />
+            <div>card card</div>
+          </div>
+
           {feedbackResponses.length > 0 ? (
             feedbackResponses.map((feedback, index) => {
               return (

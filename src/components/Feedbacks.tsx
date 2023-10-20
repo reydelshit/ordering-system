@@ -5,6 +5,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
+import CustomerReviews from './components/CustomerReviews';
 
 type Feedback = {
   email: string;
@@ -49,6 +50,7 @@ export default function Feedbacks() {
   const [replyComment, setReplyComment] = useState<string>('');
   const [storeReplies, setStoreReplies] = useState<Replies[]>([]);
   const [inputIndex, setInputIndex] = useState<number>(0);
+  const [accountType, setAccountType] = useState<string>('' as string);
 
   const checkIfOrderIdExistToUserId = () => {
     if (user_id === null) {
@@ -125,8 +127,9 @@ export default function Feedbacks() {
 
   const getReplies = async () => {
     await axios.get('http://localhost/ordering/reply.php').then((res) => {
-      console.log(res.data, 'replies');
+      // console.log(res.data, 'replies');
       setStoreReplies(res.data);
+      // setAccountType(res.data[0].user_type);
     });
   };
 
@@ -158,111 +161,14 @@ export default function Feedbacks() {
   return (
     <div className="flex justify-between p-4 h-fit mt-[5rem]">
       <div className="w-[35rem] text-start p-4">
-        <h1 className="font-bold text-2xl mb-2">Customer Reviews</h1>
-        <div className="flex items-center">
-          <div className="flex items-center">
-            {Array.from({ length: 5 }, (_, i) => i).map((number) => {
-              const untilWhatNumber = Math.floor(
-                feedbacks
-                  .map((feedback) => feedback.feedback_rating)
-                  .reduce((a, b) => a + b, 0) / feedbacks.length,
-              );
+        <CustomerReviews feedbacks={feedbacks} />
 
-              return (
-                <svg
-                  key={number}
-                  className="w-4 h-4 text-yellow-300 mr-1"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill={number == untilWhatNumber ? 'gray' : 'currentColor'}
-                  viewBox="0 0 22 20"
-                >
-                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                </svg>
-              );
-            })}
-          </div>
-          <p className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-            Based on {Math.ceil(feedbacks.length)}
-            {''} reviews
-          </p>
-        </div>
-
-        <div>
-          {Array.from({ length: 5 }, (_, i) => i + 1)
-            .reverse()
-            .map((number) => {
-              return (
-                <div key={number} className="flex items-center mt-4">
-                  <span className="flex items-center gap-1 text-md">
-                    <a href="#">{number}</a>
-                    <svg
-                      className="w-4 h-3 text-yellow-300 mr-1"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      viewBox="0 0 22 20"
-                    >
-                      <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                    </svg>
-                  </span>
-
-                  <div className="w-full h-3.5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-                    <div
-                      style={{
-                        backgroundClip: 'content-box',
-                        width: `${
-                          (feedbacks.filter(
-                            (feedb) => feedb.feedback_rating === number,
-                          ).length /
-                            feedbacks.length) *
-                          100
-                        }%`,
-                      }}
-                      className={`h-full rounded ${
-                        feedbacks.filter(
-                          (feedb) => feedb.feedback_rating === number,
-                        ).length === 0
-                          ? 'bg-gray-200'
-                          : 'bg-violet-600'
-                      }`}
-                    ></div>
-                  </div>
-                  <span className="text-sm font-medium text-gray-500 dark:text-gray-400 w-[5rem]">
-                    {feedbacks.filter(
-                      (feedb) => feedb.feedback_rating === number,
-                    ).length === 0
-                      ? 0
-                      : Math.ceil(
-                          (feedbacks.filter(
-                            (feedb) => feedb.feedback_rating === number,
-                          ).length /
-                            feedbacks.length) *
-                            100,
-                        )}
-                    %
-                    <span className="ml-2 text-violet-600">
-                      (
-                      {
-                        feedbacks.filter(
-                          (feedb) => feedb.feedback_rating === number,
-                        ).length
-                      }
-                      )
-                    </span>
-                  </span>
-                </div>
-              );
-            })}
-        </div>
-
-        <div className="mt-[5rem]">
+        <div className="mt-[5rem] p-4">
           <h1 className="font-bold text-2xl mb-2">Share your thoughts</h1>
           <p>
             If you have ordered or used this product, share you thoughts with
             other customers
           </p>
-
           <Button
             onClick={() => setShowFeedbackForm(true)}
             className="block mt-[2rem] mx-auto"
@@ -335,10 +241,7 @@ export default function Feedbacks() {
                     ),
                 )}
 
-                <Button
-                  onClick={() => handleShowReplyInput(index, index)}
-                  className="bg-green-700"
-                >
+                <Button onClick={() => handleShowReplyInput(index, index)}>
                   {showReplyInput && inputIndex === index ? 'Cancel' : 'Reply'}
                 </Button>
 
@@ -348,7 +251,11 @@ export default function Feedbacks() {
                       onClick={() =>
                         setReplyComment('Thanks for your feedback!')
                       }
-                      className="self-start bg-violet-600-700 mb-2"
+                      className={`${
+                        localStorage.getItem('type') === 'admin'
+                          ? 'block'
+                          : 'hidden'
+                      } self-start bg-violet-700 mb-2`}
                     >
                       Thanks template
                     </Button>
@@ -392,8 +299,10 @@ export default function Feedbacks() {
                       onClick={() => handleClick(number)}
                       key={number}
                       className={`${
-                        isSelected ? ':bg-violet-600 ' : 'bg-white '
-                      } ' mr-2 my-2 hover:bg-violet-600 text-black hover:text-white`}
+                        isSelected
+                          ? 'bg-violet-600 text-white'
+                          : 'bg-white text-black'
+                      } ' mr-2 my-2 hover:bg-violet-600 hover:text-white`}
                     >
                       {number + 1} ⭐
                     </Button>

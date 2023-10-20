@@ -4,13 +4,17 @@ import ManageProduct from './pages/ManageProduct';
 import Main from './pages/Main';
 import Orders from './pages/Orders';
 import ViewOrders from './pages/ViewOrders';
-import Feedback from './pages/Feedbacks';
+import Feedback from './pages/AdminFeedbacks';
 import UpdateProducts from './pages/UpdateProducts';
 import { Toaster } from '@/components/ui/toaster';
 import { BsCartCheck } from 'react-icons/bs';
 import { AiOutlineDropbox } from 'react-icons/ai';
 import { VscFeedback } from 'react-icons/vsc';
 import { RiAdminLine } from 'react-icons/ri';
+import AdminFeedbacks from './pages/AdminFeedbacks';
+import CustomerUsers from './pages/CustomerUser';
+import { FiUsers } from 'react-icons/fi';
+
 export default function AdminRoutes() {
   return (
     <div className="flex">
@@ -39,6 +43,12 @@ export default function AdminRoutes() {
             <VscFeedback className="w-[2rem] h-[1.5rem]" /> Feedbacks
           </Link>
         </span>
+
+        <span className="flex gap-2 p-1 w-full">
+          <Link className="flex" to="/admin/customer-user">
+            <FiUsers className="w-[2rem] h-[1.5rem]" /> Customers
+          </Link>
+        </span>
       </div>
       <div className="w-full justify-center">
         <Routes>
@@ -51,7 +61,8 @@ export default function AdminRoutes() {
 
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/:ordersid" element={<ViewOrders />} />
-          <Route path="/feedbacks" element={<Feedback />} />
+          <Route path="/feedbacks" element={<AdminFeedbacks />} />
+          <Route path="/customer-user" element={<CustomerUsers />} />
         </Routes>
       </div>
     </div>
