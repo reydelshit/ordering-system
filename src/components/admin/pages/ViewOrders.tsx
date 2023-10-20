@@ -200,12 +200,12 @@ export default function ViewOrders() {
         <div className="flex gap-2 items-center">
           <h1>{status}</h1>
           <Select onValueChange={(e) => handleStatus(e)}>
-            <SelectTrigger className="w-[120px]">
+            <SelectTrigger className="w-[200px]">
               <SelectValue placeholder="Set status" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="Pending">Pending</SelectItem>
-              <SelectItem value="Shipped">Shipped</SelectItem>
+              <SelectItem value="On Delivery">On Delivery</SelectItem>
               <SelectItem value="Cancelled">Cancelled</SelectItem>
               <SelectItem value="Delivered">Delivered</SelectItem>
             </SelectContent>
