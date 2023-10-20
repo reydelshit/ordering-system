@@ -8,6 +8,13 @@ import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import Cart from './components/Cart';
 import ProfileOrdersTable from './components/ProfileOrderTable';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 type User = {
   user_id: number;
@@ -32,11 +39,13 @@ type Cart = {
   status: string;
   product_id: number;
   order_id: number;
+  created_at: string;
 };
 export default function Profile() {
   const [user, setUser] = useState<User[]>([]);
   const [cart, setCart] = useState<Cart[]>([]);
   const [paidOrders, setPaidOrders] = useState<Cart[]>([]);
+  const [status, setStatus] = useState('');
 
   const getUserData = () => {
     axios
@@ -80,6 +89,13 @@ export default function Profile() {
     handleFetchCart();
     getPaidOrders();
   }, []);
+
+  const handleStatus = (event: string) => {
+    const selectedValue = event;
+
+    console.log(selectedValue);
+    setStatus(selectedValue);
+  };
 
   return (
     <div className="w-full p-4">
@@ -149,7 +165,19 @@ export default function Profile() {
           {/* <Messages /> */}
         </div>
         <div className="w-[75rem] border-2 rounded-md">
-          <ProfileOrdersTable paidOrders={paidOrders} />
+          <Select onValueChange={(e) => handleStatus(e)}>
+            <SelectTrigger className="w-[120px]">
+              <SelectValue placeholder="Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="All">All</SelectItem>
+              <SelectItem value="Pending">Pending</SelectItem>
+              <SelectItem value="Shipped">Shipped</SelectItem>
+              <SelectItem value="Cancelled">Cancelled</SelectItem>
+              <SelectItem value="Delivered">Delivered</SelectItem>
+            </SelectContent>
+          </Select>
+          <ProfileOrdersTable status={status} paidOrders={paidOrders} />
         </div>
       </div>
     </div>

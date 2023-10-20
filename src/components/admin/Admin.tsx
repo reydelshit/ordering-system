@@ -26,7 +26,7 @@ export default function AdminRoutes() {
           </Link>
         </span>
         <span className="flex gap-2 p-1 w-full mb-2">
-          <Link className="flex" to="/admin/orders">
+          <Link className="flex" to="/admin/manage-product">
             <AiOutlineDropbox className="w-[2rem] h-[1.5rem]" />
             Manage Product
           </Link>

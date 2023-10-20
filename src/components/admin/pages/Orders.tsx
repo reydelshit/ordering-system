@@ -11,21 +11,6 @@ import {
 } from '@/components/ui/select';
 import { useNavigate } from 'react-router-dom';
 
-type Order = {
-  cart_id: number;
-  product_names: string;
-  product_price: number;
-  total_quantity: number;
-  payment_type: string;
-  product_image: string;
-  status: string;
-  product_id: number;
-  order_id: number;
-  total_amount: number;
-  user_id: number;
-  status_id: number;
-};
-
 export default function Orders() {
   const [status, setStatus] = useState('');
   const navigate = useNavigate();
@@ -34,17 +19,6 @@ export default function Orders() {
 
     console.log(selectedValue);
     setStatus(selectedValue);
-    // console.log(order_id.ordersid, 'orderid');
-
-    // axios
-    //   .put('http://localhost/ordering/status.php', {
-    //     status: selectedValue,
-    //     order_id: order_id.ordersid,
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data, 'status');
-    //     getOrders();
-    //   });
   };
 
   return (

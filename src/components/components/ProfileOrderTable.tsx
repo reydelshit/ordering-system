@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 type Product = {
   cart_id: number;
@@ -29,12 +30,15 @@ type Product = {
   status: string;
   product_id: number;
   order_id: number;
+  created_at: string;
 };
 
 export default function ProfileOrdersTable({
   paidOrders,
+  status,
 }: {
   paidOrders: Product[];
+  status: string;
 }) {
   const orderGroups: { [orderId: string]: Product[] } = {} as {
     [orderId: string]: Product[];
@@ -52,6 +56,7 @@ export default function ProfileOrdersTable({
       <TableCaption>A list of your orders.</TableCaption>
       <TableHeader>
         <TableRow>
+          <TableHead className="text-center">Date</TableHead>
           <TableHead></TableHead>
           <TableHead className="text-center">Product</TableHead>
           <TableHead className="text-center">Price</TableHead>
@@ -65,48 +70,56 @@ export default function ProfileOrdersTable({
       </TableHeader>
 
       {Object.keys(orderGroups).map((orderId, index) => (
-        <TableBody key={index}>
-          {orderGroups[orderId].map((prod, index) => {
-            return (
-              <TableRow key={index}>
-                <TableCell>
-                  <img
-                    className="w-[4rem] h-[4rem] rounded-md object-cover bg-gray-100"
-                    src={prod.product_image}
-                    alt={prod.product_name}
-                  />
-                </TableCell>
-                <TableCell>{prod.product_name}</TableCell>
-                <TableCell>${prod.product_price}</TableCell>
-                <TableCell>{prod.quantity}</TableCell>
-                <TableCell>${prod.product_price * prod.quantity}</TableCell>
+        <TableBody className="border-2 rounded-md" key={index}>
+          {orderGroups[orderId]
+            .filter((prod) => prod.status.includes(status) || status === 'All')
+            .map((prod, index) => {
+              return (
+                <TableRow key={index}>
+                  <TableCell className="break-words w-[8rem]">
+                    {moment(prod.created_at).format('LLLL')}
+                  </TableCell>
 
-                <TableCell>{prod.status}</TableCell>
-                <TableCell>
-                  {prod.order_id === prod.order_id ? prod.order_id : 'ngek'}
-                </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="underline">
-                      Actions
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="cursor-pointer">
-                      <DropdownMenuItem>Cancel Order</DropdownMenuItem>
-                      <DropdownMenuItem
-                        disabled={prod.status == 'Delivered' ? false : true}
-                      >
-                        <Link
-                          to={`/shop/${prod.product_id}?orderid=${prod.order_id}`}
+                  <TableCell>
+                    <img
+                      className="w-[4rem] h-[4rem] rounded-md object-cover bg-gray-100"
+                      src={prod.product_image}
+                      alt={prod.product_name}
+                    />
+                  </TableCell>
+                  <TableCell>{prod.product_name}</TableCell>
+                  <TableCell>${prod.product_price}</TableCell>
+                  <TableCell>{prod.quantity}</TableCell>
+                  <TableCell>${prod.product_price * prod.quantity}</TableCell>
+
+                  <TableCell>{prod.status}</TableCell>
+                  <TableCell>
+                    {prod.order_id === prod.order_id ? prod.order_id : 'ngek'}
+                  </TableCell>
+                  <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="underline">
+                        Actions
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="cursor-pointer">
+                        <DropdownMenuItem className="cursor-pointer">
+                          Cancel Order
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          disabled={prod.status == 'Delivered' ? false : true}
                         >
-                          Rate now
-                        </Link>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            );
-          })}
+                          <Link
+                            to={`/shop/${prod.product_id}?orderid=${prod.order_id}`}
+                          >
+                            Rate now
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
         </TableBody>
       ))}
     </Table>

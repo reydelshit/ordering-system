@@ -80,10 +80,10 @@ export default function ViewOrders() {
         params: { order_id: order_id.ordersid },
       })
       .then((res) => {
-        // console.log(res.data, 'ndjkabjkda');
+        console.log(res.data, 'ndjkabjkda');
         setUserId(res.data[0].user_id);
-        setOrderDate(res.data[0].created_at);
         console.log(res.data[0].user_id, 'user id');
+        setOrderDate(res.data[0].created_at);
         getUserDetails(res.data[0].user_id);
         getOrderDetails(res.data[0].order_id);
         setOrderId(res.data[0].order_id);
