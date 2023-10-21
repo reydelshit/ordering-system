@@ -31,7 +31,7 @@ export default function Shortcut() {
           </Link>
         </CommandGroup>
         <CommandSeparator />
-        <CommandGroup heading="Settings">
+        <CommandGroup heading="Functions">
           <Link to="/admin/manage-product">
             <CommandItem className="cursor-pointer">Add product</CommandItem>
           </Link>

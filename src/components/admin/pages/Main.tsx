@@ -95,13 +95,13 @@ export default function Main() {
       <Separator />
       <div className="grid grid-cols-4 my-4 gap-4">
         <Cards
-          Icon={<AiOutlineDropbox className="text-4xl text-orange-400" />}
+          Icon={<AiOutlineDropbox className="text-4xl text-violet-400" />}
           title="Total Products"
           value={`+${product.length}`}
           description=" Total number of products"
         />
         <Cards
-          Icon={<MdAttachMoney className="text-4xl text-orange-400" />}
+          Icon={<MdAttachMoney className="text-4xl text-violet-400" />}
           title="Total Revenue"
           value={` $${paidOrders.reduce(
             (total, prod) => total + prod.total_amount,
@@ -110,14 +110,14 @@ export default function Main() {
           description="  +20.1% from last month"
         />
         <Cards
-          Icon={<BsCartPlus className="text-4xl text-orange-400" />}
+          Icon={<BsCartPlus className="text-4xl text-violet-400" />}
           title="Total Orders"
           value={`+${paidOrders.length}`}
           description="+20.1% from last month"
         />
 
         <Cards
-          Icon={<FiUsers className="text-4xl text-orange-400" />}
+          Icon={<FiUsers className="text-4xl text-violet-400" />}
           title="Registered Customers"
           value={`${customers.length}`}
           description="Total number of registered customers"
@@ -154,9 +154,9 @@ export default function Main() {
 
             <div className="w-full">
               <Link to="/admin/orders">
-                <div className="cursor-pointer text-start justify-between flex items-center font-bold h-[4rem] p-2 bg-orange-100 w-full rounded-lg  px-5">
+                <div className="cursor-pointer text-start justify-between flex items-center font-bold h-[4rem] p-2 bg-violet-100 w-full rounded-lg  px-5">
                   <h1 className="flex item-center">
-                    <span className="text-orange-400 mr-2 text-xl">
+                    <span className="text-violet-400 mr-2 text-xl">
                       {' '}
                       {orderStatus.map(
                         (stat: any) =>
