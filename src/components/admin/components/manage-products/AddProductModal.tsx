@@ -128,7 +128,7 @@ export default function AddProductModal({
             Go Back
           </Button>
 
-          <h1 className="font-bold text-2xl">Update Details</h1>
+          {/* <h1 className="font-bold text-2xl">Update Details</h1> */}
         </div>
 
         <div className="flex w-full justify-between gap-[4rem] mt-[5rem]">
@@ -247,7 +247,7 @@ export default function AddProductModal({
             </div>
 
             <Button className="w-[40%] self-center" type="submit">
-              Save and Update
+              Add product
             </Button>
           </form>
         </div>

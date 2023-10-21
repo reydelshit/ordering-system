@@ -50,13 +50,11 @@ export default function OrdersTable({ status }: { status: string }) {
 
   return (
     <Table className="w-full">
-      <TableCaption>A list of your orders.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="text-center">Order ID</TableHead>
           <TableHead className="text-center">User ID</TableHead>
           <TableHead className="text-center">Ordered Products</TableHead>
-          {/* <TableHead className="text-center">Payment Type</TableHead> */}
           <TableHead className="text-center">Total Amount</TableHead>
           <TableHead className="text-center">Status</TableHead>
         </TableRow>
@@ -76,15 +74,18 @@ export default function OrdersTable({ status }: { status: string }) {
                     {prod.product_names}
                   </Link>
                 </TableCell>
-                {/* <TableCell>{prod.payment_type}</TableCell> */}
                 <TableCell>{prod.total_amount}</TableCell>
                 <TableCell>
                   <div
                     className={`p-2 ${
                       prod.status === 'Delivered'
-                        ? 'bg-violet-100'
-                        : 'bg-blue-100'
-                    } text-violet-700 font-bold rounded-md`}
+                        ? 'bg-purple-500 text-white'
+                        : prod.status === 'On Delivery'
+                        ? 'bg-green-700 text-white'
+                        : prod.status === 'Cancelled'
+                        ? 'bg-red-500 text-white'
+                        : 'bg-yellow-500 text-black'
+                    }  font-bold rounded-md`}
                   >
                     {prod.status}
                   </div>

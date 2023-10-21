@@ -3,8 +3,12 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Cards from '../components/main/Cards';
 import { PieChart } from '@mui/x-charts/PieChart';
-import { set } from 'date-fns';
 import { Link } from 'react-router-dom';
+import Shortcut from '../components/main/Shortcut';
+import { BsCartPlus } from 'react-icons/bs';
+import { MdAttachMoney } from 'react-icons/md';
+import { AiOutlineDropbox } from 'react-icons/ai';
+import { FiUsers } from 'react-icons/fi';
 
 type Product = {
   product_names: string;
@@ -16,12 +20,6 @@ type Product = {
   total_amount: number;
   user_id: number;
   status_id: number;
-};
-
-type Status = {
-  status: string;
-  count: number;
-  color: string;
 };
 
 export default function Main() {
@@ -89,19 +87,21 @@ export default function Main() {
   }, []);
 
   return (
-    <div className="p-4">
+    <div className="p-4 bg-slate-50">
       <div className="text-start mb-4 h-[4rem] my-auto">
         <h1 className="font-bold text-2xl">Admin Main</h1>
         <p>Here is whats happening in your business!</p>
       </div>
       <Separator />
-      <div className="grid grid-cols-4 my-2 gap-4">
+      <div className="grid grid-cols-4 my-4 gap-4">
         <Cards
+          Icon={<AiOutlineDropbox className="text-4xl text-orange-400" />}
           title="Total Products"
           value={`+${product.length}`}
           description=" Total number of products"
         />
         <Cards
+          Icon={<MdAttachMoney className="text-4xl text-orange-400" />}
           title="Total Revenue"
           value={` $${paidOrders.reduce(
             (total, prod) => total + prod.total_amount,
@@ -110,113 +110,121 @@ export default function Main() {
           description="  +20.1% from last month"
         />
         <Cards
+          Icon={<BsCartPlus className="text-4xl text-orange-400" />}
           title="Total Orders"
           value={`+${paidOrders.length}`}
           description="+20.1% from last month"
         />
 
         <Cards
+          Icon={<FiUsers className="text-4xl text-orange-400" />}
           title="Registered Customers"
           value={`${customers.length}`}
           description="Total number of registered customers"
         />
       </div>
 
-      <div className="border-2 mt-[2rem] w-[55rem] p-4">
-        <div className="w-full text-start">
-          <h1 className="font-bold text-2xl">Order Summary</h1>
-          <p className="text-sm">Check and manage orders</p>
-        </div>
-
-        <div className="flex w-full p-2 mt-[2rem] gap-[2rem]">
-          <div className="flex items-center">
-            <PieChart
-              series={[
-                {
-                  data: orderStatus,
-                  innerRadius: 30,
-                  outerRadius: 100,
-                  paddingAngle: 5,
-                  cornerRadius: 5,
-                  startAngle: -90,
-                  endAngle: 180,
-                  cx: 150,
-                  cy: 150,
-                },
-              ]}
-              width={350}
-              height={300}
-            />
+      <div className="flex w-full border-2 gap-[2rem] items-center">
+        <div className="border-2 mt-[2rem] w-[65rem] p-4 rounded-md bg-white">
+          <div className="w-full text-start">
+            <h1 className="font-bold text-2xl">Order Summary</h1>
+            <p className="text-sm">Check and manage orders</p>
           </div>
 
-          <div className="w-full">
-            <Link to="/admin/orders">
-              <div className="cursor-pointer text-start justify-between flex items-center font-bold h-[4rem] p-2 bg-orange-100 w-full rounded-lg  px-5">
-                <h1 className="flex item-center">
-                  <span className="text-orange-400 mr-2 text-xl">
-                    {' '}
-                    {orderStatus.map(
-                      (stat: any) =>
-                        stat.name.includes('Pending') && stat.value,
-                    )}
-                  </span>{' '}
-                  New Orders
-                </h1>
-                <span className="font-bold text-3xl">{'>'}</span>
+          <div className="flex w-full p-2 mt-[2rem] gap-[2rem]">
+            <div className="flex items-center">
+              <PieChart
+                series={[
+                  {
+                    data: orderStatus,
+                    innerRadius: 30,
+                    outerRadius: 100,
+                    paddingAngle: 5,
+                    cornerRadius: 5,
+                    startAngle: -90,
+                    endAngle: 180,
+                    cx: 150,
+                    cy: 150,
+                  },
+                ]}
+                width={350}
+                height={300}
+              />
+            </div>
+
+            <div className="w-full">
+              <Link to="/admin/orders">
+                <div className="cursor-pointer text-start justify-between flex items-center font-bold h-[4rem] p-2 bg-orange-100 w-full rounded-lg  px-5">
+                  <h1 className="flex item-center">
+                    <span className="text-orange-400 mr-2 text-xl">
+                      {' '}
+                      {orderStatus.map(
+                        (stat: any) =>
+                          stat.name.includes('Pending') && stat.value,
+                      )}
+                    </span>{' '}
+                    New Orders
+                  </h1>
+                  <span className="font-bold text-3xl">{'>'}</span>
+                </div>
+              </Link>
+
+              <div className="grid grid-cols-2 place-content-center place-items-center gap-7 mt-[2rem]">
+                <span className="flex items-center gap-2">
+                  <div className="bg-green-600 rounded-sm p-4 w-[2rem]"></div>{' '}
+                  On Delivery
+                </span>
+                <span className="flex items-center gap-2">
+                  <div className="bg-purple-900 rounded-sm p-4 w-[2rem]"></div>{' '}
+                  Delivered
+                </span>
+                <span className="flex items-center gap-2">
+                  <div className="bg-red-600 rounded-sm p-4 w-[2rem]"></div>{' '}
+                  Cancelled
+                </span>
+
+                <span className="flex items-center gap-2">
+                  <div className="bg-yellow-400 rounded-sm p-4 w-[2rem]"></div>{' '}
+                  Pending
+                </span>
               </div>
-            </Link>
+            </div>
+          </div>
 
-            <div className="grid grid-cols-2 place-content-center place-items-center gap-7 mt-[2rem]">
-              <span className="flex items-center gap-2">
-                <div className="bg-green-600 rounded-sm p-4 w-[2rem]"></div> On
-                Delivery
-              </span>
-              <span className="flex items-center gap-2">
-                <div className="bg-purple-900 rounded-sm p-4 w-[2rem]"></div>{' '}
-                Delivered
-              </span>
-              <span className="flex items-center gap-2">
-                <div className="bg-red-600 rounded-sm p-4 w-[2rem]"></div>{' '}
-                Cancelled
-              </span>
+          <div className="flex justify-between h-[6rem] mt-[2rem]">
+            <div className="bg-green-600 text-white w-[16rem] rounded-lg text-start flex items-start flex-col justify-center p-4">
+              <h1 className="font-bold text-2xl">
+                {orderStatus.map(
+                  (stat: any) =>
+                    stat.name.includes('On Delivery') && stat.value,
+                )}
+              </h1>
+              <p>On Delivery</p>
+            </div>
 
-              <span className="flex items-center gap-2">
-                <div className="bg-yellow-400 rounded-sm p-4 w-[2rem]"></div>{' '}
-                Pending
-              </span>
+            <div className="bg-purple-900  text-white w-[16rem] rounded-lg text-start flex items-start flex-col justify-center p-4">
+              <h1 className="font-bold text-2xl">
+                {' '}
+                {orderStatus.map(
+                  (stat: any) => stat.name.includes('Delivered') && stat.value,
+                )}
+              </h1>
+              <p>Delivered</p>
+            </div>
+
+            <div className="bg-red-600  text-white w-[16rem] rounded-lg text-start flex items-start flex-col justify-center p-4">
+              <h1 className="font-bold text-2xl">
+                {' '}
+                {orderStatus.map(
+                  (stat: any) => stat.name.includes('Cancelled') && stat.value,
+                )}
+              </h1>
+              <p>Cancelled</p>
             </div>
           </div>
         </div>
-
-        <div className="flex justify-between h-[6rem] mt-[2rem]">
-          <div className="bg-green-600 text-white w-[16rem] rounded-lg text-start flex items-start flex-col justify-center p-4">
-            <h1 className="font-bold text-2xl">
-              {orderStatus.map(
-                (stat: any) => stat.name.includes('On Delivery') && stat.value,
-              )}
-            </h1>
-            <p>On Delivery</p>
-          </div>
-
-          <div className="bg-purple-900  text-white w-[16rem] rounded-lg text-start flex items-start flex-col justify-center p-4">
-            <h1 className="font-bold text-2xl">
-              {' '}
-              {orderStatus.map(
-                (stat: any) => stat.name.includes('Delivered') && stat.value,
-              )}
-            </h1>
-            <p>Delivered</p>
-          </div>
-
-          <div className="bg-red-600  text-white w-[16rem] rounded-lg text-start flex items-start flex-col justify-center p-4">
-            <h1 className="font-bold text-2xl">
-              {' '}
-              {orderStatus.map(
-                (stat: any) => stat.name.includes('Cancelled') && stat.value,
-              )}
-            </h1>
-            <p>Cancelled</p>
-          </div>
+        <div className="w-[40%] flex items-start h-full">
+          <Shortcut />
         </div>
       </div>
     </div>
