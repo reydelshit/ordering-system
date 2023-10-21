@@ -122,7 +122,7 @@ export default function ManageProduct() {
                         <span className="flex gap-2">
                           <AlertDialog>
                             <AlertDialogTrigger className="cursor-pointer">
-                              <RiDeleteBin5Line className="w-[2rem] h-[1.5rem]" />
+                              <RiDeleteBin5Line className="w-[2rem] h-[1.5rem] text-violet-400" />
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
@@ -149,11 +149,11 @@ export default function ManageProduct() {
                             to={`/admin/manage-product/update/${prod.product_id}`}
                           >
                             {' '}
-                            <FiEdit3 className="w-[2rem] h-[1.5rem]" />
+                            <FiEdit3 className="w-[2rem] h-[1.5rem] text-violet-400" />
                           </Link>
                           <Link to={`/shop/${prod.product_id}`}>
                             {' '}
-                            <AiOutlineEye className="w-[2rem] h-[1.5rem]" />
+                            <AiOutlineEye className="w-[2rem] h-[1.5rem] text-violet-400" />
                           </Link>
                         </span>
                       </TableCell>
