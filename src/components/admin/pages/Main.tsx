@@ -103,17 +103,19 @@ export default function Main() {
         <Cards
           Icon={<MdAttachMoney className="text-4xl text-violet-400" />}
           title="Total Revenue"
-          value={` $${paidOrders.reduce(
-            (total, prod) => total + prod.total_amount,
-            0,
-          )}`}
-          description="  +20.1% from last month"
+          value={` $${paidOrders
+            .filter((prod) => !prod.status.includes('Cancelled'))
+            .reduce((total, prod) => total + prod.total_amount, 0)}`}
+          description="Canncelled orders are not counted"
         />
         <Cards
           Icon={<BsCartPlus className="text-4xl text-violet-400" />}
           title="Total Orders"
-          value={`+${paidOrders.length}`}
-          description="+20.1% from last month"
+          value={`${
+            paidOrders.filter((prod) => !prod.status.includes('Cancelled'))
+              .length
+          }`}
+          description="Number of orders not including cancelled ones"
         />
 
         <Cards
