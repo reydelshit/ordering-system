@@ -15,7 +15,7 @@ export default function CustomerReviews({
   feedbacks: Feedback[];
 }) {
   return (
-    <div className="w-[35rem] text-start p-4 mb-[2rem]">
+    <div className="w-full text-start p-4 mb-[2rem]">
       <h1 className="font-bold text-2xl mb-2">Customer Reviews</h1>
       <div className="flex items-center">
         <div className="flex items-center">

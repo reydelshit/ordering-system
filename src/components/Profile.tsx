@@ -15,7 +15,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-
+import Cards from './components/profile/Cards';
+import { MdAttachMoney } from 'react-icons/md';
+import { VscFeedback } from 'react-icons/vsc';
+import { BsCartPlus } from 'react-icons/bs';
 type User = {
   user_id: number;
   name: string;
@@ -41,11 +44,20 @@ type Cart = {
   order_id: number;
   created_at: string;
 };
+
+type FeedbackProduct = {
+  product_id: number;
+  product_name: string;
+  total_feedback: number;
+  feedback_id: number;
+};
+
 export default function Profile() {
   const [user, setUser] = useState<User[]>([]);
   const [cart, setCart] = useState<Cart[]>([]);
   const [paidOrders, setPaidOrders] = useState<Cart[]>([]);
   const [status, setStatus] = useState('');
+  const [feedbackProduct, setFeedbackProduct] = useState<FeedbackProduct[]>([]);
 
   const getUserData = () => {
     axios
@@ -84,10 +96,22 @@ export default function Profile() {
       });
   };
 
+  const getFeedback = async () => {
+    await axios
+      .get('http://localhost/ordering/feedback.php', {
+        params: { user_id: localStorage.getItem('ordering-token') },
+      })
+      .then((res) => {
+        console.log(res.data, 'feedback');
+        setFeedbackProduct(res.data);
+      });
+  };
+
   useEffect(() => {
     getUserData();
     handleFetchCart();
     getPaidOrders();
+    getFeedback();
   }, []);
 
   const handleStatus = (event: string) => {
@@ -136,23 +160,31 @@ export default function Profile() {
               </div>
             </div>
 
-            <div className="w-full flex h-[8rem] justify-around items-center">
-              <div>
-                <h1 className="font-bold">Total orders</h1>
-                <span className="font-bold text-3xl">{paidOrders.length}</span>
-              </div>
-              <div>
-                <h1 className="font-bold">Total Spends</h1>
-                <span className="font-bold text-3xl">
-                  {paidOrders.reduce((acc, product) => {
+            <div className="grid grid-cols-3 my-4 gap-4 w-full px-4">
+              <Cards
+                title="Total Spends"
+                value={`${paidOrders
+                  .filter((prod) => prod.status.includes('Delivered'))
+                  .reduce((acc, product) => {
                     return acc + product.product_price * product.quantity;
-                  }, 0)}
-                </span>
-              </div>
-              <div>
-                <h1 className="font-bold">Feedback Submission</h1>
-                <span className="font-bold text-3xl">99</span>
-              </div>
+                  }, 0)}`}
+                description="Only delivered are counted."
+                Icon={<MdAttachMoney className="text-4xl text-violet-400" />}
+              />
+
+              <Cards
+                title="Total orders"
+                value={`${paidOrders.length}`}
+                description="Orders including the cancelled ones."
+                Icon={<BsCartPlus className="text-4xl text-violet-400" />}
+              />
+
+              <Cards
+                title="Feedbacks Submissions"
+                value={`${feedbackProduct.length}`}
+                description="Total Feedbacks Submissions"
+                Icon={<VscFeedback className="text-4xl text-violet-400" />}
+              />
             </div>
           </div>
         </div>
@@ -165,18 +197,21 @@ export default function Profile() {
           {/* <Messages /> */}
         </div>
         <div className="w-[75rem] border-2 rounded-md">
-          <Select onValueChange={(e) => handleStatus(e)}>
-            <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder="Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="All">All</SelectItem>
-              <SelectItem value="Pending">Pending</SelectItem>
-              <SelectItem value="On Delivery">On Delivery</SelectItem>
-              <SelectItem value="Cancelled">Cancelled</SelectItem>
-              <SelectItem value="Delivered">Delivered</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="w-full justify-end flex p-2">
+            <Select onValueChange={(e) => handleStatus(e)}>
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="All">All</SelectItem>
+                <SelectItem value="Pending">Pending</SelectItem>
+                <SelectItem value="On Delivery">On Delivery</SelectItem>
+                <SelectItem value="Cancelled">Cancelled</SelectItem>
+                <SelectItem value="Delivered">Delivered</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
           <ProfileOrdersTable status={status} paidOrders={paidOrders} />
         </div>
       </div>

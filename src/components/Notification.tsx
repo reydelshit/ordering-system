@@ -22,7 +22,7 @@ export default function Notification() {
       if (Array.isArray(response.data) && response.data.length > 0) {
         setNotification(response.data);
       } else {
-        setNotification([]); // Ensure notification is an array even if there are no notifications.
+        setNotification([]);
       }
     } catch (error) {
       console.error('Error fetching notifications:', error);

@@ -93,7 +93,7 @@ export default function ProfileOrdersTable({
 
       {Object.keys(orderGroups).map((orderId, index) => (
         <TableBody className="rounded-md mb-[5rem]" key={index}>
-          <span className="mt-[3rem] block"></span>
+          <tr className="mt-[3rem] block"></tr>
           {orderGroups[orderId]
             .filter((prod) => prod.status.includes(status) || status === 'All')
             .map((prod, index) => {
@@ -145,6 +145,13 @@ export default function ProfileOrdersTable({
                               <AlertDialogCancel>Cancel</AlertDialogCancel>
                               <AlertDialogAction
                                 onClick={() => handleStatus(prod.order_id)}
+                                disabled={
+                                  prod.status.includes('On Delivery')
+                                    ? true
+                                    : false || prod.status.includes('Delivered')
+                                    ? true
+                                    : false
+                                }
                               >
                                 Cancel Order
                               </AlertDialogAction>

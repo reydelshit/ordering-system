@@ -240,10 +240,13 @@ export default function Feedbacks() {
                       </div>
                     ),
                 )}
-
-                <Button onClick={() => handleShowReplyInput(index, index)}>
-                  {showReplyInput && inputIndex === index ? 'Cancel' : 'Reply'}
-                </Button>
+                {user_id && user_id.length > 0 && (
+                  <Button onClick={() => handleShowReplyInput(index, index)}>
+                    {showReplyInput && inputIndex === index
+                      ? 'Cancel'
+                      : 'Reply'}
+                  </Button>
+                )}
 
                 {showReplyInput && inputIndex === index && (
                   <div className="mt-[1rem] flex flex-col">

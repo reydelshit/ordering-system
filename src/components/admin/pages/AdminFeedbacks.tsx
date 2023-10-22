@@ -192,7 +192,7 @@ export default function AdminFeedbacks() {
         <div className="w-[100%] border-2 p-4 rounded-md">
           <div className="flex">
             <CustomerReviews feedbacks={feedbacks} />
-            <div>card card</div>
+            {/* <div>card card</div> */}
           </div>
 
           {feedbackResponses.length > 0 ? (
