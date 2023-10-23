@@ -1,14 +1,10 @@
-import { AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
-import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import { AiOutlineDelete } from 'react-icons/ai';
+import moment from 'moment';
+import { useToast } from '../ui/use-toast';
 type Cart = {
   cart_id: number;
   product_name: string;
@@ -18,16 +14,17 @@ type Cart = {
 };
 
 export default function Cart({ cart }: { cart: Cart[] }) {
-  // useEffect(() => {
-  //   handleFetchCart();
-  // }, []);
-
+  const { toast } = useToast();
   const handleDeleteCartProduct = (cart_id: number) => {
     console.log(cart_id);
     axios
       .delete(`http://localhost/ordering/cart.php/${cart_id}`)
       .then((res) => {
         console.log(res);
+        toast({
+          title: 'Cart: Deleted Successfully',
+          description: moment().format('LLLL'),
+        });
       });
   };
   return (
@@ -50,12 +47,12 @@ export default function Cart({ cart }: { cart: Cart[] }) {
               </div>
             </div>
 
-            <div className="flex flex-col justify-between h-full items-center">
+            <div className="flex flex-col justify-around h-full items-center">
               <span
                 onClick={() => handleDeleteCartProduct(cart.cart_id)}
                 className="cursor-pointer"
               >
-                delete
+                <AiOutlineDelete className="text-3xl text-violet-400" />
               </span>
               <span className="block font-bold">
                 ${cart.product_price * cart.qty}

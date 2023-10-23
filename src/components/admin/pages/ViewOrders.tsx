@@ -18,8 +18,8 @@ import moment from 'moment';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import PaidOrdersTable from '../components/view-orders/PaidOrdersTable';
 import Cards from '../components/view-orders/Cards';
-import Notification from '@/components/Notification';
 import NotificationViewOrders from '../components/view-orders/NotificationViewOrders';
+import { useToast } from '@/components/ui/use-toast';
 
 type Product = {
   cart_id: number;
@@ -73,7 +73,7 @@ export default function ViewOrders() {
   const [templateMessage, setTemplateMessage] = useState<string>('');
   const [isTemplateMessage, setIsTemplateMessage] = useState<boolean>(true);
   const [orderDate, setOrderDate] = useState<string>('');
-
+  const { toast } = useToast();
   const getOrders = async () => {
     await axios
       .get('http://localhost/ordering/view-orders-admin.php', {
@@ -138,6 +138,10 @@ export default function ViewOrders() {
       .then((res) => {
         console.log(res.data, 'status');
         getOrders();
+        toast({
+          title: 'Order Status: Changed Successfully',
+          description: moment().format('LLLL'),
+        });
       });
   };
 

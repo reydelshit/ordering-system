@@ -9,6 +9,8 @@ import {
 } from '@/components/ui/table';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 type Customer = {
   user_id: number;
   name: string;
@@ -20,6 +22,7 @@ type Customer = {
 
 export default function CustomerUsers() {
   const [customers, setCustomers] = useState<Customer[]>([]);
+  const navigate = useNavigate();
   const getCustomersDetails = () => {
     axios.get('http://localhost/ordering/customers.php').then((response) => {
       console.log(response.data);
@@ -32,8 +35,11 @@ export default function CustomerUsers() {
   }, []);
 
   return (
-    <div>
-      <h1>Customer Users</h1>
+    <div className="p-4">
+      <div className="flex justify-between w-full mb-[4rem]">
+        <Button onClick={() => navigate(-1)}>Go Back</Button>
+        <h1 className="font-bold text-2xl self-end">Customers</h1>
+      </div>
 
       <div className="w-full mt-[4rem]">
         <Table className="w-[80%] mx-auto border-2">

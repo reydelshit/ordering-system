@@ -1,12 +1,10 @@
-import { Routes, Route, Link, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 
 import ManageProduct from './pages/ManageProduct';
 import Main from './pages/Main';
 import Orders from './pages/Orders';
 import ViewOrders from './pages/ViewOrders';
-import Feedback from './pages/AdminFeedbacks';
 import UpdateProducts from './pages/UpdateProducts';
-import { Toaster } from '@/components/ui/toaster';
 import { BsCartCheck } from 'react-icons/bs';
 import { AiOutlineDropbox } from 'react-icons/ai';
 import { VscFeedback } from 'react-icons/vsc';

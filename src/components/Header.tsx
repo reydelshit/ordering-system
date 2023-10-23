@@ -1,5 +1,5 @@
-import { AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
-import { Link, useNavigate } from 'react-router-dom';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 import Jordans from '@/assets/jordans.png';
 
 import {
@@ -8,10 +8,9 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from './ui/button';
 import Cart from './components/Cart';
-import { set } from 'date-fns';
 import Notification from './Notification';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import ProfileIcon from './components/header/ProfileIcon';

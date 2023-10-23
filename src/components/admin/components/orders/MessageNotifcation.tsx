@@ -92,7 +92,6 @@ export default function MessageNotification({
         ) : (
           <p>Loading...</p>
         )}
-        B
       </div>
       <div className="flex items-center gap-4 mt-2 absolute bottom-2">
         <Textarea

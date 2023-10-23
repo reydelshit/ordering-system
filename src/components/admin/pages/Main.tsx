@@ -162,7 +162,8 @@ export default function Main() {
                       {' '}
                       {orderStatus.map(
                         (stat: any) =>
-                          stat.name.includes('Pending') && stat.value,
+                          stat.name.includes('Pending') &&
+                          (stat.value > 0 ? stat.value : 0),
                       )}
                     </span>{' '}
                     New Orders

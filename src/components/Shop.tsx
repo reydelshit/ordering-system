@@ -20,19 +20,9 @@ type Product = {
   product_category: string;
 };
 
-type Feedback = {
-  email: string;
-  feedback_description: string;
-  feedback_id: number;
-  feedback_rating: number;
-  name: string;
-  profile_picture: string;
-  feedback_date: string;
-};
-
 export default function Shop() {
   const [product, setProduct] = useState<Product[]>([]);
-  const productIndex = 0;
+
   const [quantities, setQuantities] = useState<{
     [productIndex: number]: number;
   }>({});
@@ -41,10 +31,6 @@ export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState('' as string);
 
   const [search, setSearch] = useState('');
-
-  const [selectedRating, setSelectedRating] = useState<number | null>(null);
-  const [rating, setRating] = useState(0);
-  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
 
   const getProduct = () => {
     axios.get('http://localhost/ordering/product.php/').then((res) => {
@@ -121,12 +107,6 @@ export default function Shop() {
   const handlePriceFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(event.target.value);
     setRangeValue(value);
-  };
-
-  const handleClick = (number: number) => {
-    console.log(number + 1);
-    setRating(number + 1);
-    setSelectedRating(number);
   };
 
   const handleChangeCategory = (event: React.FormEvent<HTMLInputElement>) => {

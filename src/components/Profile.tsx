@@ -1,6 +1,6 @@
 import axios from 'axios';
 import DefaultProfile from '@/assets/default.jpg';
-import { Separator } from '@/components/ui/separator';
+
 import { Label } from '@/components/ui/label';
 
 import { useEffect, useState } from 'react';

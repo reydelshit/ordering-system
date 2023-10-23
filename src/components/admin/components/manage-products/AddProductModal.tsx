@@ -26,9 +26,6 @@ export default function AddProductModal({
 }) {
   const [user, setUser] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('' as string);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [height, setHeight] = useState('');
 
   const [image, setImage] = useState<string | null>(null);
   const [images, setImages] = useState<string[]>([]);

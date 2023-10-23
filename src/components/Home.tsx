@@ -1,8 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import Jordans from '@/assets/jordans.png';
-import Jow from '@/assets/jow.png';
-import Ey from '@/assets/ey.jpg';
 export default function Home() {
   return (
     <div className="w-full flex items-center h-[90vh] p-4">

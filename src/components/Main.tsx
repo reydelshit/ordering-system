@@ -1,15 +1,15 @@
 import Header from '@/components/Header';
 import Home from '@/components/Home';
 
-import { Routes, Route, BrowserRouter, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Shop from '@/components/Shop';
 import View from '@/components/View';
 import AdminRoutes from '@/components/admin/Admin';
 import Login from './Login';
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import ProtectedRoute from './Protected';
 import axios from 'axios';
-import { is } from 'date-fns/locale';
+
 import Profile from './Profile';
 
 import Register from './Register';

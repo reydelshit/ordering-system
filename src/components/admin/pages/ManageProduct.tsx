@@ -11,7 +11,7 @@ import {
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import AddProductModal from '../components/manage-products/AddProductModal';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { FiEdit3 } from 'react-icons/fi';
 import { AiOutlineEye } from 'react-icons/ai';
@@ -28,6 +28,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { useToast } from '@/components/ui/use-toast';
+import moment from 'moment';
 
 type Product = {
   product_id: number;
@@ -40,6 +42,8 @@ export default function ManageProduct() {
   const [product, setProduct] = useState<Product[]>([]);
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [searchProduct, setSearchProduct] = useState('' as string);
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   const getProduct = () => {
     axios.get('http://localhost/ordering/product.php/').then((res) => {
@@ -56,19 +60,25 @@ export default function ManageProduct() {
     axios.delete(`http://localhost/ordering/product.php/${id}`).then((res) => {
       console.log(res.data);
       getProduct();
+
+      toast({
+        title: 'Product: Deleted Successfully',
+        description: moment().format('LLLL'),
+      });
     });
   };
 
   return (
     <div className="flex flex-col p-4 justify-center items-center">
-      <div className="flex justify-end w-full">
-        <h1 className="font-bold text-2xl">Manage Product</h1>
+      <div className="flex justify-between w-full mb-[4rem]">
+        <Button onClick={() => navigate(-1)}>Go Back</Button>
+        <h1 className="font-bold text-2xl self-end">Manage Product</h1>
       </div>
 
       {showAddProduct ? (
         <AddProductModal setShowAddProduct={setShowAddProduct} />
       ) : (
-        <div className="w-[80%] mt-[5rem]">
+        <div className="w-[80%] mt-[1rem]">
           <div className="flex w-full justify-between items-center my-2">
             <Input
               onChange={(e) => setSearchProduct(e.target.value)}

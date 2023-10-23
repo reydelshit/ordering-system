@@ -1,9 +1,7 @@
-import Profile from '@/assets/trav.png';
 import { Button } from './ui/button';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import CustomerReviews from './components/CustomerReviews';
 
@@ -37,7 +35,6 @@ export default function Feedbacks() {
   const order_id = searchParams.get('orderid');
   const user_id = localStorage.getItem('ordering-token');
   const product_id = useParams();
-  const navigate = useNavigate();
 
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
   const [disabledButton, setDisabledButton] = useState(false);
@@ -50,7 +47,6 @@ export default function Feedbacks() {
   const [replyComment, setReplyComment] = useState<string>('');
   const [storeReplies, setStoreReplies] = useState<Replies[]>([]);
   const [inputIndex, setInputIndex] = useState<number>(0);
-  const [accountType, setAccountType] = useState<string>('' as string);
 
   const checkIfOrderIdExistToUserId = () => {
     if (user_id === null) {

@@ -1,10 +1,7 @@
-import Cake from '@/assets/cake.png';
-import Cake2 from '@/assets/cake2.png';
-
 import { Button } from './ui/button';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Feedbacks from './Feedbacks';
 
 // type Image = {
@@ -88,7 +85,7 @@ export default function View() {
       qty: quantity,
     };
 
-    console.log(id);
+    // console.log(id);
 
     axios
       .get('http://localhost/ordering/cart.php', {
@@ -148,7 +145,7 @@ export default function View() {
         >
           <div className="w-[40em] flex flex-col justify-center items-center">
             <img
-              className="object-cover !h-[30rem] rounded-lg bg-[#3d633c]"
+              className="object-cover !h-[30rem] rounded-lg bg-violet-600"
               src={prod.product_image}
               alt="cake"
             />
@@ -173,7 +170,7 @@ export default function View() {
             </p>
             <span className="flex items-center gap-5 mb-4">
               <h1 className="font-bold text-3xl">${prod.product_price}</h1>
-              <p className="p-1 rounded-sm bg-violet-600 text-white">50%</p>
+              {/* <p className="p-1 rounded-sm bg-violet-600 text-white">50%</p> */}
             </span>
             <div className="flex h-[2.8rem] gap-8">
               <div
