@@ -115,7 +115,7 @@ export default function ViewOrders() {
       })
       .then((res) => {
         console.log(res.data, 'order details');
-        setOrderDetails([res.data[0]]);
+        // setOrderDetails([res.data[0]]);
       });
   };
 

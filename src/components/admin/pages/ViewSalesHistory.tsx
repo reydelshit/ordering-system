@@ -14,6 +14,7 @@ type OrderDetails = {
 export default function ViewSalesHistory() {
   const navigate = useNavigate();
   const [orderDetails, setOrderDetails] = useState<OrderDetails[]>([]);
+  const [orderItems, setOrderItems] = useState<any[]>([]);
 
   const { id } = useParams();
 
@@ -23,29 +24,25 @@ export default function ViewSalesHistory() {
         params: { order_id: id },
       })
       .then((res) => {
-        // console.log(res.data, 'ndjkabjkda');
-
-        // console.log(res.data[0].user_id, 'user id');
-
-        getOrderDetails(res.data[0].order_id);
-
-        // setDataFetched(true);
+        console.log(res.data, 'ndjkabjkda');
+        setOrderItems(res.data);
       });
   };
 
-  const getOrderDetails = async (order_id: number) => {
+  const getOrderDetails = async () => {
     await axios
       .get('http://localhost/ordering/order-details.php', {
-        params: { order_id: order_id },
+        params: { order_id: id },
       })
       .then((res) => {
         console.log(res.data, 'order details');
-        setOrderDetails([res.data[0]]);
+        setOrderDetails(res.data);
       });
   };
 
   useEffect(() => {
     getOrders();
+    getOrderDetails();
   }, []);
 
   return (
@@ -55,7 +52,19 @@ export default function ViewSalesHistory() {
         <Button onClick={() => navigate(-1)}>Go Back</Button>
         <h1 className="font-bold text-2xl self-end">View Sales</h1>
       </div>
-      hello
+      <div className="flex justify-start items-start flex-col">
+        Ordered Items
+        {orderItems.map((item, index) => (
+          <div key={index}>
+            <h1>{item.product_name}</h1>
+          </div>
+        ))}
+        {orderDetails
+          .map((item, index) => {
+            return <div key={index}>{item.name}</div>;
+          })
+          .slice(0, 1)}
+      </div>
     </div>
   );
 }

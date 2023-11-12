@@ -23,10 +23,9 @@ type Product = {
 export default function Shop() {
   const [product, setProduct] = useState<Product[]>([]);
 
-  const [quantities, setQuantities] = useState<{
-    [productIndex: number]: number;
-  }>({});
-  // const [priceFilter, setPriceFilter] = useState<number[]>([0, 1000]);
+  const productIndex = 0; // Define productIndex here
+  const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
+
   const [rangeValue, setRangeValue] = useState(5000);
   const [selectedCategory, setSelectedCategory] = useState('' as string);
 
@@ -55,7 +54,7 @@ export default function Shop() {
     const data = {
       user_id: token,
       product_id: id,
-      qty: quantities[index],
+      qty: quantities[index] > 0 ? quantities[index] : 1,
     };
 
     console.log(id);
