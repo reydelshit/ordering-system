@@ -13,7 +13,7 @@ export default function NotificationViewOrders({
     <div className="flex flex-row items-center h-[4rem] w-full justify-between">
       <div className="flex h-full items-center gap-4">
         <img
-          className="w-[4rem] h-full cover rounded-full"
+          className="w-[4rem] h-[4rem] object-cover rounded-full"
           src={recepeintProfilePicture}
           alt={recepientName}
         />

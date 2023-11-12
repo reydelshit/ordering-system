@@ -38,6 +38,7 @@ type Product = {
   quantity: number;
   product_image: string;
 };
+
 export default function ManageProduct() {
   const [product, setProduct] = useState<Product[]>([]);
   const [showAddProduct, setShowAddProduct] = useState(false);

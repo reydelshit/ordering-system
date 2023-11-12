@@ -20,6 +20,7 @@ type FeedbackProduct = {
   product_name: string;
   total_feedback: number;
   feedback_id: number;
+  product_image: string;
 };
 
 type FeedbackResponse = {
@@ -166,6 +167,7 @@ export default function AdminFeedbacks() {
           <Table className="border-2 w-full">
             <TableHeader>
               <TableRow>
+                <TableHead></TableHead>
                 <TableHead className="text-center">Product</TableHead>
                 <TableHead className="text-center">Feedbacks</TableHead>
               </TableRow>
@@ -180,6 +182,14 @@ export default function AdminFeedbacks() {
                       className="cursor-pointer"
                       key={index}
                     >
+                      <TableCell>
+                        <img
+                          className="w-[2rem] h-[2rem] object-cover rounded-sm"
+                          src={feedback.product_image}
+                          alt={feedback.product_name}
+                        />
+                      </TableCell>
+
                       <TableCell>{feedback.product_name}</TableCell>
                       <TableCell>{feedback.total_feedback}</TableCell>
                     </TableRow>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import DefaultProfile from '@/assets/default.jpg';
 
 type User = {
@@ -23,7 +23,7 @@ import { Textarea } from './ui/textarea';
 
 export default function EditProfile() {
   const user_id = useLocation().pathname.split('/')[3];
-
+  const navigate = useNavigate();
   const [user, setUser] = useState<User[]>([]);
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
@@ -69,6 +69,11 @@ export default function EditProfile() {
       })
       .then((res) => {
         console.log(res.data);
+
+        if (res.status === 200) {
+          navigate('/profile');
+          window.location.reload();
+        }
       });
   };
 

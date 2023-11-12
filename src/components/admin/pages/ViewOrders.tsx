@@ -152,7 +152,7 @@ export default function ViewOrders() {
   const handleSetTemplateMessage = () => {
     setIsTemplateMessage(!isTemplateMessage);
     const newTemplateMessage = `Hi ${recepientName}, your order with order id number ${order_id.ordersid} has been ${status}.`;
-    console.log(newTemplateMessage); // Add this line
+    console.log(newTemplateMessage);
     setTemplateMessage(newTemplateMessage);
   };
 

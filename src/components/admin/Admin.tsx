@@ -12,6 +12,8 @@ import { RiAdminLine } from 'react-icons/ri';
 import AdminFeedbacks from './pages/AdminFeedbacks';
 import CustomerUsers from './pages/CustomerUser';
 import { FiUsers } from 'react-icons/fi';
+import SalesHistory from './pages/SalesHistory';
+import ViewSalesHistory from './pages/ViewSalesHistory';
 
 export default function AdminRoutes() {
   return (
@@ -43,6 +45,12 @@ export default function AdminRoutes() {
         </span>
 
         <span className="flex gap-2 p-1 w-full">
+          <Link className="flex" to="/admin/sales-history">
+            <FiUsers className="w-[2rem] h-[1.5rem]" /> Sales History
+          </Link>
+        </span>
+
+        <span className="flex gap-2 p-1 w-full">
           <Link className="flex" to="/admin/customer-user">
             <FiUsers className="w-[2rem] h-[1.5rem]" /> Customers
           </Link>
@@ -61,6 +69,8 @@ export default function AdminRoutes() {
           <Route path="/orders/:ordersid" element={<ViewOrders />} />
           <Route path="/feedbacks" element={<AdminFeedbacks />} />
           <Route path="/customer-user" element={<CustomerUsers />} />
+          <Route path="/sales-history" element={<SalesHistory />} />
+          <Route path="/sales-history/:id" element={<ViewSalesHistory />} />
         </Routes>
       </div>
     </div>
