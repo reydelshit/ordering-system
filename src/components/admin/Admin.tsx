@@ -14,7 +14,7 @@ import CustomerUsers from './pages/CustomerUser';
 import { FiUsers } from 'react-icons/fi';
 import SalesHistory from './pages/SalesHistory';
 import ViewSalesHistory from './pages/ViewSalesHistory';
-
+import { MdHistory } from 'react-icons/md';
 export default function AdminRoutes() {
   return (
     <div className="flex">
@@ -46,7 +46,7 @@ export default function AdminRoutes() {
 
         <span className="flex gap-2 p-1 w-full">
           <Link className="flex" to="/admin/sales-history">
-            <FiUsers className="w-[2rem] h-[1.5rem]" /> Sales History
+            <MdHistory className="w-[2rem] h-[1.5rem]" /> Sales History
           </Link>
         </span>
 

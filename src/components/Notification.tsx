@@ -37,20 +37,23 @@ export default function Notification() {
   return (
     <div>
       <h1>You have {notification.length} notifications</h1>
-      {notification.length > 0 ? (
-        notification.map((noti, index) => {
-          return (
-            <div
-              className="border-2 p-2 mt-[1rem] rounded-sm bg-gray-200"
-              key={index}
-            >
-              <p>{noti.message}</p>
-            </div>
-          );
-        })
-      ) : (
-        <p>No notifications</p>
-      )}
+
+      <div className="h-[20rem] block overflow-x-auto">
+        {notification.length > 0 ? (
+          notification.map((noti, index) => {
+            return (
+              <div
+                className="border-2 p-2 mt-[1rem] rounded-sm bg-gray-200"
+                key={index}
+              >
+                <p>{noti.message}</p>
+              </div>
+            );
+          })
+        ) : (
+          <p>No notifications</p>
+        )}
+      </div>
     </div>
   );
 }
