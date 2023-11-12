@@ -172,9 +172,9 @@ export default function Main() {
                 </div>
               </Link>
 
-              <div className="grid grid-cols-2 place-content-center place-items-center gap-7 mt-[2rem]">
-                <span className="flex items-center gap-2">
-                  <div className="bg-green-600 rounded-sm p-4 w-[2rem]"></div>{' '}
+              <div className="grid grid-cols-2 place-content-center place-items-center gap-7 mt-[2rem] ">
+                <span className="flex items-center gap-2 ">
+                  <div className="bg-green-600 rounded-sm p-4 w-[2rem] "></div>{' '}
                   On Delivery
                 </span>
                 <span className="flex items-center gap-2">
@@ -196,33 +196,33 @@ export default function Main() {
 
           <div className="flex justify-between h-[6rem] mt-[2rem]">
             <div className="bg-green-600 text-white w-[16rem] rounded-lg text-start flex items-start flex-col justify-center p-4">
-              <h1 className="font-bold text-2xl">
+              <h1 className="font-bold text-2xl !text-white">
                 {orderStatus.map(
                   (stat: any) =>
                     stat.name.includes('On Delivery') && stat.value,
                 )}
               </h1>
-              <p>On Delivery</p>
+              <p className="!text-white">On Delivery</p>
             </div>
 
-            <div className="bg-purple-900  text-white w-[16rem] rounded-lg text-start flex items-start flex-col justify-center p-4">
-              <h1 className="font-bold text-2xl">
+            <div className="bg-purple-900 !text-white w-[16rem] rounded-lg text-start flex items-start flex-col justify-center p-4">
+              <h1 className="font-bold text-2xl !text-white">
                 {' '}
                 {orderStatus.map(
                   (stat: any) => stat.name.includes('Delivered') && stat.value,
                 )}
               </h1>
-              <p>Delivered</p>
+              <p className="!text-white">Delivered</p>
             </div>
 
             <div className="bg-red-600  text-white w-[16rem] rounded-lg text-start flex items-start flex-col justify-center p-4">
-              <h1 className="font-bold text-2xl">
+              <h1 className="font-bold text-2xl !text-white">
                 {' '}
                 {orderStatus.map(
                   (stat: any) => stat.name.includes('Cancelled') && stat.value,
                 )}
               </h1>
-              <p>Cancelled</p>
+              <p className="!text-white">Cancelled</p>
             </div>
           </div>
         </div>

@@ -14,7 +14,7 @@ import Cart from './components/Cart';
 import Notification from './Notification';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import ProfileIcon from './components/header/ProfileIcon';
-
+import Cake from '@/assets/cake.png';
 type Cart = {
   cart_id: number;
   product_name: string;
@@ -48,7 +48,7 @@ export default function Header() {
     <header className="flex h-[5rem] justify-between items-center border-b-2">
       <div className="flex gap-8 items-center">
         <Link to="/">
-          <img className="w-[3rem]" src={Jordans} />
+          <img className="w-[4rem]" src={Cake} />
         </Link>
 
         <div className="flex gap-10">
@@ -61,7 +61,7 @@ export default function Header() {
       <div className="flex items-center z-40 gap-1">
         {type === 'admin' && (
           <Link to="/admin">
-            <Button>Admin</Button>
+            <Button className="bg-[#5D383A]">Admin</Button>
           </Link>
         )}
 
