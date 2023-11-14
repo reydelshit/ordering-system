@@ -62,17 +62,21 @@ export default function SalesHistory() {
   };
 
   const getPaidOrders = () => {
-    axios.get('http://localhost/ordering/orders-admin.php').then((res) => {
-      console.log(res.data, 'paid');
-      setPaidOrders(res.data);
-    });
+    axios
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/orders-admin.php`)
+      .then((res) => {
+        console.log(res.data, 'paid');
+        setPaidOrders(res.data);
+      });
   };
 
   const getProduct = () => {
-    axios.get('http://localhost/ordering/product.php/').then((res) => {
-      console.log(res.data);
-      setProduct(res.data);
-    });
+    axios
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/product.php`)
+      .then((res) => {
+        console.log(res.data);
+        setProduct(res.data);
+      });
   };
 
   useEffect(() => {

@@ -24,10 +24,12 @@ export default function CustomerUsers() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const navigate = useNavigate();
   const getCustomersDetails = () => {
-    axios.get('http://localhost/ordering/customers.php').then((response) => {
-      console.log(response.data);
-      setCustomers(response.data);
-    });
+    axios
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/customers.php`)
+      .then((response) => {
+        console.log(response.data);
+        setCustomers(response.data);
+      });
   };
 
   useEffect(() => {

@@ -35,7 +35,7 @@ export default function EditProfile() {
 
   const getUserData = () => {
     axios
-      .get('http://localhost/ordering/user.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/user.php`, {
         params: { user_id: user_id },
       })
       .then((res) => {
@@ -58,7 +58,7 @@ export default function EditProfile() {
   const handleEditProfile = (e: React.FormEvent) => {
     e.preventDefault();
     axios
-      .put('http://localhost/ordering/user.php', {
+      .put(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/user.php`, {
         name: name,
         address: address,
         email: email,
@@ -81,7 +81,7 @@ export default function EditProfile() {
     const data = new FileReader();
     data.readAsDataURL(e.target.files![0]);
 
-    data.onloadend = (e) => {
+    data.onloadend = () => {
       const base64 = data.result;
       if (base64) {
         setImage(base64.toString());

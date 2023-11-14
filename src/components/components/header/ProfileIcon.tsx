@@ -15,7 +15,7 @@ export default function ProfileIcon() {
 
   const getProfilePicture = () => {
     axios
-      .get('http://localhost/ordering/user.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/user.php`, {
         params: { user_id: localStorage.getItem('ordering-token') },
       })
       .then((res) => {

@@ -18,7 +18,7 @@ export default function Cart({ cart }: { cart: Cart[] }) {
   const handleDeleteCartProduct = (cart_id: number) => {
     console.log(cart_id);
     axios
-      .delete(`http://localhost/ordering/cart.php/${cart_id}`)
+      .delete(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/cart.php/${cart_id}`)
       .then((res) => {
         console.log(res);
         toast({

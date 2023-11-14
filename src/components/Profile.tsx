@@ -61,7 +61,7 @@ export default function Profile() {
 
   const getUserData = () => {
     axios
-      .get('http://localhost/ordering/user.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/user.php`, {
         params: { user_id: localStorage.getItem('ordering-token') },
       })
       .then((res) => {
@@ -78,7 +78,9 @@ export default function Profile() {
       return;
     }
     axios
-      .get('http://localhost/ordering/cart.php', { params: { user_id: token } })
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/cart.php`, {
+        params: { user_id: token },
+      })
       .then((res) => {
         setCart(res.data);
         console.log(res.data, 'cart');
@@ -87,7 +89,7 @@ export default function Profile() {
 
   const getPaidOrders = () => {
     axios
-      .get('http://localhost/ordering/orders.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/orders.php`, {
         params: { user_id: localStorage.getItem('ordering-token') },
       })
       .then((res) => {
@@ -98,7 +100,7 @@ export default function Profile() {
 
   const getFeedback = async () => {
     await axios
-      .get('http://localhost/ordering/feedback.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/feedback.php`, {
         params: { user_id: localStorage.getItem('ordering-token') },
       })
       .then((res) => {

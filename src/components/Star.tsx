@@ -22,7 +22,7 @@ export default function Star({
 
   const fetchFeedbacks = () => {
     axios
-      .get('http://localhost/ordering/feedback.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/feedback.php`, {
         params: {
           product_id: product_id,
         },

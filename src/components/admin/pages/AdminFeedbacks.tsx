@@ -73,7 +73,7 @@ export default function AdminFeedbacks() {
   const navigate = useNavigate();
   const getFeedback = async () => {
     await axios
-      .get('http://localhost/ordering/feedback-admin.php')
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/feedback-admin.php`)
       .then((res) => {
         console.log(res.data);
         setFeedbackProduct(res.data);
@@ -88,7 +88,11 @@ export default function AdminFeedbacks() {
     // setReplyTo(user_id);
 
     axios
-      .get(`http://localhost/ordering/feedback-admin.php?product_id=${id}`)
+      .get(
+        `${
+          import.meta.env.VITE_ORDERING_LOCAL_HOST
+        }/feedback-admin.php?product_id=${id}`,
+      )
       .then((res) => {
         console.log(res.data);
         // console.log(user_id);
@@ -101,10 +105,12 @@ export default function AdminFeedbacks() {
   };
 
   const getReplies = async () => {
-    await axios.get('http://localhost/ordering/reply.php').then((res) => {
-      console.log(res.data, 'replies');
-      setStoreReplies(res.data);
-    });
+    await axios
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/reply.php`)
+      .then((res) => {
+        console.log(res.data, 'replies');
+        setStoreReplies(res.data);
+      });
   };
 
   const user_id = localStorage.getItem('ordering-token');
@@ -113,7 +119,7 @@ export default function AdminFeedbacks() {
 
   const handleReplyComment = (reply_to: number, feedback_id: number) => {
     axios
-      .post('http://localhost/ordering/reply.php', {
+      .post(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/reply.php`, {
         content: replyComment,
         reply_to: reply_to,
         feedback_id: feedback_id,
@@ -138,7 +144,7 @@ export default function AdminFeedbacks() {
 
   const fetchFeedbacks = (product_id: number) => {
     axios
-      .get('http://localhost/ordering/feedback.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/feedback.php`, {
         params: {
           product_id: product_id,
         },

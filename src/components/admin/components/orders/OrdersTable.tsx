@@ -31,10 +31,12 @@ export default function OrdersTable({ status }: { status: string }) {
   const [paidOrders, setPaidOrders] = useState<Product[]>([]);
 
   const getPaidOrders = () => {
-    axios.get('http://localhost/ordering/orders-admin.php').then((res) => {
-      console.log(res.data, 'paid');
-      setPaidOrders(res.data);
-    });
+    axios
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/orders-admin.php`)
+      .then((res) => {
+        console.log(res.data, 'paid');
+        setPaidOrders(res.data);
+      });
   };
 
   useEffect(() => {

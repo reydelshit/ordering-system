@@ -46,7 +46,7 @@ export default function AddProductModal({
     // console.log(user);
 
     axios
-      .post('http://localhost/ordering/product.php', {
+      .post(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/product.php`, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

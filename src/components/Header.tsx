@@ -37,7 +37,9 @@ export default function Header() {
     }
 
     axios
-      .get('http://localhost/ordering/cart.php', { params: { user_id: token } })
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/cart.php`, {
+        params: { user_id: token },
+      })
       .then((res) => {
         setCart(res.data);
         console.log(res.data, 'cart');

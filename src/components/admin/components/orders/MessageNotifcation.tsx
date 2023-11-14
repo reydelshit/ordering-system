@@ -43,7 +43,7 @@ export default function MessageNotification({
   const getNotification = async () => {
     try {
       const response = await axios.get(
-        'http://localhost/ordering/notification.php',
+        `${import.meta.env.VITE_ORDERING_LOCAL_HOST}/notification.php`,
         {
           params: { receiver_id: userId },
         },
@@ -61,7 +61,7 @@ export default function MessageNotification({
 
   const handleSendMessageNotification = () => {
     axios
-      .post('http://localhost/ordering/notification.php', {
+      .post(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/notification.php`, {
         sender_id: localStorage.getItem('ordering-token'),
         receiver_id: userDetails[0].user_id,
         message: message.length > 0 ? message : templateMessage,

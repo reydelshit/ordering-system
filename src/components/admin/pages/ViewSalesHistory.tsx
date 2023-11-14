@@ -21,9 +21,12 @@ export default function ViewSalesHistory() {
 
   const getOrders = async () => {
     await axios
-      .get('http://localhost/ordering/view-orders-admin.php', {
-        params: { order_id: id },
-      })
+      .get(
+        `${import.meta.env.VITE_ORDERING_LOCAL_HOST}/view-orders-admin.php`,
+        {
+          params: { order_id: id },
+        },
+      )
       .then((res) => {
         console.log(res.data, 'order items');
         setOrderItems(res.data);
@@ -32,7 +35,7 @@ export default function ViewSalesHistory() {
 
   const getOrderDetails = async () => {
     await axios
-      .get('http://localhost/ordering/order-details.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/order-details.php`, {
         params: { order_id: id },
       })
       .then((res) => {

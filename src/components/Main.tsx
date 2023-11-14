@@ -32,7 +32,7 @@ export default function Main() {
     e.preventDefault();
 
     await axios
-      .get('http://localhost/ordering/login.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/login.php`, {
         params: loginDetails,
       })
       .then((res) => {

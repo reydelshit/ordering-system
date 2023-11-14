@@ -65,7 +65,7 @@ export default function ProfileOrdersTable({
 
   const handleStatus = (orderID: number) => {
     axios
-      .put('http://localhost/ordering/status.php', {
+      .put(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/status.php`, {
         status: 'Cancelled',
         order_id: orderID,
       })

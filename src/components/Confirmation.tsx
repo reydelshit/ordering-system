@@ -44,7 +44,9 @@ export default function OrderConfirmation() {
     }
 
     axios
-      .get('http://localhost/ordering/cart.php', { params: { user_id: token } })
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/cart.php`, {
+        params: { user_id: token },
+      })
       .then((res) => {
         setCart(res.data);
 
@@ -64,7 +66,7 @@ export default function OrderConfirmation() {
     }
 
     axios
-      .post('http://localhost/ordering/orders.php', {
+      .post(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/orders.php`, {
         user_id: token,
         payment_type: paymentType,
         total_amount: cart.reduce(

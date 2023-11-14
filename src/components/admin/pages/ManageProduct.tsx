@@ -47,10 +47,12 @@ export default function ManageProduct() {
   const { toast } = useToast();
 
   const getProduct = () => {
-    axios.get('http://localhost/ordering/product.php/').then((res) => {
-      console.log(res.data);
-      setProduct(res.data);
-    });
+    axios
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/product.php/`)
+      .then((res) => {
+        console.log(res.data);
+        setProduct(res.data);
+      });
   };
 
   useEffect(() => {
@@ -58,15 +60,17 @@ export default function ManageProduct() {
   }, []);
 
   const handleDelete = (id: number) => {
-    axios.delete(`http://localhost/ordering/product.php/${id}`).then((res) => {
-      console.log(res.data);
-      getProduct();
+    axios
+      .delete(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/product.php/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        getProduct();
 
-      toast({
-        title: 'Product: Deleted Successfully',
-        description: moment().format('LLLL'),
+        toast({
+          title: 'Product: Deleted Successfully',
+          description: moment().format('LLLL'),
+        });
       });
-    });
   };
 
   return (

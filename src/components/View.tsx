@@ -36,7 +36,7 @@ export default function View() {
   const fetchProduct = () => {
     console.log(id);
     axios
-      .get('http://localhost/ordering/product.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/product.php`, {
         params: {
           product_id: id.id,
         },
@@ -51,7 +51,7 @@ export default function View() {
   const fetchProductImages = () => {
     console.log(id);
     axios
-      .get('http://localhost/ordering/product-images.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/product-images.php`, {
         params: {
           product_id: id.id,
         },
@@ -88,7 +88,7 @@ export default function View() {
     // console.log(id);
 
     axios
-      .get('http://localhost/ordering/cart.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/cart.php`, {
         params: {
           product_id: id,
           user_id: token,
@@ -98,7 +98,7 @@ export default function View() {
         console.log(res.data, 'res');
         if (res.data.length > 0) {
           axios
-            .put('http://localhost/ordering/cart.php', {
+            .put(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/cart.php`, {
               cart_id: res.data[0].cart_id,
               qty: res.data[0].qty + quantity,
             })
@@ -106,9 +106,11 @@ export default function View() {
               console.log(res);
             });
         } else {
-          axios.post('http://localhost/ordering/cart.php', data).then((res) => {
-            console.log(res.data);
-          });
+          axios
+            .post(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/cart.php`, data)
+            .then((res) => {
+              console.log(res.data);
+            });
         }
       });
   };

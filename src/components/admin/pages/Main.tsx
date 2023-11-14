@@ -29,54 +29,62 @@ export default function Main() {
   const [orderStatus, setOrderStatus] = useState([]) as any[];
 
   const getProduct = () => {
-    axios.get('http://localhost/ordering/product.php/').then((res) => {
-      console.log(res.data);
-      setProduct(res.data);
-    });
+    axios
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/product.php`)
+      .then((res) => {
+        console.log(res.data);
+        setProduct(res.data);
+      });
   };
   const getPaidOrders = () => {
-    axios.get('http://localhost/ordering/orders-admin.php').then((res) => {
-      console.log(res.data, 'paid');
+    axios
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/orders-admin.php`)
+      .then((res) => {
+        console.log(res.data, 'paid');
 
-      const paidOrders = res.data.map((product: Product) => ({
-        ...product,
-        total_quantity: Number(product.total_quantity),
-      }));
+        const paidOrders = res.data.map((product: Product) => ({
+          ...product,
+          total_quantity: Number(product.total_quantity),
+        }));
 
-      setPaidOrders(paidOrders);
-    });
+        setPaidOrders(paidOrders);
+      });
   };
 
   const getCustomersDetails = () => {
-    axios.get('http://localhost/ordering/user.php').then((response) => {
-      console.log(response.data, 'users');
-      setCustomers(response.data);
-    });
+    axios
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/user.php`)
+      .then((response) => {
+        console.log(response.data, 'users');
+        setCustomers(response.data);
+      });
   };
 
   const getOrderStatus = () => {
-    axios.get('http://localhost/ordering/pie-chart.php').then((res) => {
-      const status = res.data.map(
-        (stat: { count: number; status: string }, index: number) => {
-          return {
-            id: index,
-            value: stat.count,
-            name: stat.status,
+    axios
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/pie-chart.php`)
+      .then((res) => {
+        const status = res.data.map(
+          (stat: { count: number; status: string }, index: number) => {
+            return {
+              id: index,
+              value: stat.count,
+              name: stat.status,
 
-            color:
-              stat.status === 'Delivered'
-                ? 'purple'
-                : stat.status === 'On Delivery'
-                ? 'green'
-                : stat.status === 'Cancelled'
-                ? 'red'
-                : 'yellow',
-          };
-        },
-      );
-      console.log(status, 'status');
-      setOrderStatus(status);
-    });
+              color:
+                stat.status === 'Delivered'
+                  ? 'purple'
+                  : stat.status === 'On Delivery'
+                  ? 'green'
+                  : stat.status === 'Cancelled'
+                  ? 'red'
+                  : 'yellow',
+            };
+          },
+        );
+        console.log(status, 'status');
+        setOrderStatus(status);
+      });
   };
 
   useEffect(() => {

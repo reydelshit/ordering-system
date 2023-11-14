@@ -54,7 +54,7 @@ export default function Feedbacks() {
     }
 
     axios
-      .get('http://localhost/ordering/orders.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/orders.php`, {
         params: {
           order_id: order_id,
           user_id: user_id,
@@ -72,7 +72,7 @@ export default function Feedbacks() {
 
   const fetchFeedbacks = () => {
     axios
-      .get('http://localhost/ordering/feedback.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/feedback.php`, {
         params: {
           product_id: product_id.id,
         },
@@ -91,7 +91,7 @@ export default function Feedbacks() {
 
   const handleFeedbackSubmition = () => {
     axios
-      .post('http://localhost/ordering/feedback.php', {
+      .post(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/feedback.php`, {
         feedback_rating: rating,
         feedback_description: feedBackDescription,
         user_id: user_id,
@@ -122,16 +122,18 @@ export default function Feedbacks() {
   };
 
   const getReplies = async () => {
-    await axios.get('http://localhost/ordering/reply.php').then((res) => {
-      // console.log(res.data, 'replies');
-      setStoreReplies(res.data);
-      // setAccountType(res.data[0].user_type);
-    });
+    await axios
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/reply.php`)
+      .then((res) => {
+        // console.log(res.data, 'replies');
+        setStoreReplies(res.data);
+        // setAccountType(res.data[0].user_type);
+      });
   };
 
   const handleReplyComment = (reply_to: number, feedback_id: number) => {
     axios
-      .post('http://localhost/ordering/reply.php', {
+      .post(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/reply.php`, {
         content: replyComment,
         reply_to: reply_to,
         feedback_id: feedback_id,

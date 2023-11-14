@@ -42,7 +42,9 @@ export default function Checkout() {
     }
 
     axios
-      .get('http://localhost/ordering/cart.php', { params: { user_id: token } })
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/cart.php`, {
+        params: { user_id: token },
+      })
       .then((res) => {
         setCart(res.data);
         console.log(res.data, 'cart');
@@ -57,7 +59,9 @@ export default function Checkout() {
     }
 
     axios
-      .get('http://localhost/ordering/user.php', { params: { user_id: token } })
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/user.php`, {
+        params: { user_id: token },
+      })
       .then((res) => {
         console.log(res.data);
         setName(res.data[0].name);
@@ -76,7 +80,7 @@ export default function Checkout() {
   const handleDeleteCartProduct = (cart_id: number) => {
     console.log(cart_id);
     axios
-      .delete(`http://localhost/ordering/cart.php/${cart_id}`)
+      .delete(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/cart.php/${cart_id}`)
       .then((res) => {
         console.log(res);
       });

@@ -18,13 +18,15 @@ export default function Register() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    axios.post('http://localhost/ordering/user.php', user).then((res) => {
-      console.log(res.data);
+    axios
+      .post(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/user.php`, user)
+      .then((res) => {
+        console.log(res.data);
 
-      if (res.data.status === 'success') {
-        navigate('/login');
-      }
-    });
+        if (res.data.status === 'success') {
+          navigate('/login');
+        }
+      });
   };
 
   return (

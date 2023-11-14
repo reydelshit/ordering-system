@@ -76,9 +76,12 @@ export default function ViewOrders() {
   const { toast } = useToast();
   const getOrders = async () => {
     await axios
-      .get('http://localhost/ordering/view-orders-admin.php', {
-        params: { order_id: order_id.ordersid },
-      })
+      .get(
+        `${import.meta.env.VITE_ORDERING_LOCAL_HOST}/view-orders-admin.php`,
+        {
+          params: { order_id: order_id.ordersid },
+        },
+      )
       .then((res) => {
         console.log(res.data, 'ndjkabjkda');
         setUserId(res.data[0].user_id);
@@ -97,7 +100,7 @@ export default function ViewOrders() {
 
   const getUserDetails = async (user_id: number) => {
     await axios
-      .get('http://localhost/ordering/user.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/user.php`, {
         params: { user_id: user_id },
       })
       .then((res) => {
@@ -110,7 +113,7 @@ export default function ViewOrders() {
 
   const getOrderDetails = async (order_id: number) => {
     await axios
-      .get('http://localhost/ordering/order-details.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/order-details.php`, {
         params: { order_id: order_id },
       })
       .then((res) => {
@@ -131,7 +134,7 @@ export default function ViewOrders() {
     console.log(order_id.ordersid, 'orderid');
 
     axios
-      .put('http://localhost/ordering/status.php', {
+      .put(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/status.php`, {
         status: selectedValue,
         order_id: order_id.ordersid,
       })
@@ -158,7 +161,7 @@ export default function ViewOrders() {
 
   const handleSetNotes = () => {
     axios
-      .post('http://localhost/ordering/notes.php', {
+      .post(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/notes.php`, {
         notesMessage: notes,
         order_id: order_id.ordersid,
       })
@@ -170,7 +173,7 @@ export default function ViewOrders() {
 
   const getNotes = async () => {
     axios
-      .get('http://localhost/ordering/notes.php', {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/notes.php`, {
         params: { order_id: order_id.ordersid },
       })
       .then((res) => {

@@ -55,7 +55,7 @@ export default function UpdateProducts({}: {}) {
 
   const getProductDetails = async () => {
     const res = await axios.get(
-      'http://localhost/ordering/product-update.php',
+      `${import.meta.env.VITE_ORDERING_LOCAL_HOST}/product-update.php`,
       {
         params: {
           product_id: id,
