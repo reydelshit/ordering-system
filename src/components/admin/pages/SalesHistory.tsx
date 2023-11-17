@@ -192,8 +192,15 @@ export default function SalesHistory() {
             icon="N/A"
             // value={totalVisits.length.toString()}
             value={`${
-              todaySales.length > 0
-                ? todaySales
+              paidOrders.length > 0
+                ? paidOrders
+                    .filter(
+                      (paid) =>
+                        paid.status === 'Delivered' &&
+                        moment(paid.created_at).format('YYYY-MM-DD') ===
+                          currentDay,
+                    )
+                    .length.toString()
                 : paidOrders
                     .filter(
                       (paid) =>
@@ -203,16 +210,28 @@ export default function SalesHistory() {
                           currentDay,
                     )
                     .length.toString()
-            } - ${paidOrders
-              .filter(
-                (paid) =>
-                  paid.status === 'Delivered' &&
-                  paid.product_names.includes(productName) &&
-                  moment(paid.created_at).format('YYYY-MM-DD') ===
-                    moment().format('YYYY-MM-DD'),
-              )
-              .reduce((a, b) => a + b.total_amount, 0)
-              .toFixed(2)}`}
+            } - ${
+              paidOrders.length > 0
+                ? paidOrders
+                    .filter(
+                      (paid) =>
+                        paid.status === 'Delivered' &&
+                        moment(paid.created_at).format('YYYY-MM-DD') ===
+                          moment().format('YYYY-MM-DD'),
+                    )
+                    .reduce((a, b) => a + b.total_amount, 0)
+                    .toFixed(2)
+                : paidOrders
+                    .filter(
+                      (paid) =>
+                        paid.status === 'Delivered' &&
+                        paid.product_names.includes(productName) &&
+                        moment(paid.created_at).format('YYYY-MM-DD') ===
+                          moment().format('YYYY-MM-DD'),
+                    )
+                    .reduce((a, b) => a + b.total_amount, 0)
+                    .toFixed(2)
+            }`}
           />
 
           <CardCompo
@@ -222,12 +241,11 @@ export default function SalesHistory() {
             icon="N/A"
             // value={totalVisits.length.toString()}
             value={`${
-              todaySales.length > 0
+              productName === 'All'
                 ? paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
-                        paid.product_names.includes(productName) &&
                         moment(paid.created_at).format('YYYY-WW') ===
                           currentWeek,
                     )
@@ -241,15 +259,28 @@ export default function SalesHistory() {
                           currentWeek,
                     )
                     .length.toString()
-            } - ${paidOrders
-              .filter(
-                (paid) =>
-                  paid.status === 'Delivered' &&
-                  moment(paid.created_at).format('YYYY-WW') === currentWeek &&
-                  paid.product_names.includes(productName),
-              )
-              .reduce((a, b) => a + b.total_amount, 0)
-              .toFixed(2)}`}
+            } - ${
+              productName === 'All'
+                ? paidOrders
+                    .filter(
+                      (paid) =>
+                        paid.status === 'Delivered' &&
+                        moment(paid.created_at).format('YYYY-WW') ===
+                          currentWeek,
+                    )
+                    .reduce((a, b) => a + b.total_amount, 0)
+                    .toFixed(2)
+                : paidOrders
+                    .filter(
+                      (paid) =>
+                        paid.status === 'Delivered' &&
+                        moment(paid.created_at).format('YYYY-WW') ===
+                          currentWeek &&
+                        paid.product_names.includes(productName),
+                    )
+                    .reduce((a, b) => a + b.total_amount, 0)
+                    .toFixed(2)
+            }`}
           />
 
           <CardCompo
@@ -259,19 +290,32 @@ export default function SalesHistory() {
             icon="N/A"
             // value={totalVisits.length.toString()}
             value={`${
-              todaySales.length > 0
-                ? todaySales
-                : paidOrders
+              productName === 'All'
+                ? paidOrders
                     .filter((paid) => paid.status === 'Delivered')
                     .length.toString()
-            }  - ${paidOrders
-              .filter(
-                (paid) =>
-                  paid.status === 'Delivered' &&
-                  paid.product_names.includes(productName),
-              )
-              .reduce((a, b) => a + b.total_amount, 0)
-              .toFixed(2)}`}
+                : paidOrders
+                    .filter(
+                      (paid) =>
+                        paid.status === 'Delivered' &&
+                        paid.product_names.includes(productName),
+                    )
+                    .length.toString()
+            }  - ${
+              productName === 'All'
+                ? paidOrders
+                    .filter((paid) => paid.status === 'Delivered')
+                    .reduce((a, b) => a + b.total_amount, 0)
+                    .toFixed(2)
+                : paidOrders
+                    .filter(
+                      (paid) =>
+                        paid.status === 'Delivered' &&
+                        paid.product_names.includes(productName),
+                    )
+                    .reduce((a, b) => a + b.total_amount, 0)
+                    .toFixed(2)
+            }`}
           />
         </div>
         <div className="w-full flex gap-4 justify-between">
