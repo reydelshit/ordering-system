@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import {
   Select,
   SelectContent,
@@ -22,6 +23,7 @@ import {
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import CardCompo from '../components/sales-history/Card';
 type Product = {
   cart_id: number;
   product_names: string;
@@ -46,19 +48,81 @@ type ProductAll = {
   product_image: string;
 };
 
+const data = [
+  {
+    name: 'Jan',
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: 'Feb',
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: 'Mar',
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: 'Apr',
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: 'May',
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: 'Jun',
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: 'Jul',
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: 'Aug',
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: 'Sep',
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: 'Oct',
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: 'Nov',
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: 'Dec',
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+];
+
 export default function SalesHistory() {
   const navigate = useNavigate();
   const [paidOrders, setPaidOrders] = useState<Product[]>([]);
 
   const [product, setProduct] = useState<ProductAll[]>([]);
 
-  const [status, setStatus] = useState('');
+  const [productName, setProductName] = useState('All');
+  const [todaySales, setTodaySales] = useState('');
 
-  const handleStatus = (event: string) => {
+  const handleProductChange = (event: string) => {
     const selectedValue = event;
 
     console.log(selectedValue);
-    setStatus(selectedValue);
+    setProductName(selectedValue);
+
+    const todaySalesFilter = paidOrders.filter(
+      (prod) =>
+        prod.status === 'Delivered' &&
+        prod.product_names.includes(selectedValue),
+    );
+
+    setTodaySales(todaySalesFilter.length.toString());
+
+    // console.log(todaySalesFilter, selectedValue, todaySalesFilter.length);
   };
 
   const getPaidOrders = () => {
@@ -79,6 +143,9 @@ export default function SalesHistory() {
       });
   };
 
+  const currentWeek = moment().format('YYYY-WW');
+  const currentDay = moment().format('YYYY-MM-DD');
+
   useEffect(() => {
     getProduct();
     getPaidOrders();
@@ -92,11 +159,12 @@ export default function SalesHistory() {
         <h1 className="font-bold text-2xl self-end">Sales History</h1>
       </div>
       <div className="flex justify-between py-2">
-        <Select onValueChange={(e) => handleStatus(e)}>
+        <Select onValueChange={(e) => handleProductChange(e)}>
           <SelectTrigger className="w-[200px]">
             <SelectValue placeholder="Product" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value="All">All</SelectItem>
             {product.map((prod, index) => {
               return (
                 <SelectItem key={index} value={prod.product_name}>
@@ -113,6 +181,123 @@ export default function SalesHistory() {
         </Select>
 
         <span className="font-semibold">Only shows delivered orders</span>
+      </div>
+      <div>
+        <h1 className="font-bold text-2xl my-2">{productName}</h1>
+        <div className="flex gap-2 mb-2">
+          <CardCompo
+            title="Today Sales"
+            description="The total number of sales for today."
+            // icon={<GoNumber className="h-[1.5rem] w-[1.5rem]" />}
+            icon="N/A"
+            // value={totalVisits.length.toString()}
+            value={`${
+              todaySales.length > 0
+                ? todaySales
+                : paidOrders
+                    .filter(
+                      (paid) =>
+                        paid.status === 'Delivered' &&
+                        paid.product_names.includes(productName) &&
+                        moment(paid.created_at).format('YYYY-MM-DD') ===
+                          currentDay,
+                    )
+                    .length.toString()
+            } - ${paidOrders
+              .filter(
+                (paid) =>
+                  paid.status === 'Delivered' &&
+                  paid.product_names.includes(productName) &&
+                  moment(paid.created_at).format('YYYY-MM-DD') ===
+                    moment().format('YYYY-MM-DD'),
+              )
+              .reduce((a, b) => a + b.total_amount, 0)
+              .toFixed(2)}`}
+          />
+
+          <CardCompo
+            title="Total Weekly Sales"
+            description="The total number of sales this week."
+            // icon={<GoNumber className="h-[1.5rem] w-[1.5rem]" />}
+            icon="N/A"
+            // value={totalVisits.length.toString()}
+            value={`${
+              todaySales.length > 0
+                ? paidOrders
+                    .filter(
+                      (paid) =>
+                        paid.status === 'Delivered' &&
+                        paid.product_names.includes(productName) &&
+                        moment(paid.created_at).format('YYYY-WW') ===
+                          currentWeek,
+                    )
+                    .length.toString()
+                : paidOrders
+                    .filter(
+                      (paid) =>
+                        paid.status === 'Delivered' &&
+                        paid.product_names.includes(productName) &&
+                        moment(paid.created_at).format('YYYY-WW') ===
+                          currentWeek,
+                    )
+                    .length.toString()
+            } - ${paidOrders
+              .filter(
+                (paid) =>
+                  paid.status === 'Delivered' &&
+                  moment(paid.created_at).format('YYYY-WW') === currentWeek &&
+                  paid.product_names.includes(productName),
+              )
+              .reduce((a, b) => a + b.total_amount, 0)
+              .toFixed(2)}`}
+          />
+
+          <CardCompo
+            title="Paid Orders"
+            description="The total number of paid orders ."
+            // icon={<GoNumber className="h-[1.5rem] w-[1.5rem]" />}
+            icon="N/A"
+            // value={totalVisits.length.toString()}
+            value={`${
+              todaySales.length > 0
+                ? todaySales
+                : paidOrders
+                    .filter((paid) => paid.status === 'Delivered')
+                    .length.toString()
+            }  - ${paidOrders
+              .filter(
+                (paid) =>
+                  paid.status === 'Delivered' &&
+                  paid.product_names.includes(productName),
+              )
+              .reduce((a, b) => a + b.total_amount, 0)
+              .toFixed(2)}`}
+          />
+        </div>
+        <div className="w-full flex gap-4 justify-between">
+          <div className="md:w-[100%] md:p-5 bg-white rounded-lg border-2">
+            <h1 className="mb-5 font-bold uppercase">Monthly Sales</h1>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={data}>
+                <XAxis
+                  dataKey="name"
+                  stroke="#888888"
+                  fontSize={12}
+                  tickLine={false}
+                  axisLine={false}
+                />
+                <YAxis
+                  stroke="#888888"
+                  fontSize={12}
+                  tickLine={false}
+                  axisLine={false}
+                  tickFormatter={(value: string) => `${value}`}
+                />
+                <Bar dataKey="total" fill="#FACC15" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </div>
       <Table className="w-full">
         <TableHeader>
@@ -132,8 +317,8 @@ export default function SalesHistory() {
             .filter(
               (prod) =>
                 (prod.status === 'Delivered' &&
-                  prod.product_names.includes(status)) ||
-                status === 'All',
+                  prod.product_names.includes(productName)) ||
+                (prod.status === 'Delivered' && productName === 'All'),
             )
             .map((prod, index) => {
               return (
