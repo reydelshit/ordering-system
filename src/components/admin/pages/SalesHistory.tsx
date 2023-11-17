@@ -48,60 +48,18 @@ type ProductAll = {
   product_image: string;
 };
 
-const data = [
-  {
-    name: 'Jan',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Feb',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Mar',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Apr',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'May',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Jun',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Jul',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Aug',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Sep',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Oct',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Nov',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Dec',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-];
+interface DataItem {
+  name: string;
+  total: number;
+}
 
 export default function SalesHistory() {
   const navigate = useNavigate();
   const [paidOrders, setPaidOrders] = useState<Product[]>([]);
+  const [monthlySales, setMonthlySales] = useState<DataItem[]>([]);
+  const [productMonthlySales, setProductMonthlySales] = useState<DataItem[]>(
+    [],
+  );
 
   const [product, setProduct] = useState<ProductAll[]>([]);
 
@@ -114,15 +72,44 @@ export default function SalesHistory() {
     console.log(selectedValue);
     setProductName(selectedValue);
 
-    const todaySalesFilter = paidOrders.filter(
-      (prod) =>
-        prod.status === 'Delivered' &&
-        prod.product_names.includes(selectedValue),
-    );
+    getOrdersMonthlyProduct(selectedValue);
 
-    setTodaySales(todaySalesFilter.length.toString());
+    // const todaySalesFilter = paidOrders.filter(
+    //   (prod) =>
+    //     prod.status === 'Delivered' &&
+    //     prod.product_names.includes(selectedValue),
+    // );
+
+    // setTodaySales(todaySalesFilter.length.toString());
 
     // console.log(todaySalesFilter, selectedValue, todaySalesFilter.length);
+  };
+
+  const getOrdersMonthly = () => {
+    axios
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/orders-monthly.php`)
+      .then((res) => {
+        console.log(res.data, 'paid');
+        setMonthlySales(res.data);
+      });
+  };
+
+  const getOrdersMonthlyProduct = (selectedProduct: string) => {
+    axios
+      .get(
+        `${
+          import.meta.env.VITE_ORDERING_LOCAL_HOST
+        }/orders-monthly-product.php`,
+        {
+          params: {
+            product_name: selectedProduct,
+          },
+        },
+      )
+      .then((res) => {
+        console.log(res.data, 'orders product');
+        setProductMonthlySales(res.data);
+      });
   };
 
   const getPaidOrders = () => {
@@ -149,8 +136,14 @@ export default function SalesHistory() {
   useEffect(() => {
     getProduct();
     getPaidOrders();
+    getOrdersMonthly();
   }, []);
 
+  // const BarGraphMonthlyVisit = () => {
+  //   return (
+
+  //   );
+  // };
   return (
     <div className="p-4">
       {' '}
@@ -322,7 +315,11 @@ export default function SalesHistory() {
           <div className="md:w-[100%] md:p-5 bg-white rounded-lg border-2">
             <h1 className="mb-5 font-bold uppercase">Monthly Sales</h1>
             <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={data}>
+              <BarChart
+                data={
+                  productName === 'All' ? monthlySales : productMonthlySales
+                }
+              >
                 <XAxis
                   dataKey="name"
                   stroke="#888888"

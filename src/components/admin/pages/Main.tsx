@@ -112,7 +112,7 @@ export default function Main() {
           Icon={<MdAttachMoney className="text-4xl text-violet-400" />}
           title="Total Revenue"
           value={` $${paidOrders
-            .filter((prod) => !prod.status.includes('Cancelled'))
+            .filter((prod) => prod.status.includes('Delivered'))
             .reduce((total, prod) => total + prod.total_amount, 0)}`}
           description="Canncelled orders are not counted"
         />
