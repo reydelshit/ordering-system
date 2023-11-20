@@ -20,7 +20,7 @@ export default function Login({
           className="flex flex-col justify-center items-center "
         >
           <Input
-            type="email"
+            // type="email"
             placeholder="Email"
             className="mb-2"
             name="email"

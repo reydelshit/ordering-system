@@ -78,11 +78,11 @@ export default function MessageNotification({
 
   return (
     <div className="flex flex-col bottom-2 justify-between items-center">
-      <div className="h-[18rem]  overflow-auto w-full flex flex-col gap-1 p-4">
+      <div className="h-[18rem] overflow-auto w-full flex flex-col gap-1 p-4">
         {notification.length > 0 ? (
           notification.map((noti, index) => (
             <div
-              className="border-2 h-fit mt-[1rem] w-[100%] rounded-sm bg-gray-500 p-3 text-xs text-start !text-white"
+              className="border-2 h-fit mt-[1rem] w-[100%] rounded-sm bg-gray-100 p-3 text-xs text-start !text-white"
               key={index}
             >
               <p>{noti.message}</p>

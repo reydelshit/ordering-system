@@ -7,7 +7,7 @@ import View from '@/components/View';
 import AdminRoutes from '@/components/admin/Admin';
 import Login from './Login';
 import { useState } from 'react';
-import ProtectedRoute from './Protected';
+import ProtectedRoute from './admin/Protected';
 import axios from 'axios';
 
 import Profile from './Profile';
@@ -16,6 +16,9 @@ import Register from './Register';
 import Checkout from './Checkout';
 import OrderConfirmation from './Confirmation';
 import EditProfile from './EditProfile';
+import ProtectedRouteRider from './rider/ProtectedRider';
+import Rider from './rider/Rider';
+import RiderRoutes from './rider/RiderRoute';
 
 export default function Main() {
   const navigation = useNavigate();
@@ -43,10 +46,14 @@ export default function Main() {
           localStorage.setItem('type', res.data[0].user_type);
 
           const isAdmin = res.data[0].user_type === 'admin' ? true : false;
+          const isRider = res.data[0].user_type === 'rider' ? true : false;
           // console.log(res.data[0].user_type);
 
           if (isAdmin) {
             navigation('/admin');
+            window.location.reload();
+          } else if (isRider) {
+            navigation('/rider');
             window.location.reload();
           } else {
             navigation('/shop');
@@ -85,11 +92,28 @@ export default function Main() {
           <Route path={'/shop/:id' && '/shop/:id/*'} element={<View />} />
           {/* <Route path="/shop/:id/*" element={<View />} /> */}
           <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminRoutes />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/admin/*"
             element={
               <ProtectedRoute>
                 <AdminRoutes />
               </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/rider/*"
+            element={
+              <ProtectedRouteRider>
+                <RiderRoutes />
+              </ProtectedRouteRider>
             }
           />
         </Routes>

@@ -55,6 +55,10 @@ type OrderDetails = {
   payment_type: string;
 };
 
+type Rider = {
+  user_id: number;
+  name: string;
+};
 export default function ViewOrders() {
   const [paidOrders, setPaidOrders] = useState<Product[]>([]);
   const [userDetails, setUserDetails] = useState<User[]>([]);
@@ -73,7 +77,20 @@ export default function ViewOrders() {
   const [templateMessage, setTemplateMessage] = useState<string>('');
   const [isTemplateMessage, setIsTemplateMessage] = useState<boolean>(true);
   const [orderDate, setOrderDate] = useState<string>('');
+  const [assignedRider, setAssignedRider] = useState<string>('');
+  const [riders, setRiders] = useState<Rider[]>([]);
   const { toast } = useToast();
+
+  const getAssignedRiderName = async () => {
+    axios
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/rider.php`, {
+        params: { order_id: order_id.ordersid },
+      })
+      .then((res) => {
+        console.log(res.data, 'assigned rider');
+        setAssignedRider(res.data[0].rider_name);
+      });
+  };
   const getOrders = async () => {
     await axios
       .get(
@@ -98,13 +115,23 @@ export default function ViewOrders() {
       });
   };
 
+  const getAssignedRider = async () => {
+    await axios
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/rider.php`, {})
+      .then((res) => {
+        console.log(res.data, 'rider');
+        setRiders(res.data);
+        // setAssignedRider(res.data[0].name);
+      });
+  };
+
   const getUserDetails = async (user_id: number) => {
     await axios
       .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/user.php`, {
         params: { user_id: user_id },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data, 'recepient details');
         setRecepientName(res.data[0].name);
         setUserDetails(res.data);
         setRecepientProfilePicture(res.data[0].profile_picture);
@@ -125,7 +152,41 @@ export default function ViewOrders() {
   useEffect(() => {
     getOrders();
     getNotes();
+    getAssignedRiderName();
+    getAssignedRider();
   }, []);
+
+  const handleRider = (event: string) => {
+    const selectedValue = event;
+
+    console.log(selectedValue, 'dsanfkjbajf');
+
+    const filterNumber = selectedValue.match(/\d+/g);
+    const parsedSupplierID = filterNumber ? parseInt(filterNumber[0], 10) : 0;
+
+    const filterName = selectedValue.match(/[^0-9]+/g);
+    const parsedName = filterName ? filterName.join(' ') : '';
+    console.log(parsedSupplierID);
+    console.log(parsedName, 'name');
+
+    axios
+      .post(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/rider.php`, {
+        rider_id: parsedSupplierID,
+        order_id: order_id.ordersid,
+        rider_name: parsedName,
+        customer_name: recepientName,
+      })
+      .then((res) => {
+        console.log(res.data, 'status');
+        getOrders();
+        getAssignedRider();
+
+        toast({
+          title: 'Rider: Set Successfully',
+          description: moment().format('LLLL'),
+        });
+      });
+  };
 
   const handleStatus = (event: string) => {
     const selectedValue = event;
@@ -205,6 +266,26 @@ export default function ViewOrders() {
         </div>
 
         <div className="flex gap-2 items-center">
+          <h1>{assignedRider.length > 0 ? assignedRider : ''}</h1>
+          <div className="text-start mr-[2rem]">
+            <Select
+              disabled={assignedRider.length > 0 ? true : false}
+              onValueChange={(e) => handleRider(e)}
+            >
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Assigned rider" />
+              </SelectTrigger>
+              <SelectContent>
+                {riders.map((rider, index) => {
+                  return (
+                    <SelectItem key={index} value={rider.name + rider.user_id}>
+                      {rider.name}
+                    </SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
+          </div>
           <h1>{status}</h1>
           <Select onValueChange={(e) => handleStatus(e)}>
             <SelectTrigger className="w-[200px]">
