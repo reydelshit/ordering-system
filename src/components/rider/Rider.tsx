@@ -24,6 +24,7 @@ type AssignedOrders = {
   phone: string;
   payment_type: string;
   products: string;
+  status: string;
 };
 export default function Rider() {
   const [showImageForm, setShowImageForm] = useState(false);
@@ -76,6 +77,17 @@ export default function Rider() {
         console.log(res.data, 'status');
         setShowImageForm(false);
       });
+
+    axios
+      .put(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/rider.php`, {
+        order_id: storeOrderID,
+        status: 'Delivered',
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+
+    getAssignedOrders();
   };
 
   useEffect(() => {
@@ -116,12 +128,15 @@ export default function Rider() {
 
                   <TableCell>
                     <Button
+                      disabled={order.status === 'Delivered'}
                       onClick={() => handleOpenForm(order.order_id)}
                       className="mr-2"
                     >
                       Upload
                     </Button>
-                    <Button>Set Delivered</Button>
+                    {/* <Button onClick={() => handleSetDelivered(order.order_id)}>
+                      Set Delivered
+                    </Button> */}
                   </TableCell>
                 </TableRow>
               );

@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import Cake from '@/assets/cake.png';
 
 import { Link } from 'react-router-dom';
 
@@ -25,10 +26,13 @@ type Product = {
   total_amount: number;
   user_id: number;
   status_id: number;
+  proof_image: string;
 };
 
 export default function OrdersTable({ status }: { status: string }) {
   const [paidOrders, setPaidOrders] = useState<Product[]>([]);
+  const [showImageForm, setShowImageForm] = useState(false);
+  const [image, setImage] = useState<string | null>(null);
 
   const getPaidOrders = () => {
     axios
@@ -43,14 +47,20 @@ export default function OrdersTable({ status }: { status: string }) {
     getPaidOrders();
   }, []);
 
+  const showProofDelivery = (image: string) => {
+    setShowImageForm(true);
+    setImage(image);
+  };
+
   return (
-    <Table className="w-full">
+    <Table className="w-full relative ">
       <TableHeader>
         <TableRow>
           <TableHead className="text-center">Order ID</TableHead>
           <TableHead className="text-center">User ID</TableHead>
           <TableHead className="text-center">Ordered Products</TableHead>
           <TableHead className="text-center">Total Amount</TableHead>
+          <TableHead className="text-center">Proof Delivery</TableHead>
           <TableHead className="text-center">Status</TableHead>
         </TableRow>
       </TableHeader>
@@ -71,6 +81,16 @@ export default function OrdersTable({ status }: { status: string }) {
                 </TableCell>
                 <TableCell>{prod.total_amount}</TableCell>
                 <TableCell>
+                  <a
+                    onClick={() => showProofDelivery(prod.proof_image)}
+                    className="underline text-blue-500"
+                  >
+                    {' '}
+                    view proof
+                  </a>
+                </TableCell>
+
+                <TableCell>
                   <div
                     className={`p-2 ${
                       prod.status === 'Delivered'
@@ -89,6 +109,34 @@ export default function OrdersTable({ status }: { status: string }) {
             );
           })}
       </TableBody>
+
+      {showImageForm && (
+        <div
+          onClick={() => setShowImageForm(false)}
+          className="absolute w-full h-full top-0 z-50 bg-white bg-opacity-80 flex justify-center"
+        >
+          <div className="bg-white w-[35rem] h-fit rounded-md ">
+            <img
+              className="w-full  object-cover rounded-lg mb-4"
+              src={image! ? image! : ''}
+            />
+            {image! ? (
+              ''
+            ) : (
+              <h1 className="font-bold text-7xl">NO PROOF OF DELIVERY</h1>
+            )}
+
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={() => setShowImageForm(false)}
+                className="bg-red-500 text-white p-2 rounded-md"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </Table>
   );
 }
