@@ -4,6 +4,7 @@ import { Input } from './ui/input';
 import { useContext, useEffect, useState } from 'react';
 import { MainContext } from './hooks/useShowMessage';
 import axios from 'axios';
+import moment from 'moment';
 
 type MessageType = {
   created_at: string;
@@ -90,6 +91,7 @@ export default function SendMessage() {
               } text-start`}
             >
               <p>{res.message_context}</p>
+              <p className="text-xs">{moment(res.created_at).format('LLL')}</p>
             </div>
           );
         })}

@@ -88,6 +88,7 @@ export default function MessageNotification({ userId }: { userId: number }) {
               } text-start`}
             >
               <p>{res.message_context}</p>
+              <p className="text-xs">{moment(res.created_at).format('LLL')}</p>
             </div>
           );
         })}

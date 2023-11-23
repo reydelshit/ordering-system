@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { MainContext } from './hooks/useShowMessage';
+import moment from 'moment';
+import MessageNotification from './admin/components/orders/MessageNotifcation';
 
 type MessageType = {
   created_at: string;
@@ -70,7 +72,9 @@ export default function Message() {
                       >
                         {mes.sender_username}
                       </h1>
-                      <p>{mes.created_at}</p>
+                      <p className="text-xs">
+                        {moment(MessageNotification.created_at).format('LLL')}
+                      </p>
                     </span>
 
                     <p>{mes.message_context}</p>

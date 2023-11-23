@@ -88,7 +88,9 @@ export default function ViewOrders() {
       })
       .then((res) => {
         console.log(res.data, 'assigned rider');
-        setAssignedRider(res.data[0].rider_name);
+        if (res.data.length > 0) {
+          setAssignedRider(res.data[0].rider_name);
+        }
       });
   };
   const getOrders = async () => {
