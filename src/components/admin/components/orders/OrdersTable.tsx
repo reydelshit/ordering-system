@@ -81,20 +81,24 @@ export default function OrdersTable({ status }: { status: string }) {
                 </TableCell>
                 <TableCell>{prod.total_amount}</TableCell>
                 <TableCell>
-                  <a
-                    onClick={() => showProofDelivery(prod.proof_image)}
-                    className="underline text-blue-500"
-                  >
-                    {' '}
-                    view proof
-                  </a>
+                  {!prod.proof_image ? (
+                    <div>n/a</div>
+                  ) : (
+                    <a
+                      onClick={() => showProofDelivery(prod.proof_image)}
+                      className="underline text-blue-500 cursor-pointer"
+                    >
+                      {' '}
+                      view proof
+                    </a>
+                  )}
                 </TableCell>
 
                 <TableCell>
                   <div
                     className={`p-2 ${
                       prod.status === 'Delivered'
-                        ? 'bg-purple-500 text-white'
+                        ? 'bg-[#5d383a] text-white'
                         : prod.status === 'On Delivery'
                         ? 'bg-green-700 text-white'
                         : prod.status === 'Cancelled'

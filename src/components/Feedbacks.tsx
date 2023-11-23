@@ -169,7 +169,7 @@ export default function Feedbacks() {
           </p>
           <Button
             onClick={() => setShowFeedbackForm(true)}
-            className="block mt-[2rem] mx-auto"
+            className="block mt-[2rem] mx-auto bg-[#5d383a]"
             disabled={disabledButton}
           >
             Write a review
@@ -183,7 +183,7 @@ export default function Feedbacks() {
             <div className="mb-[1rem]" key={index}>
               <div className="flex items-center gap-4">
                 <img
-                  className="w-[5rem] h-[5rem] rounded-full object-cover bg-violet-600"
+                  className="w-[5rem] h-[5rem] rounded-full object-cover bg-[#5d383a]"
                   src={feedback.profile_picture}
                   alt="profile"
                 />
@@ -239,7 +239,10 @@ export default function Feedbacks() {
                     ),
                 )}
                 {user_id && user_id.length > 0 && (
-                  <Button onClick={() => handleShowReplyInput(index, index)}>
+                  <Button
+                    className="bg-[#5d383a]"
+                    onClick={() => handleShowReplyInput(index, index)}
+                  >
                     {showReplyInput && inputIndex === index
                       ? 'Cancel'
                       : 'Reply'}
@@ -256,7 +259,7 @@ export default function Feedbacks() {
                         localStorage.getItem('type') === 'admin'
                           ? 'block'
                           : 'hidden'
-                      } self-start bg-violet-700 mb-2`}
+                      } self-start bg-[#5d383a] mb-2`}
                     >
                       Thanks template
                     </Button>
@@ -274,7 +277,7 @@ export default function Feedbacks() {
                           feedback.feedback_id,
                         )
                       }
-                      className="mt-[1rem] w-[10rem] self-end"
+                      className="mt-[1rem] w-[10rem] self-end bg-[#5d383a]"
                     >
                       Send
                     </Button>
@@ -301,9 +304,9 @@ export default function Feedbacks() {
                       key={number}
                       className={`${
                         isSelected
-                          ? 'bg-violet-600 text-white'
+                          ? 'bg-[#5d383a] text-white'
                           : 'bg-white text-black'
-                      } ' mr-2 my-2 hover:bg-violet-600 hover:text-white`}
+                      } ' mr-2 my-2 hover:bg-[#5d383a] hover:text-white`}
                     >
                       {number + 1} ⭐
                     </Button>
@@ -328,7 +331,12 @@ export default function Feedbacks() {
                 cancel
               </Button>
 
-              <Button onClick={handleFeedbackSubmition}>Submit</Button>
+              <Button
+                className="bg-[#5d383a]"
+                onClick={handleFeedbackSubmition}
+              >
+                Submit
+              </Button>
             </div>
           </div>
         </div>

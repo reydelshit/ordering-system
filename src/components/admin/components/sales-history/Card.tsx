@@ -20,7 +20,7 @@ export default function CardCompo({
 }) {
   return (
     <>
-      <Card className="text-start bg-white w-full">
+      <Card className="text-start bg-white w-full text-[#5d383a]">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">{title}</CardTitle>
           {icon}

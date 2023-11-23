@@ -147,7 +147,7 @@ export default function View() {
         >
           <div className="w-[40em] flex flex-col justify-center items-center">
             <img
-              className="object-cover !h-[30rem] rounded-lg bg-violet-600"
+              className="object-cover !h-[30rem] rounded-lg bg-[#5d383a]"
               src={prod.product_image}
               alt="cake"
             />
@@ -195,7 +195,7 @@ export default function View() {
               </div>
               <Button
                 onClick={() => handleAddToCart(prod.product_id)}
-                className="w-[50%] h-full "
+                className="w-[50%] h-full bg-[#5d383a] "
               >
                 Add to Order cart
               </Button>

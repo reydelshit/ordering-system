@@ -95,21 +95,21 @@ export default function Main() {
   }, []);
 
   return (
-    <div className="p-4 bg-slate-50">
-      <div className="text-start mb-4 h-[4rem] my-auto">
+    <div className="p-4 bg-slate-50 ">
+      <div className="text-start mb-4 h-[4rem] my-auto text-[#5d383a]">
         <h1 className="font-bold text-2xl">Admin Main</h1>
         <p>Here is whats happening in your business!</p>
       </div>
       <Separator />
       <div className="grid grid-cols-4 my-4 gap-4">
         <Cards
-          Icon={<AiOutlineDropbox className="text-4xl text-violet-400" />}
+          Icon={<AiOutlineDropbox className="text-4xl text-[#5d383a]" />}
           title="Total Products"
           value={`+${product.length}`}
           description=" Total number of products"
         />
         <Cards
-          Icon={<MdAttachMoney className="text-4xl text-violet-400" />}
+          Icon={<MdAttachMoney className="text-4xl text-[#5d383a]" />}
           title="Total Revenue"
           value={` $${paidOrders
             .filter((prod) => prod.status.includes('Delivered'))
@@ -117,7 +117,7 @@ export default function Main() {
           description="Canncelled orders are not counted"
         />
         <Cards
-          Icon={<BsCartPlus className="text-4xl text-violet-400" />}
+          Icon={<BsCartPlus className="text-4xl text-[#5d383a]" />}
           title="Total Orders"
           value={`${
             paidOrders.filter((prod) => !prod.status.includes('Cancelled'))
@@ -127,14 +127,14 @@ export default function Main() {
         />
 
         <Cards
-          Icon={<FiUsers className="text-4xl text-violet-400" />}
+          Icon={<FiUsers className="text-4xl text-[#5d383a]" />}
           title="Registered Customers"
           value={`${customers.length}`}
           description="Total number of registered customers"
         />
       </div>
 
-      <div className="flex w-full border-2 gap-[2rem] items-center">
+      <div className="flex w-full  gap-[2rem] items-center">
         <div className="border-2 mt-[2rem] w-[65rem] p-4 rounded-md bg-white">
           <div className="w-full text-start">
             <h1 className="font-bold text-2xl">Order Summary</h1>
@@ -166,7 +166,7 @@ export default function Main() {
               <Link to="/admin/orders">
                 <div className="cursor-pointer text-start justify-between flex items-center font-bold h-[4rem] p-2 bg-violet-100 w-full rounded-lg  px-5">
                   <h1 className="flex item-center">
-                    <span className="text-violet-400 mr-2 text-xl">
+                    <span className="text-[#5d383a] mr-2 text-xl">
                       {' '}
                       {orderStatus.map(
                         (stat: any) =>

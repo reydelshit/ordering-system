@@ -52,7 +52,7 @@ export default function Cart({ cart }: { cart: Cart[] }) {
                 onClick={() => handleDeleteCartProduct(cart.cart_id)}
                 className="cursor-pointer"
               >
-                <AiOutlineDelete className="text-3xl text-violet-400" />
+                <AiOutlineDelete className="text-3xl text-[#5d383a]" />
               </span>
               <span className="block font-bold">
                 ${cart.product_price * cart.qty}
@@ -80,7 +80,7 @@ export default function Cart({ cart }: { cart: Cart[] }) {
 
         <div>
           <Link to="/shop/checkout">
-            <Button className="w-full h-[3rem] text-white font-bold">
+            <Button className="w-full h-[3rem] text-white font-bold bg-[#5d383a]">
               Checkout
             </Button>
           </Link>

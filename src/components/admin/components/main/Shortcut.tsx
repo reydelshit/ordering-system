@@ -14,13 +14,13 @@ import { Link } from 'react-router-dom';
 
 export default function Shortcut() {
   return (
-    <Command className="h-[25rem] w-full">
+    <Command className="h-[25rem] w-full ">
       <CommandInput placeholder="Type a command or search..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Suggestions">
           <Link to="/admin/orders">
-            <CommandItem className="cursor-pointer">Veiw Orders</CommandItem>
+            <CommandItem className="cursor-pointer ">Veiw Orders</CommandItem>
           </Link>
           <Link to="/admin/feedbacks">
             <CommandItem className="cursor-pointer">View Feedbacks</CommandItem>

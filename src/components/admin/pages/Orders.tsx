@@ -22,9 +22,11 @@ export default function Orders() {
   };
 
   return (
-    <div className=" p-4">
+    <div className=" p-4 bg-slate-50 ">
       <div className="flex justify-between w-full mb-[4rem]">
-        <Button onClick={() => navigate(-1)}>Go Back</Button>
+        <Button className="bg-[#5d383a]" onClick={() => navigate(-1)}>
+          Go Back
+        </Button>
         <h1 className="font-bold text-2xl self-end">Manage Product</h1>
       </div>
       <Select onValueChange={(e) => handleStatus(e)}>

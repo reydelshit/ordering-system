@@ -120,14 +120,6 @@ export default function AddProductModal({
   return (
     <div className="w-full h-fit flex justify-center items-center flex-col text-center p-4">
       <div className="w-full">
-        <div className="flex justify-between">
-          <Button className="self-start" onClick={() => navigate(-1)}>
-            Go Back
-          </Button>
-
-          {/* <h1 className="font-bold text-2xl">Update Details</h1> */}
-        </div>
-
         <div className="flex w-full justify-between gap-[4rem] mt-[5rem]">
           <div className="mb-2 flex flex-col mt-[2rem]">
             <img
@@ -144,12 +136,14 @@ export default function AddProductModal({
             />
           </div>
 
-          <form onSubmit={handleSubmit} className="flex flex-col w-full">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col w-full text-[#5d383a]"
+          >
             <div className="flex gap-2 w-full">
               <div className="flex flex-col item-start p-4">
                 <Label className="mb-2 text-start">Product Name</Label>
                 <Input
-                  placeholder="name of the product (cake)"
                   name="product_name"
                   className="mb-2"
                   onChange={handleChange}
@@ -160,7 +154,6 @@ export default function AddProductModal({
                 <Label className="mb-2 text-start">Quantity</Label>
                 <Input
                   type="number"
-                  placeholder="price"
                   name="product_price"
                   className="mb-2"
                   onChange={handleChange}
@@ -173,7 +166,6 @@ export default function AddProductModal({
               <Textarea
                 onChange={handleChange}
                 name="product_description"
-                placeholder="description"
                 className="mb-2 min-h-[10rem] mt-2"
               ></Textarea>
             </div>
@@ -183,7 +175,6 @@ export default function AddProductModal({
 
                 <Input
                   type="number"
-                  placeholder="quantity"
                   name="quantity"
                   className="mb-2"
                   onChange={handleChange}
@@ -243,7 +234,7 @@ export default function AddProductModal({
               />
             </div>
 
-            <Button className="w-[40%] self-center" type="submit">
+            <Button className="w-[40%] self-center bg-[#5d383a]" type="submit">
               Add product
             </Button>
           </form>

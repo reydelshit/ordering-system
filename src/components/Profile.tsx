@@ -63,8 +63,6 @@ export default function Profile() {
   const [status, setStatus] = useState('');
   const [feedbackProduct, setFeedbackProduct] = useState<FeedbackProduct[]>([]);
 
-  const { showMessage } = useContext(MainContext);
-
   const getUserData = () => {
     axios
       .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/user.php`, {
@@ -142,7 +140,7 @@ export default function Profile() {
             <div className="text-start p-4">
               <div className="absolute right-2 top-2">
                 <Link to={`/profile/edit/${user.user_id}`}>
-                  <Button>Edit profile</Button>
+                  <Button className="bg-[#5d383a]">Edit profile</Button>
                 </Link>
               </div>
               <span className="flex items-center gap-4">
@@ -177,21 +175,21 @@ export default function Profile() {
                     return acc + product.product_price * product.quantity;
                   }, 0)}`}
                 description="Only delivered are counted."
-                Icon={<MdAttachMoney className="text-4xl text-violet-400" />}
+                Icon={<MdAttachMoney className="text-4xl text-[#5d383a]" />}
               />
 
               <Cards
                 title="Total orders"
                 value={`${paidOrders.length}`}
                 description="Orders including the cancelled ones."
-                Icon={<BsCartPlus className="text-4xl text-violet-400" />}
+                Icon={<BsCartPlus className="text-4xl text-[#5d383a]" />}
               />
 
               <Cards
                 title="Feedbacks Submissions"
                 value={`${feedbackProduct.length}`}
                 description="Total Feedbacks Submissions"
-                Icon={<VscFeedback className="text-4xl text-violet-400" />}
+                Icon={<VscFeedback className="text-4xl text-[#5d383a]" />}
               />
             </div>
           </div>

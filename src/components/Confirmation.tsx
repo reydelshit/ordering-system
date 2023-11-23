@@ -148,12 +148,15 @@ export default function OrderConfirmation() {
           </div>
         ))}
       </div>
-      <Button className="self-start mr-2" onClick={() => navigate(-1)}>
+      <Button
+        className="self-start mr-2 bg-red-500"
+        onClick={() => navigate(-1)}
+      >
         Cancel, Go Back
       </Button>
 
       <AlertDialog>
-        <AlertDialogTrigger className="bg-green-700 text-white font-semibold p-1.5 rounded-md">
+        <AlertDialogTrigger className="bg-[#5d383a] text-white font-semibold p-1.5 rounded-md">
           {' '}
           Confirm Order
         </AlertDialogTrigger>
@@ -168,7 +171,10 @@ export default function OrderConfirmation() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleConfirmPayment}>
+            <AlertDialogAction
+              className="bg-[#5d383a]"
+              onClick={handleConfirmPayment}
+            >
               Confirm
             </AlertDialogAction>
           </AlertDialogFooter>

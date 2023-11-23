@@ -74,9 +74,11 @@ export default function ManageProduct() {
   };
 
   return (
-    <div className="flex flex-col p-4 justify-center items-center">
-      <div className="flex justify-between w-full mb-[4rem]">
-        <Button onClick={() => navigate(-1)}>Go Back</Button>
+    <div className="flex flex-col p-4 justify-center items-center bg-slate-50 ">
+      <div className="flex justify-between w-full mb-[4rem] text-[#5d383a]">
+        <Button className="bg-[#5d383a]" onClick={() => navigate(-1)}>
+          Go Back
+        </Button>
         <h1 className="font-bold text-2xl self-end">Manage Product</h1>
       </div>
 
@@ -93,7 +95,7 @@ export default function ManageProduct() {
 
             <Button
               onClick={() => setShowAddProduct(!showAddProduct)}
-              className="self-end"
+              className="self-end bg-[#5d383a]"
             >
               {showAddProduct ? 'Close' : 'Add Product'}
             </Button>
@@ -137,7 +139,7 @@ export default function ManageProduct() {
                         <span className="flex gap-2">
                           <AlertDialog>
                             <AlertDialogTrigger className="cursor-pointer">
-                              <RiDeleteBin5Line className="w-[2rem] h-[1.5rem] text-violet-400" />
+                              <RiDeleteBin5Line className="w-[2rem] h-[1.5rem] text-[#5d383a]" />
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
@@ -164,11 +166,11 @@ export default function ManageProduct() {
                             to={`/admin/manage-product/update/${prod.product_id}`}
                           >
                             {' '}
-                            <FiEdit3 className="w-[2rem] h-[1.5rem] text-violet-400" />
+                            <FiEdit3 className="w-[2rem] h-[1.5rem] text-[#5d383a]" />
                           </Link>
                           <Link to={`/shop/${prod.product_id}`}>
                             {' '}
-                            <AiOutlineEye className="w-[2rem] h-[1.5rem] text-violet-400" />
+                            <AiOutlineEye className="w-[2rem] h-[1.5rem] text-[#5d383a]" />
                           </Link>
                         </span>
                       </TableCell>

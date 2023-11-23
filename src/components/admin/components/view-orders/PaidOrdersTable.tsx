@@ -64,7 +64,7 @@ export default function PaidOrdersTable({
       </Table>
 
       <div className="self-end mt-[2rem] mr-[2rem] flex gap-2 flex-col items-start w-[10rem]">
-        <span className="flex gap-[2rem] text-center w-full justify-between items-center">
+        <span className="flex gap-[2rem] text-center w-full justify-between items-center bg-[#5d383a] text-white p-2 rounded-md">
           <h1>Total: </h1>
           <p className="font-bold text-start text-2xl">
             {paidOrders.reduce(

@@ -170,7 +170,10 @@ export default function EditProfile() {
               </div>
             </div>
 
-            <Button className="w-[80%] self-center mt-[3rem]" type="submit">
+            <Button
+              className="w-[80%] self-center mt-[3rem] bg-[#5d383a]"
+              type="submit"
+            >
               Update Profile
             </Button>
           </form>

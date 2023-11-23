@@ -261,7 +261,10 @@ export default function ViewOrders() {
   return (
     <div className="flex flex-col p-4 justify-center bg-white">
       <div className="flex justify-between">
-        <Button className="self-start" onClick={() => navigate(-1)}>
+        <Button
+          className="self-start bg-[#5d383a]"
+          onClick={() => navigate(-1)}
+        >
           Go Back
         </Button>
 
@@ -278,7 +281,9 @@ export default function ViewOrders() {
         </div>
 
         <div className="flex gap-2 items-center">
-          <h1>{assignedRider.length > 0 ? assignedRider : ''}</h1>
+          <h1 className="bg-[#5d383a] p-2 text-white rounded-xl">
+            {assignedRider.length > 0 ? assignedRider : ''}
+          </h1>
           <div className="text-start mr-[2rem]">
             <Select
               disabled={assignedRider.length > 0 ? true : false}
@@ -298,7 +303,7 @@ export default function ViewOrders() {
               </SelectContent>
             </Select>
           </div>
-          <h1>{status}</h1>
+          <h1 className="bg-[#5d383a] p-2 text-white rounded-xl">{status}</h1>
           <Select onValueChange={(e) => handleStatus(e)}>
             <SelectTrigger className="w-[200px]">
               <SelectValue placeholder="Set status" />
@@ -311,7 +316,9 @@ export default function ViewOrders() {
             </SelectContent>
           </Select>
 
-          <Button onClick={handleExport}>Export</Button>
+          <Button className="bg-[#5d383a]" onClick={handleExport}>
+            Export
+          </Button>
         </div>
       </div>
 
@@ -344,7 +351,7 @@ export default function ViewOrders() {
           <Button
             disabled={notes.length === 0 ? true : false}
             onClick={handleSetNotes}
-            className="mt-[1rem] self-end"
+            className="mt-[1rem] self-end bg-[#5d383a]"
           >
             Save
           </Button>

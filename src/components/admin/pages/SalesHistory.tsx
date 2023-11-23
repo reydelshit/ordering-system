@@ -145,10 +145,12 @@ export default function SalesHistory() {
   //   );
   // };
   return (
-    <div className="p-4">
+    <div className="p-4 bg-slate-50 ">
       {' '}
       <div className="flex justify-between w-full mb-[4rem]">
-        <Button onClick={() => navigate(-1)}>Go Back</Button>
+        <Button className="bg-[#5d383a]" onClick={() => navigate(-1)}>
+          Go Back
+        </Button>
         <h1 className="font-bold text-2xl self-end">Sales History</h1>
       </div>
       <div className="flex justify-between py-2">
@@ -334,13 +336,13 @@ export default function SalesHistory() {
                   axisLine={false}
                   tickFormatter={(value: string) => `${value}`}
                 />
-                <Bar dataKey="total" fill="#FACC15" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="total" fill="#5d383a" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
       </div>
-      <Table className="w-full">
+      <Table className="w-full bg-white border-2 mt-[2rem]">
         <TableHeader>
           <TableRow>
             <TableHead className="text-center">Order ID</TableHead>

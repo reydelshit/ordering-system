@@ -82,7 +82,7 @@ export default function CustomerReviews({
                         (feedb) => feedb.feedback_rating === number,
                       ).length === 0
                         ? 'bg-gray-200'
-                        : 'bg-violet-600'
+                        : 'bg-[#5d383a]'
                     }`}
                   ></div>
                 </div>
@@ -98,7 +98,7 @@ export default function CustomerReviews({
                           100,
                       )}
                   %
-                  <span className="ml-2 text-violet-600">
+                  <span className="ml-2 text-[#5d383a]">
                     (
                     {
                       feedbacks.filter(

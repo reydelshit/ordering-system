@@ -117,10 +117,10 @@ export default function Shop() {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 ">
       <div className="h-[4rem] rounded-lg mb-2 flex justify-between w-full items-center px-2">
         <Popover>
-          <PopoverTrigger className="bg-violet-600 p-2 rounded-md text-white w-[10rem]">
+          <PopoverTrigger className="bg-[#5d383a] p-2 rounded-md text-white w-[10rem]">
             Filter
           </PopoverTrigger>
           <PopoverContent className="h-fit w-[20rem]">
@@ -222,7 +222,7 @@ export default function Shop() {
               className="border-2 w-[18rem] max-h-[25rem] rounded-xl overflow-hidden text-start p-4 flex flex-col items-center"
             >
               <img
-                className="w-full h-[60%] object-cover rounded-lg bg-violet-600"
+                className="w-full h-[60%] object-cover rounded-lg bg-[#5d383a]"
                 src={prod.product_image}
                 alt="cake"
               />
@@ -231,7 +231,7 @@ export default function Shop() {
                   <div className="flex justify-between mb-2">
                     <Link to={`/shop/${prod.product_id}`}>
                       {' '}
-                      <h1 className="font-semibold text-xl cursor-pointer text-black">
+                      <h1 className="font-semibold text-xl cursor-pointer text-[#5d383a]">
                         {prod.product_name.slice(0, 10)}
                       </h1>
                     </Link>
@@ -266,7 +266,7 @@ export default function Shop() {
 
                 <Button
                   onClick={() => handleAddToCart(prod.product_id, index)}
-                  className="w-[9rem] h-[2.8rem] mt-4 text-white self-center"
+                  className="w-[9rem] h-[2.8rem] mt-4 text-white self-center bg-[#5d383a]"
                 >
                   Add order{' '}
                 </Button>

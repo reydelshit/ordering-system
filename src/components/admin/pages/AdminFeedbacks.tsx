@@ -156,9 +156,11 @@ export default function AdminFeedbacks() {
   };
 
   return (
-    <div className="flex justify-center items-center w-full flex-col p-4">
+    <div className="flex justify-center items-center w-full flex-col p-4 bg-slate-50 ">
       <div className="flex justify-between w-full h-[5rem] items-center">
-        <Button onClick={() => navigate(-1)}>Go Back</Button>
+        <Button className="bg-[#5d383a]" onClick={() => navigate(-1)}>
+          Go Back
+        </Button>
 
         <h1 className="font-bold text-2xl">Feedback</h1>
       </div>
@@ -167,10 +169,10 @@ export default function AdminFeedbacks() {
         <div className="w-[25rem] grid place-content-start">
           <Input
             onChange={(e) => setSearch(e.target.value)}
-            className="mb-2"
-            placeholder="Search"
+            className="mb-2 bg-white"
+            placeholder="Search "
           />
-          <Table className="border-2 w-full">
+          <Table className="border-2 w-full bg-white">
             <TableHeader>
               <TableRow>
                 <TableHead></TableHead>
@@ -205,7 +207,7 @@ export default function AdminFeedbacks() {
           </Table>
         </div>
 
-        <div className="w-[100%] border-2 p-4 rounded-md">
+        <div className="w-[100%] border-2 p-4 rounded-md bg-white">
           <div className="flex">
             <CustomerReviews feedbacks={feedbacks} />
             {/* <div>card card</div> */}
@@ -227,7 +229,7 @@ export default function AdminFeedbacks() {
                       <div className="flex items-center gap-4 justify-between">
                         <div className="flex items-center gap-4">
                           <img
-                            className="w-[2rem] h-[2rem] rounded-full object-cover bg-violet-700"
+                            className="w-[2rem] h-[2rem] rounded-full object-cover bg-[#5d383a]"
                             src={feedback.profile_picture}
                             alt="profile"
                           />
@@ -262,7 +264,7 @@ export default function AdminFeedbacks() {
 
                         <Button
                           onClick={() => handleShowReplyInput(index, index)}
-                          className="self-end"
+                          className="self-end bg-[#5d383a]"
                         >
                           {showReplyInput && inputIndex === index
                             ? 'Close Reply'
@@ -284,7 +286,7 @@ export default function AdminFeedbacks() {
                                 >
                                   <div className="flex items-center gap-4">
                                     <img
-                                      className="w-[2rem] h-[2rem] rounded-full object-cover bg-violet-700"
+                                      className="w-[2rem] h-[2rem] rounded-full object-cover bg-[#5d383a]"
                                       src={reply.profile_picture}
                                       alt="profile"
                                     />
@@ -307,7 +309,7 @@ export default function AdminFeedbacks() {
                               onClick={() =>
                                 setReplyComment('Thanks for your feedback!')
                               }
-                              className="self-start mb-2"
+                              className="self-start mb-2 bg-[#5d383a]"
                             >
                               Thanks template
                             </Button>
@@ -325,7 +327,7 @@ export default function AdminFeedbacks() {
                                   feedback.feedback_id,
                                 )
                               }
-                              className="mt-[1rem] w-[10rem] self-end"
+                              className="mt-[1rem] w-[10rem] self-end bg-[#5d383a]"
                             >
                               Send
                             </Button>
