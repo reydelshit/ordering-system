@@ -6,7 +6,7 @@ import Shop from '@/components/Shop';
 import View from '@/components/View';
 import AdminRoutes from '@/components/admin/Admin';
 import Login from './Login';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import ProtectedRoute from './admin/Protected';
 import axios from 'axios';
 
@@ -19,10 +19,14 @@ import EditProfile from './EditProfile';
 import ProtectedRouteRider from './rider/ProtectedRider';
 import Rider from './rider/Rider';
 import RiderRoutes from './rider/RiderRoute';
+import SendMessage from './SendMessage';
+import { MainContext } from './hooks/useShowMessage';
 
 export default function Main() {
   const navigation = useNavigate();
   const [loginDetails, setLoginDetails] = useState([]);
+
+  const { showMessage } = useContext(MainContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -117,6 +121,7 @@ export default function Main() {
             }
           />
         </Routes>
+        {showMessage && <SendMessage />}
       </div>
     </>
   );

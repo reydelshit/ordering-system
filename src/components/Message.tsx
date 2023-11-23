@@ -42,6 +42,7 @@ export default function Message() {
     setShowMessage(!showMessage);
     setRecepientIDNumber(id);
     // console.log(showMessage);
+    console.log(id, 'id');
   };
 
   return (

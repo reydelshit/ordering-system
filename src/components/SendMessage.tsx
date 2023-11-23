@@ -23,8 +23,9 @@ export default function SendMessage() {
 
   const getMessageRecepient = () => {
     axios
-      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/message.php`, {
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/message-fetch.php`, {
         params: {
+          sender_id: Number(localStorage.getItem('ordering-token')),
           receiver_id: recepientIDNumber,
         },
       })

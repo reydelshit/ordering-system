@@ -326,15 +326,7 @@ export default function ViewOrders() {
             recepeintProfilePicture={recepeintProfilePicture}
             handleSetTemplateMessage={handleSetTemplateMessage}
           />
-          {userId !== 0 && (
-            <MessageNotification
-              setIsTemplateMessage={setIsTemplateMessage}
-              isTemplateMessage={isTemplateMessage}
-              templateMessage={templateMessage}
-              userId={Number(userId)}
-              userDetails={userDetails}
-            />
-          )}
+          {userId !== 0 && <MessageNotification userId={Number(userId)} />}
         </div>
       </div>
 

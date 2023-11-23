@@ -223,8 +223,6 @@ export default function Profile() {
           <ProfileOrdersTable status={status} paidOrders={paidOrders} />
         </div>
       </div>
-
-      {showMessage && <SendMessage />}
     </div>
   );
 }
