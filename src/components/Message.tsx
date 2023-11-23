@@ -73,7 +73,7 @@ export default function Message() {
                         {mes.sender_username}
                       </h1>
                       <p className="text-xs">
-                        {moment(MessageNotification.created_at).format('LLL')}
+                        {moment(mes.created_at).format('LLL')}
                       </p>
                     </span>
 
