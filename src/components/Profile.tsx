@@ -169,7 +169,7 @@ export default function Profile() {
             <div className="grid grid-cols-3 my-4 gap-4 w-full px-4">
               <Cards
                 title="Total Spends"
-                value={`${paidOrders
+                value={`₱${paidOrders
                   .filter((prod) => prod.status.includes('Delivered'))
                   .reduce((acc, product) => {
                     return acc + product.product_price * product.quantity;

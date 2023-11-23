@@ -111,7 +111,7 @@ export default function Main() {
         <Cards
           Icon={<MdAttachMoney className="text-4xl text-[#5d383a]" />}
           title="Total Revenue"
-          value={` $${paidOrders
+          value={` ₱${paidOrders
             .filter((prod) => prod.status.includes('Delivered'))
             .reduce((total, prod) => total + prod.total_amount, 0)}`}
           description="Canncelled orders are not counted"

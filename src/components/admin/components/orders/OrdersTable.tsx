@@ -79,7 +79,7 @@ export default function OrdersTable({ status }: { status: string }) {
                     {prod.product_names}
                   </Link>
                 </TableCell>
-                <TableCell>{prod.total_amount}</TableCell>
+                <TableCell>₱{prod.total_amount}</TableCell>
                 <TableCell>
                   {!prod.proof_image ? (
                     <div>n/a</div>

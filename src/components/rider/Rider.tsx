@@ -130,7 +130,7 @@ export default function Rider() {
                     <Button
                       disabled={order.status === 'Delivered'}
                       onClick={() => handleOpenForm(order.order_id)}
-                      className="mr-2"
+                      className="mr-2 bg-[#5d383a]"
                     >
                       Upload
                     </Button>
@@ -147,7 +147,7 @@ export default function Rider() {
 
       {showImageForm && (
         <div className="absolute w-full h-full top-0 z-50 bg-[#f2f2f0] bg-opacity-80 flex justify-center items-center">
-          <div className="bg-white w-[35rem] h-fit p-4 rounded-md border-[#618264] border-2">
+          <div className="bg-white w-[35rem] h-fit p-4 rounded-md border-[#5d383a] border-2">
             <img
               className="w-[40rem]  h-[25rem] object-cover rounded-lg mb-4"
               src={image! ? image! : Cake}
@@ -164,12 +164,14 @@ export default function Rider() {
             <div className="flex justify-center mt-4">
               <Button
                 onClick={() => setShowImageForm(false)}
-                className="mr-2"
+                className="mr-2 bg-red-500 text-white"
                 variant="secondary"
               >
                 Cancel
               </Button>
-              <Button onClick={handleProofSubmit}>Submit</Button>
+              <Button className="bg-[#5d383a]" onClick={handleProofSubmit}>
+                Submit
+              </Button>
             </div>
           </div>
         </div>

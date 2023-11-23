@@ -54,9 +54,9 @@ export default function PaidOrdersTable({
                   {prod.product_name}
                 </TableCell>
 
-                <TableCell>${prod.product_price}</TableCell>
+                <TableCell>₱{prod.product_price}</TableCell>
                 <TableCell>{prod.quantity}</TableCell>
-                <TableCell>${prod.product_price * prod.quantity}</TableCell>
+                <TableCell>₱{prod.product_price * prod.quantity}</TableCell>
               </TableRow>
             );
           })}
@@ -67,6 +67,7 @@ export default function PaidOrdersTable({
         <span className="flex gap-[2rem] text-center w-full justify-between items-center bg-[#5d383a] text-white p-2 rounded-md">
           <h1>Total: </h1>
           <p className="font-bold text-start text-2xl">
+            ₱
             {paidOrders.reduce(
               (total, prod) => total + prod.product_price * prod.quantity,
               0,

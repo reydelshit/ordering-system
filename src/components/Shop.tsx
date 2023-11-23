@@ -240,7 +240,7 @@ export default function Shop() {
 
                   <div className="flex items-center gap-4 justify-center w-full">
                     <p className="text-2xl font-bold break-words">
-                      ${prod.product_price}
+                      ₱{prod.product_price}
                     </p>
                     <div
                       className="w-full h-[2.5rem] f-full rounded-md font-bold bg-gray-200

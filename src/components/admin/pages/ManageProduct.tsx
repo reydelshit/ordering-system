@@ -111,7 +111,7 @@ export default function ManageProduct() {
                 </TableHead>
                 <TableHead className="font-bold text-black">Price</TableHead>
                 <TableHead className="font-bold text-black">Stocks</TableHead>
-                <TableHead className="font-bold text-black">Amount</TableHead>
+                {/* <TableHead className="font-bold text-black">Amount</TableHead> */}
                 <TableHead className="font-bold text-black ">Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -132,9 +132,9 @@ export default function ManageProduct() {
                         />
                       </TableCell>
                       <TableCell>{prod.product_name}</TableCell>
-                      <TableCell>{prod.product_price}</TableCell>
+                      <TableCell>₱{prod.product_price}</TableCell>
                       <TableCell>{prod.quantity}</TableCell>
-                      <TableCell>${prod.product_price}</TableCell>
+                      {/* <TableCell>₱{prod.product_price}</TableCell> */}
                       <TableCell>
                         <span className="flex gap-2">
                           <AlertDialog>

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
-import Logo from '@/assets/logo.png';
+import Cake from '@/assets/cake.png';
 
 export default function Login({
   handleLogin,
@@ -13,7 +13,7 @@ export default function Login({
   return (
     <div className="w-full h-screen flex justify-center items-center flex-col text-center">
       <div>
-        <img src={Logo} alt="logo" className="w-[20rem]" />
+        <img src={Cake} alt="logo" className="w-[20rem]" />
 
         <form
           onSubmit={handleLogin}
@@ -33,14 +33,14 @@ export default function Login({
             name="password"
             onChange={handleChange}
           />
-          <Button className="w-[80%]" type="submit">
+          <Button className="w-[80%] bg-[#5d383a]" type="submit">
             Login
           </Button>
         </form>
 
         <span className="mt-5 block">
           Don't have an account?
-          <Link to="/register" className="text-green-500 ml-2">
+          <Link to="/register" className="text-[#5d383a] ml-2">
             click me
           </Link>
         </span>

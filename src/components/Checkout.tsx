@@ -170,7 +170,7 @@ export default function Checkout() {
                   <Link
                     to={`/shop/checkout/order-confirmation?name=${name}&email=${email}&phone=${phone}&address=${address}&payment_type=${selectedPaymentType}`}
                   >
-                    Pay $
+                    Pay ₱
                     {cart.reduce(
                       (total, prod) => total + prod.product_price * prod.qty,
                       0,
@@ -254,7 +254,7 @@ export default function Checkout() {
                 <AiOutlineDelete className="text-3xl text-[#5d383a]" />
               </span>
               <span className="block font-bold">
-                ${cart.product_price * cart.qty}
+                ₱{cart.product_price * cart.qty}
               </span>
             </div>
           </div>
@@ -262,7 +262,7 @@ export default function Checkout() {
         <div className="w-full flex justify-between p-4 font-bold">
           <h1>Total</h1>
           <span>
-            $
+            ₱
             {cart.reduce(
               (total, prod) => total + prod.product_price * prod.qty,
               0,

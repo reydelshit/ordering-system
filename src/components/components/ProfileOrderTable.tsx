@@ -114,9 +114,9 @@ export default function ProfileOrdersTable({
                     />
                   </TableCell>
                   <TableCell>{prod.product_name}</TableCell>
-                  <TableCell>${prod.product_price}</TableCell>
+                  <TableCell>₱{prod.product_price}</TableCell>
                   <TableCell>{prod.quantity}</TableCell>
-                  <TableCell>${prod.product_price * prod.quantity}</TableCell>
+                  <TableCell>₱{prod.product_price * prod.quantity}</TableCell>
 
                   <TableCell>{prod.status}</TableCell>
 

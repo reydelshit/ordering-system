@@ -92,8 +92,8 @@ export default function OrderConfirmation() {
     <div>
       <div className=" mt-[2rem] flex justify-between items-center">
         <h1 className="font-bold text-3xl text-start">ORDER CONFIRMATION</h1>
-        <span className="block font-bold text-2xl">
-          ORDER TOTAL:{' '}
+        <span className="block font-bold text-2xl bg-[#5d383a] p-2 text-white rounded-md">
+          ORDER TOTAL: ₱{' '}
           {cart.reduce(
             (total, prod) => total + prod.product_price * prod.qty,
             0,
@@ -142,7 +142,7 @@ export default function OrderConfirmation() {
 
             <div className="flex flex-col justify-between h-full items-center">
               <span className="block font-bold">
-                ${cart.product_price * cart.qty}
+                ₱{cart.product_price * cart.qty}
               </span>
             </div>
           </div>

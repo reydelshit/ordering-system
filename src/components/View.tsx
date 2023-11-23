@@ -171,7 +171,7 @@ export default function View() {
               {prod.product_description}
             </p>
             <span className="flex items-center gap-5 mb-4">
-              <h1 className="font-bold text-3xl">${prod.product_price}</h1>
+              <h1 className="font-bold text-3xl">₱{prod.product_price}</h1>
               {/* <p className="p-1 rounded-sm bg-violet-600 text-white">50%</p> */}
             </span>
             <div className="flex h-[2.8rem] gap-8">

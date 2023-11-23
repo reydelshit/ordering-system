@@ -24,6 +24,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import CardCompo from '../components/sales-history/Card';
+import { MdAttachMoney } from 'react-icons/md';
 type Product = {
   cart_id: number;
   product_names: string;
@@ -184,7 +185,7 @@ export default function SalesHistory() {
             title="Today Sales"
             description="The total number of sales for today."
             // icon={<GoNumber className="h-[1.5rem] w-[1.5rem]" />}
-            icon="N/A"
+            icon={<MdAttachMoney className="text-4xl text-[#5d383a]" />}
             // value={totalVisits.length.toString()}
             value={`${
               paidOrders.length > 0
@@ -205,7 +206,7 @@ export default function SalesHistory() {
                           currentDay,
                     )
                     .length.toString()
-            } - ${
+            } - ₱${
               paidOrders.length > 0
                 ? paidOrders
                     .filter(
@@ -233,7 +234,7 @@ export default function SalesHistory() {
             title="Total Weekly Sales"
             description="The total number of sales this week."
             // icon={<GoNumber className="h-[1.5rem] w-[1.5rem]" />}
-            icon="N/A"
+            icon={<MdAttachMoney className="text-4xl text-[#5d383a]" />}
             // value={totalVisits.length.toString()}
             value={`${
               productName === 'All'
@@ -254,7 +255,7 @@ export default function SalesHistory() {
                           currentWeek,
                     )
                     .length.toString()
-            } - ${
+            } - ₱${
               productName === 'All'
                 ? paidOrders
                     .filter(
@@ -282,7 +283,7 @@ export default function SalesHistory() {
             title="Paid Orders"
             description="The total number of paid orders ."
             // icon={<GoNumber className="h-[1.5rem] w-[1.5rem]" />}
-            icon="N/A"
+            icon={<MdAttachMoney className="text-4xl text-[#5d383a]" />}
             // value={totalVisits.length.toString()}
             value={`${
               productName === 'All'
@@ -296,7 +297,7 @@ export default function SalesHistory() {
                         paid.product_names.includes(productName),
                     )
                     .length.toString()
-            }  - ${
+            }  - ₱${
               productName === 'All'
                 ? paidOrders
                     .filter((paid) => paid.status === 'Delivered')
@@ -374,7 +375,7 @@ export default function SalesHistory() {
                       {prod.product_names}
                     </Link>
                   </TableCell>
-                  <TableCell>{prod.total_amount}</TableCell>
+                  <TableCell>₱{prod.total_amount}</TableCell>
                   <TableCell>{prod.payment_type}</TableCell>
                   <TableCell>{moment(prod.created_at).format('LL')}</TableCell>
 
