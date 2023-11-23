@@ -6,7 +6,7 @@ import moment from 'moment';
 
 type Notification = {
   created_at: string;
-  message: string;
+  message_context: string;
   receiver_id: number;
   sender_id: number;
 };
@@ -37,55 +37,47 @@ export default function MessageNotification({
   isTemplateMessage: boolean;
   setIsTemplateMessage: (e: boolean) => void;
 }) {
-  const [notification, setNotification] = useState<Notification[]>([]);
+  const [recepientMessage, setRecepientMessage] = useState<Notification[]>([]);
   const [message, setMessage] = useState<string>('');
 
-  const getNotification = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_ORDERING_LOCAL_HOST}/notification.php`,
-        {
-          params: { receiver_id: userId },
-        },
-      );
-      // console.log(response.data, 'notif');
-
-      if (response.data.length > 0) {
-        setNotification(response.data);
-      }
-    } catch (error) {
-      console.error('Error fetching notifications:', error);
-      //   setDataFetched(false);
-    }
+  const getRecepientMessage = async () => {
+    axios
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/message.php`, {
+        params: { receiver_id: userId },
+      })
+      .then((res) => {
+        console.log(res.data, 'message');
+        setRecepientMessage(res.data);
+      });
   };
 
   const handleSendMessageNotification = () => {
     axios
-      .post(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/notification.php`, {
+      .post(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/message.php`, {
         sender_id: localStorage.getItem('ordering-token'),
         receiver_id: userDetails[0].user_id,
-        message: message.length > 0 ? message : templateMessage,
+        message_context: message,
       })
       .then(() => {
-        getNotification();
+        getRecepientMessage();
         setMessage('');
       });
   };
 
   useEffect(() => {
-    getNotification();
+    getRecepientMessage();
   }, []);
 
   return (
     <div className="flex flex-col bottom-2 justify-between items-center">
       <div className="h-[18rem] overflow-auto w-full flex flex-col gap-1 p-4">
-        {notification.length > 0 ? (
-          notification.map((noti, index) => (
+        {recepientMessage.length > 0 ? (
+          recepientMessage.map((noti, index) => (
             <div
               className="border-2 h-fit mt-[1rem] w-[100%] rounded-sm bg-gray-100 p-3 text-xs text-start !text-white"
               key={index}
             >
-              <p>{noti.message}</p>
+              <p>{noti.message_context}</p>
               <p className="mt-1">{moment(noti.created_at).format('LLLL')}</p>
             </div>
           ))

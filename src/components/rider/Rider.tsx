@@ -96,7 +96,7 @@ export default function Rider() {
 
   return (
     <div className="flex flex-col justify-center items-center p-4">
-      <h1>Rider</h1>
+      <h1 className="text-2xl">Assigned Orders</h1>
       <div className="w-[80%] border-2 my-[2rem]">
         <Table>
           <TableHeader>

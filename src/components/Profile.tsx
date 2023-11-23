@@ -3,7 +3,7 @@ import DefaultProfile from '@/assets/default.jpg';
 
 import { Label } from '@/components/ui/label';
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import Cart from './components/Cart';
@@ -19,6 +19,10 @@ import Cards from './components/profile/Cards';
 import { MdAttachMoney } from 'react-icons/md';
 import { VscFeedback } from 'react-icons/vsc';
 import { BsCartPlus } from 'react-icons/bs';
+import SendMessage from './SendMessage';
+
+import { MainContext } from './hooks/useShowMessage';
+
 type User = {
   user_id: number;
   name: string;
@@ -58,6 +62,8 @@ export default function Profile() {
   const [paidOrders, setPaidOrders] = useState<Cart[]>([]);
   const [status, setStatus] = useState('');
   const [feedbackProduct, setFeedbackProduct] = useState<FeedbackProduct[]>([]);
+
+  const { showMessage } = useContext(MainContext);
 
   const getUserData = () => {
     axios
@@ -124,7 +130,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full p-4 relative h-screen">
       {user.map((user, index) => (
         <div className="flex w-full gap-4" key={index}>
           <img
@@ -217,6 +223,8 @@ export default function Profile() {
           <ProfileOrdersTable status={status} paidOrders={paidOrders} />
         </div>
       </div>
+
+      {showMessage && <SendMessage />}
     </div>
   );
 }

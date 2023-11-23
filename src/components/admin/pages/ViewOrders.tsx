@@ -207,6 +207,16 @@ export default function ViewOrders() {
           description: moment().format('LLLL'),
         });
       });
+
+    axios
+      .post(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/notification.php`, {
+        sender_id: localStorage.getItem('ordering-token'),
+        receiver_id: userDetails[0].user_id,
+        message: `Hi ${recepientName}, your order with order id number ${order_id.ordersid} has been ${selectedValue}.`,
+      })
+      .then(() => {
+        console.log('Message sent');
+      });
   };
 
   const handleExport = () => {
