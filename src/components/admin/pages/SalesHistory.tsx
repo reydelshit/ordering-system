@@ -168,11 +168,6 @@ export default function SalesHistory() {
                 </SelectItem>
               );
             })}
-            {/* <SelectItem value="All">All</SelectItem>
-          <SelectItem value="Pending">Pending</SelectItem>
-          <SelectItem value="On Delivery">On Delivery</SelectItem>
-          <SelectItem value="Cancelled">Cancelled</SelectItem>
-          <SelectItem value="Delivered">Delivered</SelectItem> */}
           </SelectContent>
         </Select>
 

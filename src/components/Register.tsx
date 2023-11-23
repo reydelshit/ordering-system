@@ -4,8 +4,18 @@ import { Label } from '@radix-ui/react-label';
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
 export default function Register() {
   const [user, setUser] = useState([]);
+  const [accountType, setAccountType] = useState('');
 
   const navigate = useNavigate();
 
@@ -19,7 +29,10 @@ export default function Register() {
     e.preventDefault();
 
     axios
-      .post(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/user.php`, user)
+      .post(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/user.php`, {
+        ...user,
+        user_type: accountType,
+      })
       .then((res) => {
         console.log(res.data);
 
@@ -27,6 +40,15 @@ export default function Register() {
           navigate('/login');
         }
       });
+  };
+
+  const handleAccountType = (event: string) => {
+    const selectedValue = event;
+
+    // console.log(selectedValue);
+    setAccountType(selectedValue);
+
+    console.log(selectedValue);
   };
 
   return (
@@ -89,6 +111,16 @@ export default function Register() {
               <Label className="text-start mr-2 text-sm">Female</Label>
             </div>
           </div>
+
+          <Select onValueChange={(e) => handleAccountType(e)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Account type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="rider">Driver</SelectItem>
+              <SelectItem value="user">Customer</SelectItem>
+            </SelectContent>
+          </Select>
 
           <Button className="w-[80%] self-center mt-[3rem]" type="submit">
             Register

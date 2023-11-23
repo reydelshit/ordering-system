@@ -33,7 +33,8 @@ export default function Login({
             name="password"
             onChange={handleChange}
           />
-          <Button className="w-[80%] bg-[#5d383a]" type="submit">
+
+          <Button className="w-[80%] bg-[#5d383a] my-4" type="submit">
             Login
           </Button>
         </form>
