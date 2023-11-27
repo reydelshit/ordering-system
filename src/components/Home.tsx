@@ -7,13 +7,16 @@ export default function Home() {
     <div className="w-full flex items-center h-[90vh] p-4">
       <div className="text-start w-[60%]">
         <h1 className="font-semibold text-6xl mb-5 uppercase text-[#5D383A]">
-          CAKE CAKE CAKE 🔥
+          NICKIANJAZ CAKE SHOP 🔥
         </h1>
         <p className="text-xl">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore saepe
-          recusandae a laudantium quibusdam. Omnis nobis praesentium soluta
-          dolorum nesciunt!
+          Discover pure delight in every slice at our cake shop. Indulge in
+          handcrafted masterpieces, from elegant wedding cakes to whimsical
+          birthday creations. Dive into a world of flavor and artistry that
+          celebrates life's sweetest moments.
         </p>
+
+        <p className="text-xs">by gpt</p>
         <Link to="/shop">
           <Button className="w-[15rem] h-[3rem] mt-5 text-white bg-[#5D383A]">
             Order now
