@@ -16,6 +16,7 @@ type MessageType = {
 export default function Message() {
   const [message, setMessage] = useState<MessageType[]>([]);
   const userId = Number(localStorage.getItem('ordering-token'));
+
   const { setRecepientIDNumber, showMessage, setShowMessage } =
     useContext(MainContext);
 

@@ -52,7 +52,7 @@ export default function Register() {
   };
 
   return (
-    <div className="w-full h-screen border-2 flex justify-center items-center flex-col text-center">
+    <div className="w-full h-screen  flex justify-center items-center flex-col text-center">
       <div className="w-[30%] flex flex-col justify-center items-center p-4">
         {/* <img src={Logo} alt="logo" className="w-[20rem]" /> */}
 
