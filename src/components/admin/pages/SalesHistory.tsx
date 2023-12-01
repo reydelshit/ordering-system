@@ -192,7 +192,8 @@ export default function SalesHistory() {
                           currentDay,
                     )
                     .length.toString()
-                : paidOrders
+                : paidOrders.length > 0 &&
+                  paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
@@ -212,7 +213,8 @@ export default function SalesHistory() {
                     )
                     .reduce((a, b) => a + b.total_amount, 0)
                     .toFixed(2)
-                : paidOrders
+                : paidOrders.length > 0 &&
+                  paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
@@ -233,7 +235,8 @@ export default function SalesHistory() {
             // value={totalVisits.length.toString()}
             value={`${
               productName === 'All'
-                ? paidOrders
+                ? paidOrders.length > 0 &&
+                  paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
@@ -241,7 +244,8 @@ export default function SalesHistory() {
                           currentWeek,
                     )
                     .length.toString()
-                : paidOrders
+                : paidOrders.length > 0 &&
+                  paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
@@ -252,7 +256,8 @@ export default function SalesHistory() {
                     .length.toString()
             } - ₱${
               productName === 'All'
-                ? paidOrders
+                ? paidOrders.length > 0 &&
+                  paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
@@ -261,7 +266,8 @@ export default function SalesHistory() {
                     )
                     .reduce((a, b) => a + b.total_amount, 0)
                     .toFixed(2)
-                : paidOrders
+                : paidOrders.length > 0 &&
+                  paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
@@ -282,10 +288,12 @@ export default function SalesHistory() {
             // value={totalVisits.length.toString()}
             value={`${
               productName === 'All'
-                ? paidOrders
+                ? paidOrders.length > 0 &&
+                  paidOrders
                     .filter((paid) => paid.status === 'Delivered')
                     .length.toString()
-                : paidOrders
+                : paidOrders.length > 0 &&
+                  paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
@@ -294,11 +302,13 @@ export default function SalesHistory() {
                     .length.toString()
             }  - ₱${
               productName === 'All'
-                ? paidOrders
+                ? paidOrders.length > 0 &&
+                  paidOrders
                     .filter((paid) => paid.status === 'Delivered')
                     .reduce((a, b) => a + b.total_amount, 0)
                     .toFixed(2)
-                : paidOrders
+                : paidOrders.length > 0 &&
+                  paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
