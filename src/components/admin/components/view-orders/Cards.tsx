@@ -16,7 +16,7 @@ export default function Cards({
   orderDetails: OrderDetails[];
 }) {
   return (
-    <div className="flex w-full justify-between mt-[2rem] items-start h-[8rem]">
+    <div className="flex w-full justify-around mt-[2rem] items-start h-[8rem] p-2">
       {orderDetails.map((order, index) => {
         return (
           <div

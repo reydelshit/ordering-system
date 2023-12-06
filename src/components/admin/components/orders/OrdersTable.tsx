@@ -117,7 +117,7 @@ export default function OrdersTable({ status }: { status: string }) {
       {showImageForm && (
         <div
           onClick={() => setShowImageForm(false)}
-          className="absolute w-full h-full top-0 z-50 bg-white bg-opacity-80 flex justify-center"
+          className="absolute w-full h-screen top-0 z-50 bg-white bg-opacity-80 flex justify-center"
         >
           <div className="bg-white w-[35rem] h-fit rounded-md ">
             <img

@@ -117,8 +117,17 @@ export default function SalesHistory() {
     axios
       .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/orders-admin.php`)
       .then((res) => {
-        console.log(res.data, 'paid');
-        setPaidOrders(res.data);
+        console.log(res.data, 'paid')
+        if(res.data.length > 0){
+          setPaidOrders(res.data);
+          // setPaidOrders([res.data]);
+
+
+        } else {
+          // if empty 
+          setPaidOrders([res.data]);
+
+        }
       });
   };
 
@@ -192,8 +201,7 @@ export default function SalesHistory() {
                           currentDay,
                     )
                     .length.toString()
-                : paidOrders.length > 0 &&
-                  paidOrders
+                : paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
@@ -211,10 +219,9 @@ export default function SalesHistory() {
                         moment(paid.created_at).format('YYYY-MM-DD') ===
                           moment().format('YYYY-MM-DD'),
                     )
-                    .reduce((a, b) => a + b.total_amount, 0)
+                    .reduce((a, b) => a + Number(b.total_amount), 0)
                     .toFixed(2)
-                : paidOrders.length > 0 &&
-                  paidOrders
+                : paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
@@ -222,7 +229,7 @@ export default function SalesHistory() {
                         moment(paid.created_at).format('YYYY-MM-DD') ===
                           moment().format('YYYY-MM-DD'),
                     )
-                    .reduce((a, b) => a + b.total_amount, 0)
+                    .reduce((a, b) => a + Number(b.total_amount), 0)
                     .toFixed(2)
             }`}
           />
@@ -235,8 +242,7 @@ export default function SalesHistory() {
             // value={totalVisits.length.toString()}
             value={`${
               productName === 'All'
-                ? paidOrders.length > 0 &&
-                  paidOrders
+                ? paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
@@ -244,8 +250,7 @@ export default function SalesHistory() {
                           currentWeek,
                     )
                     .length.toString()
-                : paidOrders.length > 0 &&
-                  paidOrders
+                : paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
@@ -256,18 +261,16 @@ export default function SalesHistory() {
                     .length.toString()
             } - ₱${
               productName === 'All'
-                ? paidOrders.length > 0 &&
-                  paidOrders
+                ? paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
                         moment(paid.created_at).format('YYYY-WW') ===
                           currentWeek,
                     )
-                    .reduce((a, b) => a + b.total_amount, 0)
+                    .reduce((a, b) => a + Number(b.total_amount), 0)
                     .toFixed(2)
-                : paidOrders.length > 0 &&
-                  paidOrders
+                : paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
@@ -275,7 +278,7 @@ export default function SalesHistory() {
                           currentWeek &&
                         paid.product_names.includes(productName),
                     )
-                    .reduce((a, b) => a + b.total_amount, 0)
+                    .reduce((a, b) => a + Number(b.total_amount), 0)
                     .toFixed(2)
             }`}
           />
@@ -287,13 +290,11 @@ export default function SalesHistory() {
             icon={<MdAttachMoney className="text-4xl text-[#5d383a]" />}
             // value={totalVisits.length.toString()}
             value={`${
-              productName === 'All'
-                ? paidOrders.length > 0 &&
-                  paidOrders
+              productName === 'All' && paidOrders.length > 0
+                ? paidOrders
                     .filter((paid) => paid.status === 'Delivered')
                     .length.toString()
-                : paidOrders.length > 0 &&
-                  paidOrders
+                : paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
@@ -301,20 +302,18 @@ export default function SalesHistory() {
                     )
                     .length.toString()
             }  - ₱${
-              productName === 'All'
-                ? paidOrders.length > 0 &&
-                  paidOrders
+              productName === 'All' 
+                ? paidOrders.length > 0 && paidOrders
                     .filter((paid) => paid.status === 'Delivered')
-                    .reduce((a, b) => a + b.total_amount, 0)
+                    .reduce((a, b) => a + Number(b.total_amount), 0)
                     .toFixed(2)
-                : paidOrders.length > 0 &&
-                  paidOrders
+                : paidOrders.length > 0 && paidOrders
                     .filter(
                       (paid) =>
                         paid.status === 'Delivered' &&
                         paid.product_names.includes(productName),
                     )
-                    .reduce((a, b) => a + b.total_amount, 0)
+                    .reduce((a, b) => a + Number(b.total_amount), 0)
                     .toFixed(2)
             }`}
           />

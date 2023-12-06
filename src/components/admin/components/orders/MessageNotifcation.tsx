@@ -82,9 +82,9 @@ export default function MessageNotification({ userId }: { userId: number }) {
             <div
               key={index}
               className={`border-2 p-2 mt-[1rem] rounded-sm w-full ${
-                res.receiver_id === userPov
-                  ? 'bg-gray-200'
-                  : 'bg-[#5D383A] !text-white'
+                Number(res.sender_id) === Number(userPov)
+                  ? 'bg-[#5D383A] !text-white'
+                  : 'bg-gray-200'
               } text-start`}
             >
               <p>{res.message_context}</p>

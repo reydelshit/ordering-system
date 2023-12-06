@@ -113,7 +113,7 @@ export default function Main() {
           title="Total Revenue"
           value={` ₱${paidOrders
             .filter((prod) => prod.status.includes('Delivered'))
-            .reduce((total, prod) => total + prod.total_amount, 0)}`}
+            .reduce((total, prod) => total + Number(prod.total_amount), 0)}`}
           description="Canncelled orders are not counted"
         />
         <Cards

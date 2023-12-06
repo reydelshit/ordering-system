@@ -20,6 +20,15 @@ type Product = {
   product_category: string;
 };
 
+
+type CartProductRes = {
+  cart_id: number;
+  product_id: number;
+  user_id: number;
+  qty: number;
+  isPaid: number;
+}
+
 export default function Shop() {
   const [product, setProduct] = useState<Product[]>([]);
 
@@ -28,12 +37,13 @@ export default function Shop() {
 
   const [rangeValue, setRangeValue] = useState(5000);
   const [selectedCategory, setSelectedCategory] = useState('' as string);
+  const [cart, setCart] = useState<CartProductRes []>([])
 
   const [search, setSearch] = useState('');
 
   const getProduct = () => {
     axios
-      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/product.php/`)
+      .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/product.php`)
       .then((res) => {
         console.log(res.data, 'product');
         setProduct(res.data);
@@ -59,7 +69,7 @@ export default function Shop() {
       qty: quantities[index] > 0 ? quantities[index] : 1,
     };
 
-    console.log(id);
+    // console.log(id);
 
     axios
       .get(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/cart.php`, {
@@ -70,14 +80,28 @@ export default function Shop() {
       })
       .then((res) => {
         console.log(res.data, 'cart');
+
+        setCart(res.data)
+        // console.log(cart[0].qty, 'currebt')
+
+        // if(res.data.length > 0){
+        //   const currentQ = cart[0].qty
+        //   const ohoh = parseInt(currentQ as unknown as string) + 5
+        //   console.log(ohoh)
+
+        // }
+        
         if (res.data.length > 0) {
+
+
+          // console.log(cart[0].qty as number + 5, 'calculate')
           axios
             .put(`${import.meta.env.VITE_ORDERING_LOCAL_HOST}/cart.php`, {
               cart_id: res.data[0].cart_id,
-              qty: res.data[0].qty + quantities[index],
+              qty: parseInt(res.data[0].qty) + quantities[index],
             })
             .then((res) => {
-              console.log(res);
+              console.log(res.data);
             });
         } else {
           axios

@@ -43,7 +43,9 @@ export default function Header() {
         params: { user_id: token },
       })
       .then((res) => {
-        setCart(res.data);
+        setCart(res.data as Cart[]);
+
+        // console.log(res.data)
         console.log(res.data, 'cart');
       });
   };

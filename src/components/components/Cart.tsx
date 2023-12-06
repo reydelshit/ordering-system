@@ -30,7 +30,7 @@ export default function Cart({ cart }: { cart: Cart[] }) {
   return (
     <div className="w-full">
       {cart.length > 0 ? (
-        cart.map((cart, index) => (
+        cart.map((ca, index) => (
           <div
             className="flex h-[6rem] items-center justify-between border-b-2 mb-2"
             key={index}
@@ -38,24 +38,24 @@ export default function Cart({ cart }: { cart: Cart[] }) {
             <div className="flex gap-2 w-full">
               <img
                 className="w-[4rem] h-[4rem] rounded-md object-cover bg-gray-100"
-                src={cart.product_image}
-                alt={cart.product_name}
+                src={ca.product_image}
+                alt={ca.product_name}
               />
               <div>
-                <h1 className="font-bold">{cart.product_name}</h1>
-                <p>Qty: {cart.qty}</p>
+                <h1 className="font-bold">{ca.product_name}</h1>
+                <p>Qty: {ca.qty}</p>
               </div>
             </div>
 
             <div className="flex flex-col justify-around h-full items-center">
               <span
-                onClick={() => handleDeleteCartProduct(cart.cart_id)}
+                onClick={() => handleDeleteCartProduct(ca.cart_id)}
                 className="cursor-pointer"
               >
                 <AiOutlineDelete className="text-3xl text-[#5d383a]" />
               </span>
               <span className="block font-bold">
-                ₱{cart.product_price * cart.qty}
+                ₱{ca.product_price * ca.qty}
               </span>
             </div>
           </div>

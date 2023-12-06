@@ -147,7 +147,7 @@ export default function ViewOrders() {
       })
       .then((res) => {
         console.log(res.data, 'order details');
-        // setOrderDetails([res.data[0]]);
+        setOrderDetails([res.data[0]]);
       });
   };
 
@@ -322,9 +322,8 @@ export default function ViewOrders() {
         </div>
       </div>
 
-      <div>
-        <Cards orderDetails={orderDetails} />
-      </div>
+     <Cards orderDetails={orderDetails} />
+
 
       <div className="flex mt-[2rem] gap-4">
         <PaidOrdersTable paidOrders={paidOrders} status={status} />

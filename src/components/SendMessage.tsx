@@ -85,9 +85,9 @@ export default function SendMessage() {
             <div
               key={index}
               className={`border-2 p-2 mt-[1rem] rounded-sm  ${
-                res.receiver_id === userId
-                  ? 'bg-gray-200'
-                  : 'bg-[#5D383A] !text-white'
+                Number(res.sender_id) === Number(userId)
+                  ? 'bg-[#5D383A] !text-white'
+                  : 'bg-gray-200'
               } text-start`}
             >
               <p>{res.message_context}</p>

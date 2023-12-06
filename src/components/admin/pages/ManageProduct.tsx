@@ -85,7 +85,7 @@ export default function ManageProduct() {
       {showAddProduct ? (
         <AddProductModal setShowAddProduct={setShowAddProduct} />
       ) : (
-        <div className="w-[80%] mt-[1rem]">
+        <div className="w-[80%] mt-[1rem] bg-white p-2 rounded-lg">
           <div className="flex w-full justify-between items-center my-2">
             <Input
               onChange={(e) => setSearchProduct(e.target.value)}

@@ -22,7 +22,7 @@ export default function Orders() {
   };
 
   return (
-    <div className=" p-4 bg-slate-50 ">
+    <div className=" p-4 bg-slate-50">
       <div className="flex justify-between w-full mb-[4rem]">
         <Button className="bg-[#5d383a]" onClick={() => navigate(-1)}>
           Go Back
@@ -41,7 +41,9 @@ export default function Orders() {
           <SelectItem value="Delivered">Delivered</SelectItem>
         </SelectContent>
       </Select>
-      <OrdersTable status={status} />
+      <div className='bg-white p-2 rounded-md mt-[2rem]'>
+        <OrdersTable status={status} />
+      </div>
     </div>
   );
 }
