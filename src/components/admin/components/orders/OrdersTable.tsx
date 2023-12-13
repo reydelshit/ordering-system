@@ -53,94 +53,99 @@ export default function OrdersTable({ status }: { status: string }) {
   };
 
   return (
-    <Table className="w-full relative ">
-      <TableHeader>
-        <TableRow>
-          <TableHead className="text-center">Order ID</TableHead>
-          <TableHead className="text-center">User ID</TableHead>
-          <TableHead className="text-center">Ordered Products</TableHead>
-          <TableHead className="text-center">Total Amount</TableHead>
-          <TableHead className="text-center">Proof Delivery</TableHead>
-          <TableHead className="text-center">Status</TableHead>
-        </TableRow>
-      </TableHeader>
+    <div className="w-full relative h-screen">
+      <Table >
+          <TableHeader>
+            <TableRow>
+              <TableHead className="text-center">Order ID</TableHead>
+              <TableHead className="text-center">User ID</TableHead>
+              <TableHead className="text-center">Ordered Products</TableHead>
+              <TableHead className="text-center">Total Amount</TableHead>
+              <TableHead className="text-center">Proof Delivery</TableHead>
+              <TableHead className="text-center">Status</TableHead>
+            </TableRow>
+          </TableHeader>
 
-      <TableBody>
-        {paidOrders
-          .filter((prod) => prod.status.includes(status) || status === 'All')
-          .map((prod, index) => {
-            return (
-              <TableRow key={index}>
-                <TableCell>{prod.order_id}</TableCell>
-                <TableCell>{prod.user_id}</TableCell>
-                <TableCell className="font-bold cursor-pointer">
-                  <Link to={`/admin/orders/${prod.order_id}`}>
-                    {' '}
-                    {prod.product_names}
-                  </Link>
-                </TableCell>
-                <TableCell>₱{prod.total_amount}</TableCell>
-                <TableCell>
-                  {!prod.proof_image ? (
-                    <div>n/a</div>
-                  ) : (
-                    <a
-                      onClick={() => showProofDelivery(prod.proof_image)}
-                      className="underline text-blue-500 cursor-pointer"
-                    >
-                      {' '}
-                      view proof
-                    </a>
-                  )}
-                </TableCell>
+          <TableBody>
+            {paidOrders
+              .filter((prod) => prod.status.includes(status) || status === 'All')
+              .map((prod, index) => {
+                return (
+                  <TableRow key={index}>
+                    <TableCell>{prod.order_id}</TableCell>
+                    <TableCell>{prod.user_id}</TableCell>
+                    <TableCell className="font-bold cursor-pointer">
+                      <Link to={`/admin/orders/${prod.order_id}`}>
+                        {' '}
+                        {prod.product_names}
+                      </Link>
+                    </TableCell>
+                    <TableCell>₱{prod.total_amount}</TableCell>
+                    <TableCell>
+                      {!prod.proof_image ? (
+                        <div>n/a</div>
+                      ) : (
+                        <a
+                          onClick={() => showProofDelivery(prod.proof_image)}
+                          className="underline text-blue-500 cursor-pointer"
+                        >
+                          {' '}
+                          view proof
+                        </a>
+                      )}
+                    </TableCell>
 
-                <TableCell>
-                  <div
-                    className={`p-2 ${
-                      prod.status === 'Delivered'
-                        ? 'bg-[#5d383a] text-white'
-                        : prod.status === 'On Delivery'
-                        ? 'bg-green-700 text-white'
-                        : prod.status === 'Cancelled'
-                        ? 'bg-red-500 text-white'
-                        : 'bg-yellow-500 text-black'
-                    }  font-bold rounded-md`}
+                    <TableCell>
+                      <div
+                        className={`p-2 ${
+                          prod.status === 'Delivered'
+                            ? 'bg-[#5d383a] text-white'
+                            : prod.status === 'On Delivery'
+                            ? 'bg-green-700 text-white'
+                            : prod.status === 'Cancelled'
+                            ? 'bg-red-500 text-white'
+                            : 'bg-yellow-500 text-black'
+                        }  font-bold rounded-md`}
+                      >
+                        {prod.status}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+          </TableBody>
+
+        
+        </Table>
+
+        {showImageForm && (
+            <div
+              onClick={() => setShowImageForm(false)}
+              className="absolute w-full h-full top-0 z-50 bg-white bg-opacity-80 flex justify-center "
+            >
+              <div className="bg-white w-[80%] h-[80%] rounded-md border-2">
+                <img  
+                  className="w-full h-full object-cover rounded-lg mb-4 border-2"
+                  src={image! ? image! : ''}
+                />
+                {image! ? (
+                  ''
+                ) : (
+                  <h1 className="font-bold text-7xl">NO PROOF OF DELIVERY</h1>
+                )}
+
+                <div className="flex justify-center mt-4">
+                  <button
+                    onClick={() => setShowImageForm(false)}
+                    className="bg-red-500 text-white p-2 rounded-md"
                   >
-                    {prod.status}
-                  </div>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-      </TableBody>
-
-      {showImageForm && (
-        <div
-          onClick={() => setShowImageForm(false)}
-          className="absolute w-full h-screen top-0 z-50 bg-white bg-opacity-80 flex justify-center"
-        >
-          <div className="bg-white w-[35rem] h-fit rounded-md ">
-            <img
-              className="w-full  object-cover rounded-lg mb-4"
-              src={image! ? image! : ''}
-            />
-            {image! ? (
-              ''
-            ) : (
-              <h1 className="font-bold text-7xl">NO PROOF OF DELIVERY</h1>
-            )}
-
-            <div className="flex justify-center mt-4">
-              <button
-                onClick={() => setShowImageForm(false)}
-                className="bg-red-500 text-white p-2 rounded-md"
-              >
-                Close
-              </button>
+                    Close
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
-    </Table>
+          )}
+    </div>
+  
   );
 }

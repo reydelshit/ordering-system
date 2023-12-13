@@ -71,7 +71,7 @@ export default function CustomerReviews({
                       backgroundClip: 'content-box',
                       width: `${
                         (feedbacks.filter(
-                          (feedb) => feedb.feedback_rating === number,
+                          (feedb) => Number(feedb.feedback_rating) === Number(number),
                         ).length /
                           feedbacks.length) *
                         100
@@ -79,7 +79,7 @@ export default function CustomerReviews({
                     }}
                     className={`h-full rounded ${
                       feedbacks.filter(
-                        (feedb) => feedb.feedback_rating === number,
+                        (feedb) => Number(feedb.feedback_rating) === Number(number),
                       ).length === 0
                         ? 'bg-gray-200'
                         : 'bg-[#5d383a]'
@@ -92,7 +92,7 @@ export default function CustomerReviews({
                     ? 0
                     : Math.ceil(
                         (feedbacks.filter(
-                          (feedb) => feedb.feedback_rating === number,
+                          (feedb) => Number(feedb.feedback_rating) === Number(number),
                         ).length /
                           feedbacks.length) *
                           100,
@@ -102,7 +102,7 @@ export default function CustomerReviews({
                     (
                     {
                       feedbacks.filter(
-                        (feedb) => feedb.feedback_rating === number,
+                        (feedb) => Number(feedb.feedback_rating) === Number(number),
                       ).length
                     }
                     )
